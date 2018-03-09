@@ -28,4 +28,9 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
       $location.path("/home");
     });
   }
+
+  self.searchEntered = function(searchTerm){
+    console.log('in searchEntered function', searchTerm)
+  }
+  
 }]);

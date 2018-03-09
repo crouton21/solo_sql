@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="myApp">
     <head>
-        <title>Solo Project</title>
+        <title>Slack Overflow</title>
         <link rel="stylesheet" href="styles/style.css">
 
         <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
@@ -11,11 +11,23 @@
         <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
         <script type="text/javascript" src="scripts/controllers/user.controller.js"></script>
         <script type="text/javascript" src="scripts/services/user.service.js"></script>
+        <link rel="stylesheet" href="vendors/bootstrap.css">
+        <!-- SOURCE IN ALL CONTROLLERS -->
     </head>
 
-    <body ng-app="myApp">
-      <header ng-include="'/views/partials/header.html'"></header>
-
+    <body>
+    <div class="container">
+    <div class="row">
+      <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log" class="col-xs-1">
+      <a class="header_link col-xs-1" href="views/templates/questions.html">Questions</a>
+      <a class="header_link col-xs-1" href="views/templates/tags.html">Tags</a>
+      <div ng-controller="IndexController as ic">
+      <form ng-submit="ic.searchEntered(ic.searchTerm)">
+            <input type="text" ng-model="ic.searchTerm" name="search" placeholder="Search..." />
+      </form>
+      </div>
+    </div>
+    </div>  
       <main ng-view></main>
 
     </body>

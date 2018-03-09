@@ -7,6 +7,10 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     .when('/', {
       redirectTo: 'home'
     })
+    .when('/questions', {
+      templateUrl: '/views/templates/questions.html',
+      controller: 'QuestionController as vm',
+    })
     .when('/home', {
       templateUrl: '/views/templates/home.html',
       controller: 'LoginController as vm',
