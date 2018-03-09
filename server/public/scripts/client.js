@@ -3,9 +3,14 @@ var myApp = angular.module('myApp', ['ngRoute']);
 /// Routes ///
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   console.log('myApp -- config')
+  // HOW TO NEST ALL CONTROLLERS AND VIEWS IN INDEXCONTROLLER??
   $routeProvider
     .when('/', {
-      redirectTo: 'home'
+      templateUrl:'index.html',
+      controller: 'IndexController as ic',
+      children: [
+        
+      ]
     })
     .when('/questions', {
       templateUrl: '/views/templates/questions.html',

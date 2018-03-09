@@ -2,6 +2,10 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
+  self.slackOverflow = {
+      searchTerm:'', 
+      searchResults:[]
+    }
 
   self.getuser = function(){
     console.log('UserService -- getuser');
@@ -31,6 +35,8 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
 
   self.searchEntered = function(searchTerm){
     console.log('in searchEntered function', searchTerm)
+    //HTTP GET with searchTerm, search in database.  
+    //On .then fill self.slackOverflow.searchResults and open up search view
   }
-  
+
 }]);
