@@ -3,6 +3,7 @@
     <head>
         <title>Slack Overflow</title>
         <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="vendors/bootstrap.css">
 
         <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
         <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
@@ -11,25 +12,35 @@
         <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
         <script type="text/javascript" src="scripts/controllers/user.controller.js"></script>
         <script type="text/javascript" src="scripts/services/user.service.js"></script>
-        <link rel="stylesheet" href="vendors/bootstrap.css">
-        <!-- SOURCE IN ALL CONTROLLERS -->
+        <!-- SOURCE IN ALL CONTROLLERS, add controllers in client.js -->
         <script type="text/javascript" src="scripts/controllers/index.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/ask_question.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/individual_question.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/individual_tag.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/profile.controller.js"></script> <!-- need?? -->
+        <script type="text/javascript" src="scripts/controllers/search.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/tags.controller.js"></script>
+        <script type="text/javascript" src="scripts/controllers/questions.controller.js"></script>
+
     </head>
 
     <body>
+    <section ng-controller="IndexController as ic">
     <div class="container">
     <div class="row">
-      <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log" class="col-xs-1">
-      <a class="header_link col-xs-1" href="views/templates/questions.html">Questions</a>
-      <a class="header_link col-xs-1" href="views/templates/tags.html">Tags</a>
-      <div ng-controller="IndexController as ic">
-      <form ng-submit="ic.searchEntered(ic.searchTerm)">
-            <input type="text" ng-model="ic.searchTerm" name="search" placeholder="Search..." />
+      <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log" class="col-xs-1" ng-click="ic.logoClicked()">
+      <a class="header_link col-xs-2" href="#!/questions">Questions</a>
+      <a class="header_link col-xs-2" href="#!/tags">Tags</a>
+      
+      <form ng-submit="ic.searchEntered()">
+            <input class="col-xs-4" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
       </form>
-      </div>
+      <a href="#!/home" ng-hide="vm.stackOverflow.authenticationStatus">Log In</a>
+      <a href="#!/questions" ng-show="vm.stackOverflow.authenticationStatus">Sign Out</a>
+      <a href="#!/profile" ng-show="vm.stackOverflow.authenticationStatus">Profile</a>
     </div>
     </div>  
       <main ng-view></main>
-
+    </section>
     </body>
 </html>

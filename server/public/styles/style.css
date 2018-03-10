@@ -93,5 +93,11 @@ li a:hover {
 .header_link:hover{
   background-color: lightgray;
   text-decoration:none;
+}
 
+#tags{
+  display: inline;
+  float: left;
+  margin-left: 20px;
+  padding: 10px;
 }

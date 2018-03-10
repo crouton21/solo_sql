@@ -1,6 +1,9 @@
 myApp.controller('LoginController', ['$http', '$location', 'UserService', function($http, $location, UserService) {
     console.log('LoginController created');
     var self = this;
+
+    self.slackOverflow = UserService.slackOverflow;
+
     self.user = {
       username: '',
       password: ''
