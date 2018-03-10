@@ -2,6 +2,6 @@ myApp.controller('SearchController', ['$http', '$location', 'UserService', funct
     console.log('SearchController created');
     var self = this;
 
-    
+    self.slackOverflow = UserService.slackOverflow;
 
 }]);
