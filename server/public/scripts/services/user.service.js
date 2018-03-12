@@ -8,7 +8,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
       authenticationStatus: false,
       topQuestions: [],
       individualQuestion: {},
-      individualQuestionAnswers: []
+      individualQuestionAnswers: [],
+      newAnswer: {},
+      taggedQuestions:[],
+      individualTag: ''
     }
 
   self.getuser = function(){
@@ -79,10 +82,6 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
   })    
   }
 
-  self.postNewQuestion = function(newQuestion){
-
-  }
-
   self.logoClicked = function(){
     console.log('in logo clicked');
     $location.url('/questions');
@@ -151,6 +150,47 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
       console.log('individualQuestionAnswers array:', self.slackOverflow.individualQuestionAnswers);
   }).catch(function(error){
       console.log('error on getting answers for individual question');
+  })
+  }
+
+  self.postNewAnswer = function(question_id, newAnswer){
+    console.log('in postNewAnswer function', question_id, newAnswer);
+    $http({
+      method: 'POST',
+      url: '/questions/answers',
+      data: {
+        answer: newAnswer.description,
+        question_id: question_id
+      }
+    }).then(function(response){
+      console.log('posted new answer', response);
+      self.getAnswers(question_id);
+  }).catch(function(error){
+      console.log('error on posting new answer');
+  })
+  }
+
+  // Trix event listener??
+  // document.addEventListener("trix-attachment-add", function(event) {
+  //   var element = document.querySelector("trix-editor");
+  //   var attachment;
+  //   attachment = event.attachment;
+  //   if (attachment.file) {      
+  //     element.editor.composition.updateAttributesForAttachment({"caption": Trix.config.lang.captionPlaceholder}, event.attachment);
+  //     return uploadAttachment(attachment);
+  //   }     
+  // });
+
+  self.getTagQuestions = function(tagName){
+    console.log('in getTagQuestions', tagName);
+    $http({
+      method: 'GET',
+      url: `/questions/tags/${tagName}`
+    }).then(function(response){
+      console.log('got questions with individual tag', response.data);
+      self.slackOverflow.taggedQuestions = response.data;
+  }).catch(function(error){
+      console.log('error on getting individual tagged questions');
   })
   }
 

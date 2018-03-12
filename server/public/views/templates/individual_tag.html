@@ -1,1 +1,5 @@
-in individual_tag
+<h3>{{vm.slackOverflow.tagName}}</h3>
+
+<div ng-repeat="question in vm.slackOverflow.taggedQuestions">
+    <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+</div>

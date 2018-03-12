@@ -84,7 +84,7 @@ router.post('/search', function(request, response){
     JOIN answers on joint_questions_answers.answer_id = answers.id
     JOIN joint_users_answers on joint_users_answers.answer_id = answers.id
     JOIN users on joint_users_answers.user_id = users.id
-    WHERE questions.id = $1`;
+    WHERE questions.id = $1 ORDER by answers.votes`;
     pool.query(sqlText, [question_id])
       .then(function(result) {
         console.log('got all answers')
@@ -96,5 +96,45 @@ router.post('/search', function(request, response){
       })
   })
 
+  //NEED TO FINISH POST FOR NEW ANSWER
+  router.post('/answers', function(request, response){
+    answer = request.body.answer;
+    question_id = request.body.question_id;
+    user_id = 1; //WILL NEED TO GET USER ID SENT IN POST
+    const sqlText = `WITH ins1 AS (
+      INSERT INTO answers(answer)
+      VALUES ($1)
+      RETURNING answers.id AS answer_id)
+      ,ins2 AS (
+      INSERT INTO joint_questions_answers (answer_id, question_id)
+      SELECT answer_id, ${question_id} FROM ins1)
+      INSERT INTO joint_users_answers (answer_id, user_id)
+      SELECT answer_id, ${user_id} FROM ins1`;
+   pool.query(sqlText, [answer])
+      .then(function(result) {
+        console.log('posted new answer to answers table, joint_questions_answers table, joint_users_answers table');
+        response.sendStatus(201);
+      })
+      .catch(function(error){
+        console.log('Error on posting new answer:', error);
+        response.sendStatus(500);
+      })
+  })
+
+
+  router.get('/tags/:tagName', function(request, response){
+    const tagName = request.params.tagName;
+    //GET to questions table
+    sqlText = `SELECT * FROM questions WHERE '${tagName}' = ANY(tag_array);`
+    pool.query(sqlText)
+      .then(function(result) {
+        console.log('got all questions that had to do with tag')
+        response.send(result.rows);
+      })
+      .catch(function(error){
+        console.log('Error on Getting questions for individual tag:', error);
+        response.sendStatus(500);
+      })
+  })
 
 module.exports = router;

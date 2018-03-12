@@ -4,4 +4,11 @@
 
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     {{answer.answer}}
+    {{answer.posted_date}}
+    {{answer.votes}}
+    {{answer.username}}
 </div>
+
+<h3>Your Answer</h3>
+<trix-editor angular-trix ng-model="vm.slackOverflow.newAnswer.description" class="trix-content"></trix-editor>
+<button ng-click="vm.postNewAnswer(vm.slackOverflow.individualQuestion.id, vm.slackOverflow.newAnswer)">Post Answer</button>
