@@ -14,7 +14,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
       templateUrl: '/views/templates/questions.html',
       controller: 'QuestionsController as vm',
     })
-    .when('/questions/:id', {
+    .when('/individual_question/:id/:num_of_views', {
       templateUrl: '/views/templates/individual_question.html',
       controller: 'IndividualQuestionController as vm',
     })

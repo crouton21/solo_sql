@@ -1,1 +1,7 @@
-in individual_question
+<h3>{{vm.slackOverflow.individualQuestion.question_title}}</h3>
+
+<p>{{vm.slackOverflow.individualQuestion.question_description}}</p>
+
+<div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
+    {{answer.answer}}
+</div>

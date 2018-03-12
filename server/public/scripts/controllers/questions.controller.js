@@ -4,6 +4,8 @@ myApp.controller('QuestionsController', ['$http', '$location', 'UserService', fu
 
     self.slackOverflow = UserService.slackOverflow;
     self.getTopQuestions = UserService.getTopQuestions;
+    self.getIndividualQuestion = UserService.getIndividualQuestion;
+    self.getIndividualQuestionView = UserService.getIndividualQuestionView;
 
     self.getTopQuestions();
 

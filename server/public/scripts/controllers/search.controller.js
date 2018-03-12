@@ -3,5 +3,7 @@ myApp.controller('SearchController', ['$http', '$location', 'UserService', funct
     var self = this;
 
     self.slackOverflow = UserService.slackOverflow;
+    self.getIndividualQuestion = UserService.getIndividualQuestion;
+    self.getIndividualQuestionView = UserService.getIndividualQuestionView;
 
 }]);

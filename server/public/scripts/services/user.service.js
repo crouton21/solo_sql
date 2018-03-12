@@ -1,4 +1,4 @@
-myApp.service('UserService', ['$http', '$location', function($http, $location){
+myApp.service('UserService', ['$http', '$location', '$routeParams', function($http, $location, $routeParams){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
@@ -6,7 +6,9 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
       searchTerm:'', 
       searchResults:[],
       authenticationStatus: false,
-      topQuestions: []
+      topQuestions: [],
+      individualQuestion: {},
+      individualQuestionAnswers: []
     }
 
   self.getuser = function(){
@@ -51,7 +53,7 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
   }
 
   self.searchEntered = function(){
-    self.commonWords = ['or', 'and', 'but', 'so', 'is', 'not', 'my', 'is', 'it', 'the', 'question', 'working', 'of', 'here', 'maybe', 'be', 'to', 'a', 'in', 'that', 'have', 'it', 'i', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'an', 'will', 'my', 'would', 'there', 'what', 'up', 'out', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'your', 'good','some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'most', 'us'];
+    self.commonWords = ['or', 'and', 'but', 'so', 'is', 'not', 'my', 'is', 'it', 'the', 'this', 'question', 'working', 'of', 'here', 'maybe', 'be', 'to', 'a', 'in', 'that', 'have', 'it', 'i', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'an', 'will', 'my', 'would', 'there', 'what', 'up', 'out', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'your', 'good','some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'most', 'us'];
     self.search_term_array = self.slackOverflow.searchTerm.toLowerCase().split(' ');
 
     for(let i = self.search_term_array.length-1; i--;){
@@ -70,7 +72,7 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
     }).then(function(response){
       console.log('search success', response.data);
       self.slackOverflow.searchResults = response.data;
-      self.slackOverflow.searchTerm = {};
+      self.slackOverflow.searchTerm = '';
       $location.url('/search');
   }).catch(function(error){
       console.log('Error on search get', error);
@@ -99,6 +101,56 @@ myApp.service('UserService', ['$http', '$location', function($http, $location){
       console.log('User not logged in', self.slackOverflow);
       self.slackOverflow.authenticationStatus = false;
       $location.url($location.path());
+  })
+  }
+
+  self.getIndividualQuestionView = function(id, num_of_views){
+    $location.url(`/individual_question/${id}/${num_of_views}`);
+  }
+
+  self.getIndividualQuestion = function(id, num_of_views){
+    console.log('In getIndividualQuestion function', id);
+    num_of_views = parseInt(num_of_views) + 1;
+    console.log('num_of_views', num_of_views);
+    self.getAnswers(id);
+    $http({
+      method: 'GET',
+      url: `/questions/${id}`
+    }).then(function(response){
+      console.log('got individual question', response);
+      self.slackOverflow.individualQuestion = response.data[0];
+      console.log('individual question object:', self.slackOverflow.individualQuestion);
+      //call on GET to get all answers for this question
+      self.upViews(id,num_of_views);
+  }).catch(function(error){
+      console.log('error on getting individual question');
+  })
+  }
+
+  self.upViews = function(id,num_of_views){
+    console.log('in upViews function:', id, num_of_views);
+    $http({
+      method: 'PUT',
+      url: `/questions/${id}`,
+      data: {num_of_views:num_of_views}
+    }).then(function(response){
+      console.log('upped views');
+  }).catch(function(error){
+      console.log('error on upping views');
+  })
+  }
+
+  self.getAnswers = function(question_id){
+    console.log('in getAnswers function', question_id);
+    $http({
+      method: 'GET',
+      url: `/questions/answers/${question_id}`
+    }).then(function(response){
+      console.log('got all answers for individual question', response);
+      self.slackOverflow.individualQuestionAnswers = response.data;
+      console.log('individualQuestionAnswers array:', self.slackOverflow.individualQuestionAnswers);
+  }).catch(function(error){
+      console.log('error on getting answers for individual question');
   })
   }
 

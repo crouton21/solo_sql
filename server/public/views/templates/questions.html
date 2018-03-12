@@ -2,7 +2,7 @@
 <h3>Most Viewed Questions</h3>
 
 <div ng-repeat="question in vm.slackOverflow.topQuestions">
-    <a id="questions" href="#!/questions/{{question.id}}">{{question.question_title}}</a>
+    <a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
     <div ng-repeat="tag in question.tag_array">
     <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a>
     </div>
