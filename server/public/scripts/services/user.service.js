@@ -12,6 +12,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
       newAnswer: {},
       taggedQuestions:[],
       individualTag: '',
+      previousLocation: '/questions',
+      allTags: []
     }
 
   self.getuser = function(){
@@ -20,7 +22,11 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
         if(response.data.username) {
             // user has a curret session on the server
             self.userObject.userName = response.data.username;
+            self.userObject.profile_img_url = response.data.profile_img_url;
             console.log('UserService -- getuser -- User Data: ', self.userObject.userName);
+            self.slackOverflow.authenticationStatus = true;
+            console.log('user authentication status', self.slackOverflow.authenticationStatus);
+            $location.path(self.slackOverflow.previousLocation);
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
@@ -28,6 +34,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
         }
     },function(response){
       console.log('UserService -- getuser -- failure: ', response);
+      self.slackOverflow.authenticationStatus = false;
+      console.log('user authentication status', self.slackOverflow.authenticationStatus);
       $location.path("/home");
     });
   }
@@ -36,9 +44,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
     console.log('UserService -- logout');
     $http.get('/api/user/logout').then(function(response) {
       console.log('UserService -- logout -- logged out');
-      $location.path("/home");
+      $location.path("/questions");
     });
     self.slackOverflow.authenticationStatus = false;
+    console.log('user authentication status', self.slackOverflow.authenticationStatus);
   }
 
   self.getTopQuestions = function(){
@@ -85,22 +94,6 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
   self.logoClicked = function(){
     console.log('in logo clicked');
     $location.url('/questions');
-  }
-
-  self.isLoggedIn = function(){
-    console.log('in isLoggedIn function');
-    $http({
-      method: 'GET',
-      url: '/api/user'
-    }).then(function(response){
-      console.log('User authenticated', response);
-      self.slackOverflow.authenticationStatus = true;
-      //store user info here and in slackOverflow object
-  }).catch(function(error){
-      console.log('User not logged in', self.slackOverflow);
-      self.slackOverflow.authenticationStatus = false;
-      $location.url($location.path());
-  })
   }
 
   self.getIndividualQuestionView = function(id, num_of_views){
@@ -172,62 +165,94 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
   }
 
   // TRIX STORE AN IMAGE??
-  //   var createStorageKey, host, uploadAttachment;
+    var createStorageKey, host, uploadAttachment;
 
-  //   self.trixAttachmentAdd = function(e) {
-  //       var attachment;
-  //       attachment = e.attachment;
-  //       if (attachment.file) {
-  //           return self.uploadAttachment(attachment);
-  //       }
-  //   }
+    self.trixAttachmentAdd = function(e) {
+        var attachment;
+        attachment = e.attachment;
+        if (attachment.file) {
+            return self.uploadAttachment(attachment);
+        }
+    }
 
-  //   host = "http://localhost:5000/";
+    host = "http://localhost:5000/";
 
-  //   self.uploadAttachment=function(attachment) {
-  //     let file = attachment.file;
-  //     console.log('in uploadAttachment function, file:', file);
-  //     $http({
-  //       method: 'POST',
-  //       url: `/questions/answers/file_upload`,
-  //       data: {file: file,
-  //             content_type: file.type}
-  //     }).then(function(response){
-  //       console.log('saved image url', response);
-  //       //self.getAnswers(question_id);
-  //     }).catch(function(error){
-  //       console.log('error on saving image', error);
-  //     })
-  //   }
+    self.uploadAttachment=function(attachment) {
+      let file = attachment.file;
+      console.log('in uploadAttachment function, file:', file);
+      $http({
+        method: 'POST',
+        url: `/questions/answers/file_upload`,
+        data: {file: file,
+              content_type: file.type,
+              url: myApp.trix_upload_url}
+      }).then(function(response){
+        console.log('saved image url', response);
+        attachment.setAttributes({
+          url: response.url,
+          href: response.url,
+          id: response.id
+        })
+        //self.getAnswers(question_id);
+      }).catch(function(error){
+        console.log('error on saving image', error);
+      })
+    }
 
-  // self.getTagQuestions = function(tagName){
-  //   console.log('in getTagQuestions', tagName);
-  //   $http({
-  //     method: 'GET',
-  //     url: `/questions/tags/${tagName}`
-  //   }).then(function(response){
-  //     console.log('got questions with individual tag', response.data);
-  //     self.slackOverflow.taggedQuestions = response.data;
-  // }).catch(function(error){
-  //     console.log('error on getting individual tagged questions');
-  // })
-  // }
-
-  self.client = filestack.init("AI5OhtlsWSsiO7mmCbw06z");
-
-  self.upload = function(){
-    console.log('in upload');
-    self.client.pick({
-      accept: 'image/*',
-      maxFiles: 1
-    }).then(function(result){
-      alert("successful upload!");
-      self.slackOverflow.newAnswer.img_url = result.filesUploaded[0].url;
-      console.log('img url in service:', self.slackOverflow.newAnswer.img_url);
-    })
-    
+  self.getTagQuestions = function(tagName){
+    console.log('in getTagQuestions', tagName);
+    $http({
+      method: 'GET',
+      url: `/questions/tags/${tagName}`
+    }).then(function(response){
+      console.log('got questions with individual tag', response.data);
+      self.slackOverflow.taggedQuestions = response.data;
+  }).catch(function(error){
+      console.log('error on getting individual tagged questions');
+  })
   }
 
-  self.isLoggedIn();
+  //CHANGE USER PROFILE PICTURE
+  // self.client = filestack.init("AI5OhtlsWSsiO7mmCbw06z");
+
+  // self.upload = function(){
+  //   console.log('in upload');
+  //   self.client.pick({
+  //     accept: 'image/*',
+  //     maxFiles: 1
+  //   }).then(function(result){
+  //     alert("successful upload!");
+  //     self.slackOverflow.newAnswer.img_url = result.filesUploaded[0].url;
+  //     console.log('img url in service:', self.slackOverflow.newAnswer.img_url);
+  //   })
+    
+  // }
+
+  self.askQuestion = function(){
+    self.getuser();
+    self.slackOverflow.previousLocation = ("/questions/ask")
+    if (self.slackOverflow.authenticationStatus){ //user is logged in, send to ask question page
+      $location.path("/questions/ask");
+    }
+    else{ //user is not logged in, send to sign up page, then send to askquestion page once logged in
+      $location.path("/home");
+    }
+  }
+
+  self.getAllTags = function(){
+    console.log('in getAllTags function');
+    $http({
+      method: 'GET',
+      url: '/questions/tags/tags/all'
+    }).then(function(response){
+      console.log('got all tags success', response.data);
+      self.slackOverflow.allTags = response.data;
+      console.log('all tags', self.slackOverflow.allTags);
+  }).catch(function(error){
+      console.log('Error on get all tags', error);
+  })    
+  }
+
+  self.getAllTags();
 
 }]);

@@ -4,15 +4,14 @@
 
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     <div ng-bind-html="answer.answer"></div>
-    <img ng-src="{{answer.img_url}}" height="200px" width="auto"> 
+    <!-- <img ng-src="{{answer.img_url}}" height="200px" width="auto">  -->
     {{answer.posted_date}}
     {{answer.votes}}
     {{answer.username}}
 </div>
 
 <h3>Your Answer</h3>
-<button ng-click="vm.upload()">Upload Image</button>
-<trix-editor angular-trix ng-model="vm.slackOverflow.newAnswer.description" class="trix-content"></trix-editor>
+<!-- <button ng-click="vm.upload()">Upload Image</button> -->
+<trix-editor angular-trix ng-model="vm.slackOverflow.newAnswer.description" class="trix-content" trix-attachment-add="vm.trixAttachmentAdd(e, editor);" trix-attachment-remove="vm.trixAttachmentRemove(e, editor);"></trix-editor>
 <button ng-click="vm.postNewAnswer(vm.slackOverflow.individualQuestion.id, vm.slackOverflow.newAnswer)">Post Answer</button>
 
-<!-- ADD BACK INTP TRIX-EDITOR TAG: trix-attachment-add="vm.trixAttachmentAdd(e, editor);" trix-attachment-remove="vm.trixAttachmentRemove(e, editor);" -->

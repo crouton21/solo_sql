@@ -5,5 +5,6 @@ myApp.controller('IndexController', ['$http', '$location', 'UserService', functi
     self.slackOverflow = UserService.slackOverflow;
     self.searchEntered = UserService.searchEntered;
     self.logoClicked = UserService.logoClicked;
-
+    self.logout = UserService.logout;
+    self.askQuestion = UserService.askQuestion;
 }]);

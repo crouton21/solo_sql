@@ -1,1 +1,11 @@
-in tags
+Tags
+
+<p>A tag is a keyword that categorizes your question.</p>
+
+<div>Type to find tags:
+    <input type="text" ng-model="vm.searchTags">
+</div>
+
+<div ng-repeat="tag in vm.slackOverflow.allTags|filter:vm.searchTags">
+    {{tag.tag_name}}
+</div>

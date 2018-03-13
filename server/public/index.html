@@ -45,9 +45,10 @@
       <form ng-submit="ic.searchEntered()">
             <input class="col-xs-4" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
       </form>
-      <a href="#!/home" ng-hide="vm.stackOverflow.authenticationStatus">Log In</a>
-      <a href="#!/questions" ng-show="vm.stackOverflow.authenticationStatus">Sign Out</a>
-      <a href="#!/profile" ng-show="vm.stackOverflow.authenticationStatus">Profile</a>
+      <a href="#!/home" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a>
+      <a ng-click="ic.logout()" ng-show="ic.slackOverflow.authenticationStatus">Sign Out</a>
+      <a href="#!/profile" ng-show="ic.slackOverflow.authenticationStatus">Profile</a>
+      <button ng-click="ic.askQuestion()">Ask Question</button>
     </div>
     </div>  
       <main ng-view></main>

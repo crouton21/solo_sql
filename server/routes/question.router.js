@@ -79,7 +79,8 @@ router.post('/search', function(request, response){
 
   router.get('/answers/:question_id', function(request, response){
     const question_id = request.params.question_id;
-    const sqlText = `SELECT answers.id, answers.answer, answers.img_url, answers.posted_date, answers.votes, joint_users_answers.user_id, users.profile_img_url, users.username FROM questions
+    const sqlText = `SELECT answers.id, answers.answer, answers.img_url, answers.posted_date, 
+    answers.votes, joint_users_answers.user_id, users.profile_img_url, users.username FROM questions
     JOIN joint_questions_answers on joint_questions_answers.question_id = questions.id
     JOIN answers on joint_questions_answers.answer_id = answers.id
     JOIN joint_users_answers on joint_users_answers.answer_id = answers.id
@@ -134,6 +135,19 @@ router.post('/search', function(request, response){
       })
       .catch(function(error){
         console.log('Error on Getting questions for individual tag:', error);
+        response.sendStatus(500);
+      })
+  })
+
+  router.get('/tags/tags/all', function(request, response){
+    sqlText = `SELECT tags.tag_name FROM tags`;
+    pool.query(sqlText)
+      .then(function(result) {
+        console.log('got all tags')
+        response.send(result.rows);
+      })
+      .catch(function(error){
+        console.log('Error on Getting all tags:', error);
         response.sendStatus(500);
       })
   })

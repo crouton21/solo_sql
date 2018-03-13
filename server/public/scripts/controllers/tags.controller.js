@@ -2,6 +2,7 @@ myApp.controller('TagsController', ['$http', '$location', 'UserService', functio
     console.log('TagsController created');
     var self = this;
 
-    
+    self.slackOverflow = UserService.slackOverflow;
+    self.getAllTags = UserService.getAllTags;
 
 }]);
