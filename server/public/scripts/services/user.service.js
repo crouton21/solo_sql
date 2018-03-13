@@ -11,7 +11,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
       individualQuestionAnswers: [],
       newAnswer: {},
       taggedQuestions:[],
-      individualTag: ''
+      individualTag: '',
     }
 
   self.getuser = function(){
@@ -160,7 +160,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
       url: '/questions/answers',
       data: {
         answer: newAnswer.description,
-        question_id: question_id
+        question_id: question_id,
+        img_url: newAnswer.img_url
       }
     }).then(function(response){
       console.log('posted new answer', response);
@@ -170,28 +171,61 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', function($ht
   })
   }
 
-  // Trix event listener??
-  // document.addEventListener("trix-attachment-add", function(event) {
-  //   var element = document.querySelector("trix-editor");
-  //   var attachment;
-  //   attachment = event.attachment;
-  //   if (attachment.file) {      
-  //     element.editor.composition.updateAttributesForAttachment({"caption": Trix.config.lang.captionPlaceholder}, event.attachment);
-  //     return uploadAttachment(attachment);
-  //   }     
-  // });
+  // TRIX STORE AN IMAGE??
+  //   var createStorageKey, host, uploadAttachment;
 
-  self.getTagQuestions = function(tagName){
-    console.log('in getTagQuestions', tagName);
-    $http({
-      method: 'GET',
-      url: `/questions/tags/${tagName}`
-    }).then(function(response){
-      console.log('got questions with individual tag', response.data);
-      self.slackOverflow.taggedQuestions = response.data;
-  }).catch(function(error){
-      console.log('error on getting individual tagged questions');
-  })
+  //   self.trixAttachmentAdd = function(e) {
+  //       var attachment;
+  //       attachment = e.attachment;
+  //       if (attachment.file) {
+  //           return self.uploadAttachment(attachment);
+  //       }
+  //   }
+
+  //   host = "http://localhost:5000/";
+
+  //   self.uploadAttachment=function(attachment) {
+  //     let file = attachment.file;
+  //     console.log('in uploadAttachment function, file:', file);
+  //     $http({
+  //       method: 'POST',
+  //       url: `/questions/answers/file_upload`,
+  //       data: {file: file,
+  //             content_type: file.type}
+  //     }).then(function(response){
+  //       console.log('saved image url', response);
+  //       //self.getAnswers(question_id);
+  //     }).catch(function(error){
+  //       console.log('error on saving image', error);
+  //     })
+  //   }
+
+  // self.getTagQuestions = function(tagName){
+  //   console.log('in getTagQuestions', tagName);
+  //   $http({
+  //     method: 'GET',
+  //     url: `/questions/tags/${tagName}`
+  //   }).then(function(response){
+  //     console.log('got questions with individual tag', response.data);
+  //     self.slackOverflow.taggedQuestions = response.data;
+  // }).catch(function(error){
+  //     console.log('error on getting individual tagged questions');
+  // })
+  // }
+
+  self.client = filestack.init("AI5OhtlsWSsiO7mmCbw06z");
+
+  self.upload = function(){
+    console.log('in upload');
+    self.client.pick({
+      accept: 'image/*',
+      maxFiles: 1
+    }).then(function(result){
+      alert("successful upload!");
+      self.slackOverflow.newAnswer.img_url = result.filesUploaded[0].url;
+      console.log('img url in service:', self.slackOverflow.newAnswer.img_url);
+    })
+    
   }
 
   self.isLoggedIn();

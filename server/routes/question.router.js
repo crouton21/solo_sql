@@ -79,7 +79,7 @@ router.post('/search', function(request, response){
 
   router.get('/answers/:question_id', function(request, response){
     const question_id = request.params.question_id;
-    const sqlText = `SELECT answers.id, answers.answer, answers.posted_date, answers.votes, joint_users_answers.user_id, users.profile_img_url, users.username FROM questions
+    const sqlText = `SELECT answers.id, answers.answer, answers.img_url, answers.posted_date, answers.votes, joint_users_answers.user_id, users.profile_img_url, users.username FROM questions
     JOIN joint_questions_answers on joint_questions_answers.question_id = questions.id
     JOIN answers on joint_questions_answers.answer_id = answers.id
     JOIN joint_users_answers on joint_users_answers.answer_id = answers.id
@@ -100,17 +100,18 @@ router.post('/search', function(request, response){
   router.post('/answers', function(request, response){
     answer = request.body.answer;
     question_id = request.body.question_id;
+    img_url = request.body.img_url;
     user_id = 1; //WILL NEED TO GET USER ID SENT IN POST
     const sqlText = `WITH ins1 AS (
-      INSERT INTO answers(answer)
-      VALUES ($1)
+      INSERT INTO answers(answer, img_url)
+      VALUES ($1, $2)
       RETURNING answers.id AS answer_id)
       ,ins2 AS (
       INSERT INTO joint_questions_answers (answer_id, question_id)
       SELECT answer_id, ${question_id} FROM ins1)
       INSERT INTO joint_users_answers (answer_id, user_id)
       SELECT answer_id, ${user_id} FROM ins1`;
-   pool.query(sqlText, [answer])
+   pool.query(sqlText, [answer, img_url])
       .then(function(result) {
         console.log('posted new answer to answers table, joint_questions_answers table, joint_users_answers table');
         response.sendStatus(201);

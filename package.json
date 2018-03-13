@@ -11,6 +11,7 @@
   "dependencies": {
     "angular": "^1.6.9",
     "angular-route": "^1.6.9",
+    "angular-sanitize": "^1.6.9",
     "angular-trix": "^1.0.2",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
