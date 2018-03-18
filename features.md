@@ -36,6 +36,9 @@
 [ ] displays user name and profile picture of answerer - GET user by id
 [ ] large input box for you to answer
 [ ] post answer button-POST your answer to JOINT question answer table with question id, GET answers again
+[ ] assign username to each posted answer and question
+[ ] only show delete if username from log in matches username from question
+[ ] integrate filestack with angular-text
 
 
 -- LOG IN VIEW --
@@ -88,3 +91,4 @@
 [ ] insert code blocks into answers
 [ ] insert code blocks into questions
 [ ] order search by relevancy
+

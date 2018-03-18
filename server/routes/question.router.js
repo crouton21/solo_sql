@@ -102,7 +102,7 @@ router.post('/search', function(request, response){
     answer = request.body.answer;
     question_id = request.body.question_id;
     img_url = request.body.img_url;
-    user_id = 1; //WILL NEED TO GET USER ID SENT IN POST
+    user_id = request.body.user_id; //WILL NEED TO GET USER ID SENT IN POST
     const sqlText = `WITH ins1 AS (
       INSERT INTO answers(answer, img_url)
       VALUES ($1, $2)

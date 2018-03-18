@@ -23,6 +23,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             // user has a curret session on the server
             self.userObject.userName = response.data.username;
             self.userObject.profile_img_url = response.data.profile_img_url;
+            self.userObject.userId = response.data.id;
             console.log('UserService -- getuser -- User Data: ', self.userObject.userName);
             self.slackOverflow.authenticationStatus = true;
             console.log('user authentication status', self.slackOverflow.authenticationStatus);
@@ -154,6 +155,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       data: {
         answer: newAnswer.description,
         question_id: question_id,
+        user_id: self.userObject.userId 
         //img_url: newAnswer.img_url
       }
     }).then(function(response){
