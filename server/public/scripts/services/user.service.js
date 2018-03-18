@@ -1,4 +1,4 @@
-myApp.service('UserService', ['$http', '$location', '$routeParams', '$route', function($http, $location, $routeParams, $route){
+myApp.service('UserService', ['$http', '$location', '$routeParams',  function($http, $location, $routeParams){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
@@ -13,7 +13,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', '$route', fu
       taggedQuestions:[],
       individualTag: '',
       previousLocation: '/questions',
-      allTags: []
+      allTags: [],
+      tagsObjectArray: [],
+      newQuestion: {},
+      filteredTags: []
     }
 
   self.getuser = function(){
@@ -198,8 +201,6 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', '$route', fu
       }).then(function(response){
         console.log('updated profile picture', response);
         self.userObject.profile_img_url = response.data;
-        //get user info then reload page
-        $route.reload();
     }).catch(function(error){
         console.log('error on updating profile picture');
     })
@@ -226,6 +227,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', '$route', fu
       console.log('got all tags success', response.data);
       self.slackOverflow.allTags = response.data;
       console.log('all tags', self.slackOverflow.allTags);
+      for (let tag of self.slackOverflow.allTags){
+        self.slackOverflow.tagsObjectArray.push({text: tag.tag_name});
+      } 
+      console.log('tagsObjectArray: ', self.slackOverflow.tagsObjectArray);
   }).catch(function(error){
       console.log('Error on get all tags', error);
   })    
@@ -245,6 +250,33 @@ myApp.service('UserService', ['$http', '$location', '$routeParams', '$route', fu
       console.log('Error on deleting answer', error);
   })    
   }
+
+  self.postNewQuestion = function(){
+    console.log('in postNewQuestion function, newQuestion:', self.slackOverflow.newQuestion);
+
+  }
+
+  
+  self.loadTags = function(query){
+    self.slackOverflow.filteredTags = [];
+    console.log('in loadTags function', query);
+    for (let tag of self.slackOverflow.tagsObjectArray){
+      //console.log('tag:', tag.text.substring(0,query.length), 'query:', query);
+      if (tag.text.substring(0,query.length).toLowerCase() == query.toLowerCase()){
+        console.log(tag.text);
+        self.slackOverflow.filteredTags.push(tag);
+      }
+    }
+    return self.slackOverflow.filteredTags;
+
+    // for (let tag of self.slackOverflow.tagsObjectArray){
+
+      
+    // }
+    // return self.slackOverflow.filteredTags;
+    //return filtered self.slackOverflow.tagsObjectArray based on query
+  }
+    
 
   self.getAllTags();
 

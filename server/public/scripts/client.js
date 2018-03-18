@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'textAngular']);
+var myApp = angular.module('myApp', ['ngRoute', 'textAngular', 'ngTagsInput']);
 
 /// Routes ///
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

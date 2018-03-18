@@ -1,1 +1,13 @@
-in ask_question
+<label for="questionTitle">Title:</label>
+<input id="questionTitle" ng-model="vm.slackOverflow.newQuestion.title"/>
+
+<text-angular ng-model="vm.slackOverflow.newQuestion.description"></text-angular>
+<label for="questionTags">Tags</label>
+
+<tags-input ng-model="vm.slackOverflow.newQuestion.tags" add-on-paste="true">
+        <auto-complete source="vm.loadTags($query)">
+        </auto-complete>
+</tags-input>
+<!-- <input id="questionTags" ng-model="vm.slackOverflow.newQuestion.tags"/> -->
+
+<button ng-click="vm.postNewQuestion()">Ask Question</button>
