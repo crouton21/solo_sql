@@ -168,7 +168,22 @@ router.post('/search', function(request, response){
         console.log('Error on deleting answer:', error);
         response.sendStatus(500);
       })
-    
+  })
+
+  router.put('/users/update_profile_picture/:id', function(request, response){
+    const url = request.body.new_profile_picture;
+    id = request.params.id;
+    console.log('in router put for profile picture, url:', url, 'id:', id);
+    sqlText = `UPDATE users SET profile_img_url = $1 WHERE id=$2`;
+    pool.query(sqlText, [url, id])
+    .then(function(result) {
+      console.log('profile picture updated')
+      response.send(url);
+    })
+    .catch(function(error){
+      console.log('Error on updating profile picture:', error);
+      response.sendStatus(500);
+    })
   })
 
 module.exports = router;

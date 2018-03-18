@@ -1,4 +1,4 @@
-myApp.service('UserService', ['$http', '$location', '$routeParams',  function($http, $location, $routeParams){
+myApp.service('UserService', ['$http', '$location', '$routeParams', '$route', function($http, $location, $routeParams, $route){
   console.log('UserService Loaded');
   var self = this;
   self.userObject = {};
@@ -189,11 +189,21 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       accept: 'image/*',
       maxFiles: 1
     }).then(function(result){
+      console.log('in upload,', result.filesUploaded[0].url)
       alert("successful upload!");
-      self.slackOverflow.newAnswer.img_url = result.filesUploaded[0].url;
-      console.log('img url in service:', self.slackOverflow.newAnswer.img_url);
+      $http({
+        method: 'PUT',
+        url: `questions/users/update_profile_picture/${self.userObject.userId}`,
+        data: {new_profile_picture: result.filesUploaded[0].url}
+      }).then(function(response){
+        console.log('updated profile picture', response);
+        self.userObject.profile_img_url = response.data;
+        //get user info then reload page
+        $route.reload();
+    }).catch(function(error){
+        console.log('error on updating profile picture');
     })
-    
+    })
   }
 
   self.askQuestion = function(){
