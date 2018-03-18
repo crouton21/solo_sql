@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp', ['ngRoute', 'angularTrix', 'ngSanitize']);
+var myApp = angular.module('myApp', ['ngRoute', 'textAngular']);
 
 /// Routes ///
 myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {

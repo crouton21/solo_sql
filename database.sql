@@ -39,25 +39,10 @@ create table joint_users_questions(
 
 create table joint_questions_answers(
 	question_id int references questions,
-	answer_id int references answers
+	answer_id int references answers ON DELETE CASCADE
 );
 
 create table joint_users_answers(
 	user_id int references users,
-	answer_id int references answers
-);
-
-create table images(
-	id serial primary key,
-	img_url varchar
-);
-
-create table joint_questions_images(
-	question_id int references questions,
-	image_id int references images
-);
-
-create table joint_answers_images(
-	answer_id int references answers,
-	image_id int references images
+	answer_id int references answers ON DELETE CASCADE
 );

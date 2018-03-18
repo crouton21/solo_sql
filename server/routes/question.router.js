@@ -152,4 +152,23 @@ router.post('/search', function(request, response){
       })
   })
 
+  router.delete('/answers/delete/:id', function(request, response){
+    const id = request.params.id;
+    console.log('in delete in router,', id);
+    sqlText = `DELETE FROM answers a
+    USING joint_questions_answers jqa, joint_users_answers jua
+    WHERE jqa.answer_id = a.id AND jua.answer_id = a.id
+    AND a.id=$1`;
+    pool.query(sqlText, [id])
+      .then(function(result) {
+        console.log('deleted answer')
+        response.sendStatus(200);
+      })
+      .catch(function(error){
+        console.log('Error on deleting answer:', error);
+        response.sendStatus(500);
+      })
+    
+  })
+
 module.exports = router;
