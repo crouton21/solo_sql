@@ -14,5 +14,6 @@ myApp.controller('IndividualQuestionController', ['$http', '$location', 'UserSer
     self.getIndividualQuestion(id, num_of_views);
 
     self.deleteAnswer = UserService.deleteAnswer;
+    self.deleteQuestion = UserService.deleteQuestion;
 
 }]);

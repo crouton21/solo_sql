@@ -291,6 +291,20 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }
     return self.slackOverflow.filteredTags;
   }
+
+  self.deleteQuestion = function(question_id){
+    console.log('In deleteQuestion function:', question_id);
+    $http({
+      method: 'DELETE',
+      url: `/questions/${question_id}`
+    }).then(function(response){
+      console.log('success deleting question', response);
+      $location.path(`/questions`)
+      self.getTopQuestions(); //delete questions other than top questions????
+    }).catch(function(error){
+      console.log('error deleting question', error);
+    })
+  }
     
 
   self.getAllTags();

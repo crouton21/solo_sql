@@ -212,6 +212,23 @@ router.post('/search', function(request, response){
       response.sendStatus(500);
     })
   })
+
+  router.delete(`/:id`, function(request, response){
+    const id = request.params.id;
+    sqlText = `DELETE FROM questions q
+    USING joint_users_questions juq
+    WHERE juq.question_id = q.id
+    AND q.id=$1`;
+    pool.query(sqlText, [id])
+    .then(function(result) {
+      console.log('question deleted')
+      response.sendStatus(200);
+    })
+    .catch(function(error){
+      console.log('Error on deleting question:', error);
+      response.sendStatus(500);
+    })
+  })
 	
     
 module.exports = router;

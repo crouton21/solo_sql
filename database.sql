@@ -27,18 +27,13 @@ create table answers(
 	posted_date date default CURRENT_TIMESTAMP
 );
 
-create table joint_questions_tags(
-	question_id int references questions,
-	tag_id int references tags
-);
-
 create table joint_users_questions(
 	user_id int references users,
-	question_id int references questions
+	question_id int references questions ON DELETE CASCADE
 );
 
 create table joint_questions_answers(
-	question_id int references questions,
+	question_id int references questions ON DELETE CASCADE,
 	answer_id int references answers ON DELETE CASCADE
 );
 

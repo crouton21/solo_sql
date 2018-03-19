@@ -1,7 +1,7 @@
 <h3>{{vm.slackOverflow.individualQuestion.question_title}}</h3>
 
 <p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
-
+<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)">Remove</button>
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     <div ng-bind-html="answer.answer"></div>
     <!-- <img ng-src="{{answer.img_url}}" height="200px" width="auto">  -->
