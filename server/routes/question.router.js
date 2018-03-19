@@ -186,4 +186,32 @@ router.post('/search', function(request, response){
     })
   })
 
+  router.post(`/`, function(request, response){
+    const question_title = request.body.title;
+    const question_description = request.body.description;
+    let tag_array = request.body.tags;
+    const user_id = 2 //WILL NEED TO UPDATE WITH ID OF USER
+    console.log('post new question, tag_array:', tag_array);
+    let array_to_send = [];
+    for (let tag of tag_array){
+      array_to_send.push("'"+tag+"'");
+    }
+    sqlText = `WITH ins1 AS ( INSERT INTO questions (question_title, question_description, tag_array)
+    VALUES ('${question_title}', '${question_description}', ARRAY [${array_to_send}]) 
+    RETURNING questions.id AS question_id)
+    INSERT INTO joint_users_questions (question_id, user_id)
+    SELECT question_id, ${user_id} FROM ins1 RETURNING question_id`;
+    console.log('sqlText in router:', sqlText);
+    pool.query(sqlText)
+    .then(function(result) {
+      console.log('question added')
+      response.send(result.rows);
+    })
+    .catch(function(error){
+      console.log('Error on adding question:', error);
+      response.sendStatus(500);
+    })
+  })
+	
+    
 module.exports = router;

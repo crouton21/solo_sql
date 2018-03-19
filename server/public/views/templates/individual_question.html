@@ -1,6 +1,6 @@
 <h3>{{vm.slackOverflow.individualQuestion.question_title}}</h3>
 
-<p>{{vm.slackOverflow.individualQuestion.question_description}}</p>
+<p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
 
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     <div ng-bind-html="answer.answer"></div>

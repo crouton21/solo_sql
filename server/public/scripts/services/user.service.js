@@ -253,28 +253,43 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.postNewQuestion = function(){
     console.log('in postNewQuestion function, newQuestion:', self.slackOverflow.newQuestion);
-
+    let newQuestion = self.slackOverflow.newQuestion
+    let tagsArray = [];
+    for (let tagObject of newQuestion.tags){
+      tagsArray.push(tagObject.text);
+    }
+    console.log('tagsArray in post question:', tagsArray)
+    $http({
+      method: 'POST',
+      url: `/questions`,
+      data: {
+        title: newQuestion.title,
+        description: newQuestion.description,
+        tags: tagsArray
+      }
+    }).then(function(response){
+      console.log('success creating question, id:', response);
+      let id_of_question = response.data[0].question_id;
+      console.log("id_of_question", id_of_question)
+      //locate to /questions/id of your question
+      $location.path(`/individual_question/${id_of_question}/0`);
+      self.getIndividualQuestion(id_of_question, 0);
+      self.slackOverflow.newQuestion = {};
+  }).catch(function(error){
+      console.log('error on posting new question');
+  })
   }
-
   
   self.loadTags = function(query){
     self.slackOverflow.filteredTags = [];
     console.log('in loadTags function', query);
     for (let tag of self.slackOverflow.tagsObjectArray){
-      //console.log('tag:', tag.text.substring(0,query.length), 'query:', query);
       if (tag.text.substring(0,query.length).toLowerCase() == query.toLowerCase()){
         console.log(tag.text);
         self.slackOverflow.filteredTags.push(tag);
       }
     }
     return self.slackOverflow.filteredTags;
-
-    // for (let tag of self.slackOverflow.tagsObjectArray){
-
-      
-    // }
-    // return self.slackOverflow.filteredTags;
-    //return filtered self.slackOverflow.tagsObjectArray based on query
   }
     
 
