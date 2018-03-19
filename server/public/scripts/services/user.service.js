@@ -16,7 +16,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       allTags: [],
       tagsObjectArray: [],
       newQuestion: {},
-      filteredTags: []
+      filteredTags: [],
+      allQuestions: []
     }
 
   self.getuser = function(){
@@ -68,6 +69,20 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   })    
   }
 
+  self.getAllQuestions = function(){
+    console.log('in getAllQuestions function');
+    $http({
+      method: 'GET',
+      url: '/questions/all'
+    }).then(function(response){
+      console.log('got top questions success', response.data);
+      self.slackOverflow.allQuestions = response.data;
+      console.log('top questions', self.slackOverflow.allQuestions);
+  }).catch(function(error){
+      console.log('Error on search get', error);
+  })    
+  }
+
   self.searchEntered = function(){
     self.commonWords = ['or', 'and', 'but', 'so', 'is', 'not', 'my', 'is', 'it', 'the', 'this', 'question', 'working', 'of', 'here', 'maybe', 'be', 'to', 'a', 'in', 'that', 'have', 'it', 'i', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'an', 'will', 'my', 'would', 'there', 'what', 'up', 'out', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'your', 'good','some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'most', 'us'];
     self.search_term_array = self.slackOverflow.searchTerm.toLowerCase().split(' ');
@@ -87,7 +102,13 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       data: {search_term_array: self.search_term_array}
     }).then(function(response){
       console.log('search success', response.data);
-      self.slackOverflow.searchResults = response.data;
+      for (let question of response.data){
+        if (question.total != "0"){
+          self.slackOverflow.searchResults.push(question)
+        }
+      }
+      console.log(self.slackOverflow.searchResults);
+      //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
       $location.url('/search');
   }).catch(function(error){
@@ -97,7 +118,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.logoClicked = function(){
     console.log('in logo clicked');
-    $location.url('/questions');
+    $location.url('/questions/all');
   }
 
   self.getIndividualQuestionView = function(id, num_of_views){
@@ -164,6 +185,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).then(function(response){
       console.log('posted new answer', response);
       self.getAnswers(question_id);
+      self.slackOverflow.newAnswer = {};
   }).catch(function(error){
       console.log('error on posting new answer');
   })
@@ -305,8 +327,33 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       console.log('error deleting question', error);
     })
   }
+
+  self.upVote = function(answer_id, num_of_votes){
+    let newVoteCount = num_of_votes + 1;
+    self.updateVotes(answer_id, newVoteCount);
+  }
     
+  self.downVote = function(answer_id, num_of_votes){
+    let newVoteCount = num_of_votes + 1;
+    self.updateVotes(answer_id, newVoteCount);
+  }
+
+  self.updateVotes = function(answer_id, num_of_votes){
+    $http({
+      method: 'PUT',
+      url: `questions/answers/${answer_id}`,
+      data: {newVoteCount: num_of_votes}
+    }).then(function(response){
+      console.log('success updating vote count', response);
+      //get all answers again for that question
+      self.getAnswers(self.slackOverflow.individualQuestion.id);
+      self.getIndividualQuestionView(self.slackOverflow.individualQuestion.id, self.slackOverflow.individualQuestion.num_of_views);
+    }).catch(function(error){
+      console.log('error updating vote count', error);
+    })
+  }
 
   self.getAllTags();
+  self.getuser();
 
 }]);

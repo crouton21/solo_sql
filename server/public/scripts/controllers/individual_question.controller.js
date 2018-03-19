@@ -5,6 +5,8 @@ myApp.controller('IndividualQuestionController', ['$http', '$location', 'UserSer
     self.slackOverflow = UserService.slackOverflow;
     self.getIndividualQuestion = UserService.getIndividualQuestion;
     self.postNewAnswer = UserService.postNewAnswer;
+    self.upVote = UserService.upVote;
+    self.downVote = UserService.downVote;
    
     //self.upload = UserService.upload;
     

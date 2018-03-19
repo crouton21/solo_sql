@@ -2,7 +2,7 @@
 
 <div ng-repeat="question in vm.slackOverflow.searchResults">
         <a id="questions"  ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
-        <div ng-repeat="tag in question.tag_array">
+        <!-- <div ng-repeat="tag in question.tag_array">
         <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a>
-        </div>
+        </div> -->
     </div>

@@ -1,12 +1,16 @@
 <h3>{{vm.slackOverflow.individualQuestion.question_title}}</h3>
 
 <p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
-<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)">Remove</button>
+<!-- tags here -->
+
+<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)">Remove</button> <!-- show for admin only -->
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     <div ng-bind-html="answer.answer"></div>
     <!-- <img ng-src="{{answer.img_url}}" height="200px" width="auto">  -->
     {{answer.posted_date}}
+    <button ng-click="vm.upVote(answer.id, answer.votes)">↑</button>
     {{answer.votes}}
+    <button ng-click="vm.downVote(answer.id, answer.votes)">↓</button>
     {{answer.username}}
     <button ng-click="vm.deleteAnswer(answer, vm.slackOverflow.individualQuestion.id)">delete</button>
 </div>

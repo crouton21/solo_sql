@@ -19,19 +19,65 @@ router.get('/', function(request, response){
       })
   })
 
-router.post('/search', function(request, response){
+  router.get('/all', function(request, response){
+    const sqlText = `SELECT * FROM questions
+    ORDER BY questions.posted_date DESC`;
+    pool.query(sqlText)
+      .then(function(result) {
+        response.send(result.rows);
+      })
+      .catch(function(error){
+        console.log('Error on Get:', error);
+        response.sendStatus(500);
+      })
+  })
+
+// router.post('/search', function(request, response){
+//     let search_term_array = request.body.search_term_array;
+//     console.log('search term in router:', search_term_array);
+//     let searchArrayTitle = [];
+//     let searchArrayDescription = [];
+//     for (word of search_term_array){
+//         searchArrayTitle.push(`question_title ILIKE '%${word}%'`);
+//         searchArrayDescription.push(`question_description ILIKE '%${word}%'`);
+//     }
+//     addedsqlTextForTitle = searchArrayTitle.join(" OR ");
+//     addedsqlTextForDescription = searchArrayDescription.join(" OR ");
+//     //console.log('added sqlText in router:', addedsqlTextForTitle,'and', addedsqlTextForDescription);
+//     let sqlText = `SELECT * FROM questions WHERE ${addedsqlTextForTitle} OR ${addedsqlTextForDescription} ORDER BY num_of_views`;
+//     console.log('sqlText in router:', sqlText);
+//     pool.query(sqlText)
+//       .then(function(result) {
+//         console.log('Get result:', result);
+//         response.send(result.rows);
+//       })
+//       .catch(function(error){
+//         console.log('Error on Get:', error);
+//         response.sendStatus(500);
+//       })
+//   })
+
+  router.post('/search', function(request, response){
     let search_term_array = request.body.search_term_array;
     console.log('search term in router:', search_term_array);
     let searchArrayTitle = [];
     let searchArrayDescription = [];
-    for (word of search_term_array){
-        searchArrayTitle.push(`question_title ILIKE '%${word}%'`);
-        searchArrayDescription.push(`question_description ILIKE '%${word}%'`);
+    let sumArray = []
+    let aliasArray = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    for (let i=0; i<search_term_array.length; i++){
+        let word = search_term_array[i];
+        let alias1 = aliasArray[i];
+        let alias2 = aliasArray[aliasArray.length-1-i]
+        searchArrayTitle.push(`LATERAL(SELECT COUNT(*) - 1 AS ${alias1} FROM regexp_split_to_table(tb.question_title, '${word}')) ${alias1}`);
+        searchArrayDescription.push(`LATERAL(SELECT COUNT(*) - 1 AS ${alias2} FROM regexp_split_to_table(tb.question_description, '${word}')) ${alias2}`);
+        sumArray.push(alias1);
+        sumArray.push(alias2);
     }
-    addedsqlTextForTitle = searchArrayTitle.join(" OR ");
-    addedsqlTextForDescription = searchArrayDescription.join(" OR ");
+    addedsqlTextForTitle = searchArrayTitle.join(", ");
+    addedsqlTextForDescription = searchArrayDescription.join(", ");
+    addedsqlTextForSum = sumArray.join(" + ");
     //console.log('added sqlText in router:', addedsqlTextForTitle,'and', addedsqlTextForDescription);
-    let sqlText = `SELECT * FROM questions WHERE ${addedsqlTextForTitle} OR ${addedsqlTextForDescription} ORDER BY num_of_views`;
+    let sqlText = `SELECT *, (${addedsqlTextForSum}) AS total FROM questions tb, ${addedsqlTextForTitle}, ${addedsqlTextForDescription} ORDER BY total DESC`;
     console.log('sqlText in router:', sqlText);
     pool.query(sqlText)
       .then(function(result) {
@@ -43,6 +89,27 @@ router.post('/search', function(request, response){
         response.sendStatus(500);
       })
   })
+
+
+
+  // SELECT *, (c+d+e+f) AS total
+	// FROM   questions tb, 
+	// LATERAL(
+  //   SELECT count(*) - 1 AS c
+  //   FROM   regexp_split_to_table(tb.question_title, 'atom')
+  //   ) c,
+  //   LATERAL(
+  //   SELECT count(*) - 1 AS d
+  //   FROM   regexp_split_to_table(tb.question_title, 'terminal')
+  //   ) d,
+  //   LATERAL(
+  //   SELECT count(*) - 1 AS e
+  //   FROM   regexp_split_to_table(tb.question_description, 'atom')
+  //   ) e,
+  //   LATERAL(
+  //   SELECT count(*) - 1 AS f
+  //   FROM   regexp_split_to_table(tb.question_description, 'atom')
+  //   ) f  ORDER BY total DESC;    
 
   router.get('/:id', function(request, response){
     const id = request.params.id;
@@ -229,6 +296,20 @@ router.post('/search', function(request, response){
       response.sendStatus(500);
     })
   })
-	
+  
+  router.put(`/answers/:answer_id`, function(request, response){
+    const answer_id = request.params.answer_id;
+    const new_vote_count = request.body.newVoteCount;
+    sqlText = `UPDATE answers SET votes = $1 WHERE id=$2`
+    pool.query(sqlText, [new_vote_count, answer_id])
+    .then(function(result) {
+      console.log('votes updated')
+      response.sendStatus(200);
+    })
+    .catch(function(error){
+      console.log('Error on updating votes:', error);
+      response.sendStatus(500);
+    })
+  })
     
 module.exports = router;
