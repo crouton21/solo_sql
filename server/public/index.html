@@ -3,7 +3,8 @@
     <head>
         <title>Slack Overflow</title>
         <link rel="stylesheet" href="styles/style.css">
-        <link rel="stylesheet" href="vendors/bootstrap.css">
+        <link rel="stylesheet" href="vendors/bootstrap_simple_theme.css">
+        <script src="vendors/bootstrap.js"></script>
 
         <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
         <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
@@ -44,28 +45,42 @@
 
     <body>
     <section ng-controller="IndexController as ic">
+
     <div class="container-fluid header">
-    <div class="row">
-      <div id="image-container" class="col-xs-1 col-md-1 col-lg-1">
+      <div class="row">
+      <div id="logo-container" class="offset-xs-1 col-xs-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right header_item">
       <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log"  ng-click="ic.logoClicked()">
-    </div>
-      <a class="header_link col-xs-1 col-md-1 col-lg-1" href="#!/questions">Questions</a>
-      <a class="header_link col-xs-1 col-md-1 col-lg-1" href="#!/tags">Tags</a>
+      </div>
       
-      <form ng-submit="ic.searchEntered()" class="col-xs-7 col-md-7 col-lg-7">
+    
+
+      <a class="header_link questions_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item"  href="#!/questions">Questions</a>
+
+      <a class="header_link tags_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item"   href="#!/tags">Tags</a>
+
+
+      <form ng-submit="ic.searchEntered()" class="col-xs-5 col-md-5 col-lg-5 header_item">
             <input id="searchBar" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
       </form>
-      <div class="col-xs-1 col-md-1 col-lg-1">
-      <a href="#!/home" class="small_header_link" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a>
-      <a ng-click="ic.logout()" class="small_header_link" ng-show="ic.slackOverflow.authenticationStatus">Sign Out</a>
-      <div id="image-container">
-      <img ng-click="ic.goToProfile()" src="{{ic.userObject.profile_img_url}}">
+
+      <div class="col-xs-2 col-md-2 col-lg-2 header_item">
+      <div class="row"><a href="#!/home" id="small_header_link" class="col-xs-12 col-md-12 col-lg-12 pull-left btn-link" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a></div>
+      <div class="row"><a ng-click="ic.logout()" id="small_header_link" class="col-xs-6 col-md-6 col-lg-6 text-right btn-link" ng-show="ic.slackOverflow.authenticationStatus">Log Out</a>
+      <div ng-show="ic.slackOverflow.authenticationStatus" id="image-container" class="col-xs-6 col-md-6 col-lg-6 pull-left">
+      <img ng-click="ic.goToProfile()" class="pull-left" id="profile_pic" src="{{ic.userObject.profile_img_url}}">
+      </div></div>
       </div>
+
       </div>
-      <button class="col-xs-1 col-md-1 col-lg-1" ng-click="ic.askQuestion()">Ask Question</button>
-    </div>
-    </div>  
-      <main ng-view></main>
+    </div> 
+
+    <div class="row">
+    <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-9 offset-sm-9 offset-md-9 offset-lg-9 btn-sm pull-right" id="askQuestionButton" ng-click="ic.askQuestion()"><span id="smallerText">Ask Question</span></button>
+    </div> 
+    
+    <main ng-view></main>
     </section>
     </body>
 </html>
+
+
