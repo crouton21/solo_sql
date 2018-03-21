@@ -1,20 +1,32 @@
 #tags{
-  color: darkslategray;
+  background-color: #c7ebdf;
+  padding:5px;
+  margin: 10px;
+}
+
+#tags:hover{
+  background-color: #45BD95;
+ 
+}
+
+#ind-tag{
+  color: #5c5c5c;
   font-size: 9px;
   -webkit-font-smoothing: antialiased;
 }
 
-.badge .badge-pill .badge-plight:hover{
-  background-color: #ededed;
+#ind-tag:hover{
+  text-decoration:none;
+  color:white;
 }
 
 hr {
   border: 0;
   clear:both;
   display:block;
-  width: 96%;               
-  background-color:gray;
-  height: 1px;
+  width: 80%;               
+  background-color:#f1f1f1;
+  height: .5px;
 }
 
 #logo-container{
@@ -58,13 +70,20 @@ img {
   position: fixed; 
   top: 0;
   padding-bottom: 30px;
+  opacity: 0%;
+  z-index: 5;
 }
 
 #askQuestionButton{
   /* height:30px; */
-  margin-top: 50px;
+  margin-top: 70px;
   background-color: #5c5c5c;
   color: white;
+  right: 55px;
+}
+
+#askQuestionButton:hover{
+  background-color: #45BD95;
 }
 
 #smallerText{
@@ -145,4 +164,133 @@ img {
   border-style: solid;
   border-color: #45BD95;
   border-width: 1px;
+}
+
+.page-title{
+  margin-top: -30px;
+  left:40px;
+}
+
+#card-text{
+  font-size: 8px;
+  text-align:center;
+}
+
+.card-title{
+  text-align: center;
+}
+
+.card{
+  left: 40px;
+}
+
+#card{
+  background-color: #f1f1f1;
+  padding:0px;
+}
+
+#questions{
+  margin-left: -40px;
+  text-decoration: underline;
+  color:#3f3f3f;
+}
+
+#questions:hover{
+  color:#45BD95;
+}
+
+#date{
+  font-size: 10px;
+  bottom: -45px;
+}
+
+#tag-page-text{
+  left: 40px;
+}
+
+#allTags{
+  left:30px;
+  margin-top: 20px;
+}
+
+#newQuestion{
+  left:40px;
+}
+
+#newQuestionInput{
+  margin-top: 10px;
+}
+
+#askQuestionTitle{
+  margin-top: 70px;
+}
+
+#tagInput{
+  left: -12px;
+  top:10px;
+}
+
+#newQuestionTags{
+  top: 20px;
+  left:40px;
+}
+
+#askButton{
+  margin-top: 20px;
+  background-color: #5c5c5c;
+  color: white;
+  right: 55px;
+}
+
+#askButton:hover{
+  background-color: #45BD95;
+}
+/* 
+text-angular{
+  height: 50%;
+} */
+
+#profile_img_url{
+  height: 200px;
+  width: 200px;
+  margin-left:40px;
+  border-style: ridge;
+  border-color: #45BD95;
+  border-width: 1px;
+}
+
+#hi{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#change-pic-btn{
+  position: relative;
+  left: 25px;
+  width: 200px;
+  height: 30px;
+  top: -30px;
+  opacity: 0.8;
+  background-color:#4c4c4c;
+  color: white;
+}
+
+#change-pic-btn:hover{
+  opacity: 0.9;
+  background-color:#3d3d3d;
+}
+
+#profile-hr{
+  margin-left: 25px;
+  margin-bottom: 20px;
+}
+
+#profile-title{
+  margin-left: 25px;
+  margin-top: 20px;
+}
+
+#profile-questions-answers{
+  margin-left:40px;
+  color: gray;
 }

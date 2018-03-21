@@ -1,5 +1,20 @@
-<h3>{{vm.slackOverflow.tagName}}</h3>
+<h3 class="offset-xs-1 col-xs-12 offset-sm-1 col-sm-12 offset-md-1 col-md-12 offset-lg-1 col-lg-12 page-title">{{vm.slackOverflow.tagName}}</h3>
 
-<div ng-repeat="question in vm.slackOverflow.taggedQuestions">
-    <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+<hr>
+
+<div class="container-fluid" ng-repeat="question in vm.slackOverflow.taggedQuestions">
+    <div class="row">
+    <div id="card" class="offset-xs-1 col-xs-1 offset-sm-1 col-sm-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{question.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
+    <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9"><a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+    
+
+    <div class="d-flex flex-row">
+    <div ng-repeat="tag in question.tag_array">
+    <span id="tags" class="badge badge-pill badge-plight"><a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a></span>
+    </div>
+    </div>
+    <div id="date" class="offset-xs-9 col-xs-2 offset-sm-9 col-sm-2 offset-md-9 col-md-2 offset-lg-9 col-lg-2">{{question.posted_date}}</div>
+</div>
+<hr>
+
 </div>

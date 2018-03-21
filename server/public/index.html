@@ -75,7 +75,7 @@
     </div> 
 
     <div class="row">
-    <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-9 offset-sm-9 offset-md-9 offset-lg-9 btn-sm pull-right" id="askQuestionButton" ng-click="ic.askQuestion()"><span id="smallerText">Ask Question</span></button>
+    <button ng-if="ic.slackOverflow.askQuestionButtonVisible" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10 btn-sm float-right" id="askQuestionButton" ng-click="ic.askQuestion()"><span id="smallerText">Ask Question</span></button>
     </div> 
     
     <main ng-view></main>

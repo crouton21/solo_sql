@@ -9,6 +9,9 @@ myApp.controller('ProfileController', ['$http', '$location', 'UserService', func
 
     self.getQuestionsAskedByIndividualUser = UserService.getQuestionsAskedByIndividualUser;
     self.getQuestionsAnsweredByIndividualUser = UserService.getQuestionsAnsweredByIndividualUser;
+    self.getuser = UserService.getuser;
+
+    
 
     self.getQuestionsAskedByIndividualUser();
     self.getQuestionsAnsweredByIndividualUser();

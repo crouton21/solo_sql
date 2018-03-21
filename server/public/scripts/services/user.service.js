@@ -19,7 +19,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       filteredTags: [],
       allQuestions: [],
       questionsAnsweredByIndividualUser: [],
-      questionsAskedByIndividualUser: []
+      questionsAskedByIndividualUser: [],
+      askQuestionButtonVisible: true
     }
 
   self.getuser = function(){
@@ -125,7 +126,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       $location.url('/search');
   }).catch(function(error){
       console.log('Error on search get', error);
-  })    
+  }) 
   }
 
   self.logoClicked = function(){
@@ -205,6 +206,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   }).catch(function(error){
       console.log('error on posting new answer');
   })
+  self.slackOverflow.askQuestionButtonVisible=true;
   }
 
 
@@ -216,6 +218,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).then(function(response){
       console.log('got questions with individual tag', response.data);
       self.slackOverflow.taggedQuestions = response.data;
+      for (let question of self.slackOverflow.taggedQuestions){
+        question.posted_date = question.posted_date.substring(0,10);
+      }
   }).catch(function(error){
       console.log('error on getting individual tagged questions');
   })
@@ -247,6 +252,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.askQuestion = function(){
     self.getuser();
+    self.slackOverflow.askQuestionButtonVisible=false;
     self.slackOverflow.previousLocation = ("/questions/ask")
     if (self.slackOverflow.authenticationStatus){ //user is logged in, send to ask question page
       $location.path("/questions/ask");
