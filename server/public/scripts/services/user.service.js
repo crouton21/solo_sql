@@ -4,6 +4,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   self.userObject = {};
   self.slackOverflow = {
       searchTerm:'', 
+      originalSearchTerm:'',
       searchResults:[],
       authenticationStatus: false,
       topQuestions: [],
@@ -94,6 +95,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   }
 
   self.searchEntered = function(){
+    self.slackOverflow.originalSearchTerm = '';
+    self.slackOverflow.originalSearchTerm = self.slackOverflow.searchTerm;
+    self.slackOverflow.searchResults = [];
     self.commonWords = ['or', 'and', 'but', 'so', 'is', 'not', 'my', 'is', 'it', 'the', 'this', 'question', 'working', 'of', 'here', 'maybe', 'be', 'to', 'a', 'in', 'that', 'have', 'it', 'i', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'an', 'will', 'my', 'would', 'there', 'what', 'up', 'out', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'your', 'good','some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'most', 'us'];
     self.search_term_array = self.slackOverflow.searchTerm.toLowerCase().split(' ');
 
