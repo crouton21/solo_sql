@@ -63,7 +63,7 @@ router.get('/', function(request, response){
     let searchArrayTitle = [];
     let searchArrayDescription = [];
     let sumArray = []
-    let aliasArray = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    let aliasArray = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','aa','bb','cc','dd','ee','ff','gg','hh','ii','jj','kk','ll','mm','nn','oo','pp','qq','rr','ss','tt','uu','vv','ww','xx','yy','zz','aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj','kkk','lll','mmm','nnn','ooo','ppp','qqq','rrr','sss','ttt','uuu','vvv','www','xxx','yyy','zzz','aaaa','bbbb','cccc','dddd','eeee','ffff','gggg','hhhh','iiii','jjjj','kkkk','llll','mmmm','nnnn','oooo','pppp','qqqq','rrrr','ssss','tttt','uuuu','vvvv','wwww','xxxx','yyyy','zzzz'];
     for (let i=0; i<search_term_array.length; i++){
         let word = search_term_array[i];
         let alias1 = aliasArray[i];
@@ -169,17 +169,17 @@ router.get('/', function(request, response){
     answer = request.body.answer;
     question_id = request.body.question_id;
     img_url = request.body.img_url;
-    user_id = request.body.user_id; //WILL NEED TO GET USER ID SENT IN POST
+    user_id = request.body.user_id; 
     const sqlText = `WITH ins1 AS (
       INSERT INTO answers(answer, img_url)
       VALUES ($1, $2)
       RETURNING answers.id AS answer_id)
       ,ins2 AS (
       INSERT INTO joint_questions_answers (answer_id, question_id)
-      SELECT answer_id, ${question_id} FROM ins1)
+      SELECT answer_id, $3 FROM ins1)
       INSERT INTO joint_users_answers (answer_id, user_id)
-      SELECT answer_id, ${user_id} FROM ins1`;
-   pool.query(sqlText, [answer, img_url])
+      SELECT answer_id, $4 FROM ins1`;
+   pool.query(sqlText, [answer, img_url, question_id, user_id])
       .then(function(result) {
         console.log('posted new answer to answers table, joint_questions_answers table, joint_users_answers table');
         response.sendStatus(201);
@@ -192,9 +192,9 @@ router.get('/', function(request, response){
 
 
   router.get('/tags/:tagName', function(request, response){
-    const tagName = request.params.tagName;
+    let tagName = request.params.tagName;
     //GET to questions table
-    sqlText = `SELECT * FROM questions WHERE '${tagName}' = ANY(tag_array);`
+    sqlText = `SELECT * FROM questions WHERE '${tagName}' = ANY(tag_array)`
     pool.query(sqlText)
       .then(function(result) {
         console.log('got all questions that had to do with tag')
@@ -257,19 +257,16 @@ router.get('/', function(request, response){
     const question_title = request.body.title;
     const question_description = request.body.description;
     let tag_array = request.body.tags;
-    const user_id = 2 //WILL NEED TO UPDATE WITH ID OF USER
+    const user_id = request.body.user_id; 
     console.log('post new question, tag_array:', tag_array);
     let array_to_send = [];
     for (let tag of tag_array){
       array_to_send.push("'"+tag+"'");
     }
-    sqlText = `WITH ins1 AS ( INSERT INTO questions (question_title, question_description, tag_array)
-    VALUES ('${question_title}', '${question_description}', ARRAY [${array_to_send}]) 
-    RETURNING questions.id AS question_id)
-    INSERT INTO joint_users_questions (question_id, user_id)
-    SELECT question_id, ${user_id} FROM ins1 RETURNING question_id`;
+    console.log('array_to_send', array_to_send);
+    sqlText = "WITH ins1 AS ( INSERT INTO questions (question_title, question_description, tag_array) VALUES ($1, $2, ARRAY ["+array_to_send+"]) RETURNING questions.id AS question_id) INSERT INTO joint_users_questions (question_id, user_id) SELECT question_id, $3 FROM ins1 RETURNING question_id";
     console.log('sqlText in router:', sqlText);
-    pool.query(sqlText)
+    pool.query(sqlText, [question_title, question_description, user_id])
     .then(function(result) {
       console.log('question added')
       response.send(result.rows);
@@ -308,6 +305,39 @@ router.get('/', function(request, response){
     })
     .catch(function(error){
       console.log('Error on updating votes:', error);
+      response.sendStatus(500);
+    })
+  })
+
+  router.get(`/asked/:user_id`, function(request, response){
+    const user_id = request.params.user_id;
+    sqlText = `SELECT * FROM questions
+    JOIN joint_users_questions ON joint_users_questions.question_id = questions.id
+    WHERE joint_users_questions.user_id = $1`;
+    pool.query(sqlText, [user_id])
+    .then(function(result) {
+      console.log('got all questions asked by user')
+      response.send(result.rows);
+    })
+    .catch(function(error){
+      console.log('Error on getting all questions asked by user:', error);
+      response.sendStatus(500);
+    })
+  })
+
+  router.get(`/answered/:user_id`, function(request, response){
+    const user_id = request.params.user_id;
+    sqlText = `SELECT * FROM questions
+    JOIN joint_questions_answers ON joint_questions_answers.question_id = questions.id
+    JOIN joint_users_answers ON joint_users_answers.answer_id = joint_questions_answers.answer_id
+    WHERE joint_users_answers.user_id = $1`;
+    pool.query(sqlText, [user_id])
+    .then(function(result) {
+      console.log('got all questions answered by user')
+      response.send(result.rows);
+    })
+    .catch(function(error){
+      console.log('Error on getting all questions answered by user:', error);
       response.sendStatus(500);
     })
   })

@@ -1,3 +1,13 @@
 
 <img src="{{vm.userObject.profile_img_url}}">
 <button ng-click="vm.upload()">Change Profile Picture</button>
+
+<h4 ng-if="vm.slackOverflow.questionsAskedByIndividualUser.length > 0">Questions Asked</h4>
+<div ng-repeat="question in vm.slackOverflow.questionsAskedByIndividualUser">
+        <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+</div>
+
+<h4 ng-if="vm.slackOverflow.questionsAnsweredByIndividualUser.length > 0">Questions Answered</h4>
+<div ng-repeat="question in vm.slackOverflow.questionsAnsweredByIndividualUser">
+        <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+    </div>

@@ -7,4 +7,9 @@ myApp.controller('IndexController', ['$http', '$location', 'UserService', functi
     self.logoClicked = UserService.logoClicked;
     self.logout = UserService.logout;
     self.askQuestion = UserService.askQuestion;
+    self.userObject = UserService.userObject;
+
+    self.goToProfile = function(){
+        $location.path("/profile");
+    }
 }]);

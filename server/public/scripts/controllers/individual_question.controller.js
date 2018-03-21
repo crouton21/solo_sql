@@ -7,6 +7,7 @@ myApp.controller('IndividualQuestionController', ['$http', '$location', 'UserSer
     self.postNewAnswer = UserService.postNewAnswer;
     self.upVote = UserService.upVote;
     self.downVote = UserService.downVote;
+    self.userObject = UserService.userObject;
    
     //self.upload = UserService.upload;
     

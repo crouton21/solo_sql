@@ -17,7 +17,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       tagsObjectArray: [],
       newQuestion: {},
       filteredTags: [],
-      allQuestions: []
+      allQuestions: [],
+      questionsAnsweredByIndividualUser: [],
+      questionsAskedByIndividualUser: []
     }
 
   self.getuser = function(){
@@ -29,6 +31,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             self.userObject.profile_img_url = response.data.profile_img_url;
             self.userObject.userId = response.data.id;
             console.log('UserService -- getuser -- User Data: ', self.userObject.userName);
+            console.log('userObject:', self.userObject);
             self.slackOverflow.authenticationStatus = true;
             console.log('user authentication status', self.slackOverflow.authenticationStatus);
             $location.path(self.slackOverflow.previousLocation);
@@ -63,6 +66,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).then(function(response){
       console.log('got top questions success', response.data);
       self.slackOverflow.topQuestions = response.data;
+      for (let question of self.slackOverflow.topQuestions){
+        question.posted_date = question.posted_date.substring(0,10);
+      }
       console.log('top questions', self.slackOverflow.topQuestions);
   }).catch(function(error){
       console.log('Error on search get', error);
@@ -77,6 +83,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).then(function(response){
       console.log('got top questions success', response.data);
       self.slackOverflow.allQuestions = response.data;
+      for (let question of self.slackOverflow.allQuestions){
+        question.posted_date = question.posted_date.substring(0,10);
+      }
       console.log('top questions', self.slackOverflow.allQuestions);
   }).catch(function(error){
       console.log('Error on search get', error);
@@ -107,6 +116,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
           self.slackOverflow.searchResults.push(question)
         }
       }
+      for (let question of self.slackOverflow.searchResults){
+        question.posted_date = question.posted_date.substring(0,10);
+      }
       console.log(self.slackOverflow.searchResults);
       //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
@@ -136,6 +148,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).then(function(response){
       console.log('got individual question', response);
       self.slackOverflow.individualQuestion = response.data[0];
+      self.slackOverflow.individualQuestion.posted_date = self.slackOverflow.individualQuestion.posted_date.substring(0,10);
       console.log('individual question object:', self.slackOverflow.individualQuestion);
       //call on GET to get all answers for this question
       self.upViews(id,num_of_views);
@@ -165,6 +178,9 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).then(function(response){
       console.log('got all answers for individual question', response);
       self.slackOverflow.individualQuestionAnswers = response.data;
+      for (let answer of self.slackOverflow.individualQuestionAnswers){
+        answer.posted_date = answer.posted_date.substring(0,10);
+      }
       console.log('individualQuestionAnswers array:', self.slackOverflow.individualQuestionAnswers);
   }).catch(function(error){
       console.log('error on getting answers for individual question');
@@ -287,7 +303,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       data: {
         title: newQuestion.title,
         description: newQuestion.description,
-        tags: tagsArray
+        tags: tagsArray,
+        user_id: self.userObject.userId
       }
     }).then(function(response){
       console.log('success creating question, id:', response);
@@ -334,8 +351,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   }
     
   self.downVote = function(answer_id, num_of_votes){
-    let newVoteCount = num_of_votes + 1;
-    self.updateVotes(answer_id, newVoteCount);
+    if (num_of_votes > 0){
+      let newVoteCount = num_of_votes - 1;
+      self.updateVotes(answer_id, newVoteCount);
+    }
   }
 
   self.updateVotes = function(answer_id, num_of_votes){
@@ -350,6 +369,34 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       self.getIndividualQuestionView(self.slackOverflow.individualQuestion.id, self.slackOverflow.individualQuestion.num_of_views);
     }).catch(function(error){
       console.log('error updating vote count', error);
+    })
+  }
+
+  self.getQuestionsAskedByIndividualUser = function(){
+    console.log('in getQuestionsAskedByIndividualUser function', self.userObject.userId);
+    $http({
+      method: 'GET',
+      url:`questions/asked/${self.userObject.userId}`
+    }).then(function(response){
+      console.log('success getting questions asked', response);
+      self.slackOverflow.questionsAskedByIndividualUser = response.data;
+      console.log('questions asked:', self.slackOverflow.questionsAskedByIndividualUser);
+    }).catch(function(error){
+      console.log('error getting questions asked', error);
+    })
+  }
+
+  self.getQuestionsAnsweredByIndividualUser = function(){
+    console.log('getQuestionsAnsweredByIndividualUser function', self.userObject.userId);
+    $http({
+      method: 'GET',
+      url:`questions/answered/${self.userObject.userId}`
+    }).then(function(response){
+      console.log('success getting questions answered', response);
+      self.slackOverflow.questionsAnsweredByIndividualUser = response.data;
+      console.log('questions answered:', self.slackOverflow.questionsAnsweredByIndividualUser);
+    }).catch(function(error){
+      console.log('error getting questions answered', error);
     })
   }
 

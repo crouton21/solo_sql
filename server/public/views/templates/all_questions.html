@@ -1,8 +1,19 @@
 <h3>All Questions</h3>
 
-<div ng-repeat="question in vm.slackOverflow.allQuestions">
-    <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
-    <!-- <div ng-repeat="tag in question.tag_array">
-    <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a> -->
+<table>
+        <thead>
+            <th></th>
+            <th></th>
+        </thead>
+        <tbody>
+<tr ng-repeat="question in vm.slackOverflow.allQuestions">
+    <td>{{question.num_of_views}}</td>
+    <td><a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+    <div ng-repeat="tag in question.tag_array">
+    <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a>
     </div>
-</div>
+    {{question.posted_date}}
+    </td>
+</tr>
+</tbody>
+</table>

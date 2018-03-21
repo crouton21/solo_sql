@@ -1,8 +1,20 @@
 <h3>Search Results</h3>
 
-<div ng-repeat="question in vm.slackOverflow.searchResults">
-        <a id="questions"  ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
-        <!-- <div ng-repeat="tag in question.tag_array">
+    <table>
+            <thead>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+    <tr ng-repeat="question in vm.slackOverflow.searchResults">
+        <td>{{question.num_of_views}}</td>
+        <td><a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+        <div ng-repeat="tag in question.tag_array">
         <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a>
-        </div> -->
-    </div>
+        </div>
+        {{question.posted_date}}
+        </td>
+    </tr>
+    </tbody>
+    </table>
+    

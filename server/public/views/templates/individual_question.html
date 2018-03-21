@@ -2,8 +2,17 @@
 
 <p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
 <!-- tags here -->
+<div ng-repeat="tag in vm.slackOverflow.individualQuestion.tag_array">
+    <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a>
+</div>
+{{vm.slackOverflow.individualQuestion.posted_date}}
+{{vm.slackOverflow.individualQuestion.num_of_views}}
+{{vm.slackOverflow.individualQuestion.username}}
+<img src="{{vm.slackOverflow.individualQuestion.profile_img_url}}" height="30px" width="30px" />
+<!-- ADD BACK TO REMOVE BUTTON ng-show="vm.userObject.is_admin"-->
+<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)" >Remove</button> <!-- show for admin only -->
 
-<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)">Remove</button> <!-- show for admin only -->
+<br><br>
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     <div ng-bind-html="answer.answer"></div>
     <!-- <img ng-src="{{answer.img_url}}" height="200px" width="auto">  -->
@@ -12,7 +21,8 @@
     {{answer.votes}}
     <button ng-click="vm.downVote(answer.id, answer.votes)">↓</button>
     {{answer.username}}
-    <button ng-click="vm.deleteAnswer(answer, vm.slackOverflow.individualQuestion.id)">delete</button>
+    <img src="{{answer.profile_img_url}}" height="30px" width="30px" />
+    <button ng-if="vm.userObject.userName==answer.username" ng-click="vm.deleteAnswer(answer, vm.slackOverflow.individualQuestion.id)">delete</button>
 </div>
 
 <h3>Your Answer</h3>

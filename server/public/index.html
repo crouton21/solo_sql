@@ -44,19 +44,25 @@
 
     <body>
     <section ng-controller="IndexController as ic">
-    <div class="container">
+    <div class="container-fluid header">
     <div class="row">
-      <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log" class="col-xs-1" ng-click="ic.logoClicked()">
-      <a class="header_link col-xs-2" href="#!/questions">Questions</a>
-      <a class="header_link col-xs-2" href="#!/tags">Tags</a>
+      <div id="image-container" class="col-xs-1 col-md-1 col-lg-1">
+      <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log"  ng-click="ic.logoClicked()">
+    </div>
+      <a class="header_link col-xs-1 col-md-1 col-lg-1" href="#!/questions">Questions</a>
+      <a class="header_link col-xs-1 col-md-1 col-lg-1" href="#!/tags">Tags</a>
       
-      <form ng-submit="ic.searchEntered()">
-            <input class="col-xs-4" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
+      <form ng-submit="ic.searchEntered()" class="col-xs-7 col-md-7 col-lg-7">
+            <input id="searchBar" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
       </form>
-      <a href="#!/home" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a>
-      <a ng-click="ic.logout()" ng-show="ic.slackOverflow.authenticationStatus">Sign Out</a>
-      <a href="#!/profile" ng-show="ic.slackOverflow.authenticationStatus">Profile</a>
-      <button ng-click="ic.askQuestion()">Ask Question</button>
+      <div class="col-xs-1 col-md-1 col-lg-1">
+      <a href="#!/home" class="small_header_link" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a>
+      <a ng-click="ic.logout()" class="small_header_link" ng-show="ic.slackOverflow.authenticationStatus">Sign Out</a>
+      <div id="image-container">
+      <img ng-click="ic.goToProfile()" src="{{ic.userObject.profile_img_url}}">
+      </div>
+      </div>
+      <button class="col-xs-1 col-md-1 col-lg-1" ng-click="ic.askQuestion()">Ask Question</button>
     </div>
     </div>  
       <main ng-view></main>
