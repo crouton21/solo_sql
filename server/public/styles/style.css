@@ -303,6 +303,28 @@ text-angular{
   top: 10px;
 }
 
-#ind-question-page{
+#removeBtn{
+  float:left;
+  margin-left:-70px;
+  margin-top: -80px;
+}
 
+#ind-question-date{
+  margin-left: 38px;
+  font-size: 10px;
+}
+
+#postedBy{
+  font-size: 10px;
+  display: inline-block;
+}
+
+#ind-question-title{
+  margin-top: -30px;
+  left:40px;
+}
+
+#bottom-hr{
+  margin-top:-10px;
+  margin-bottom: 30px;
 }

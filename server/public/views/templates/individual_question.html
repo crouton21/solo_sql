@@ -1,22 +1,39 @@
 
-<section class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1" id="ind-question-page">
-<h3 id="question-title" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">{{vm.slackOverflow.individualQuestion.question_title}}</h3>
+<h3 id="ind-question-title" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">{{vm.slackOverflow.individualQuestion.question_title}}</h3>
 
-<hr id="profile-hr">
+<hr >
 
+<div class="row">
+
+<div id="card" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
+
+<div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-9 col-sm-9 col-md-9 col-lg-9">
 <p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
-<!-- tags here -->
-<div ng-repeat="tag in vm.slackOverflow.individualQuestion.tag_array">
-    <a id="tags" href="#!/tags/{{tag}}">{{tag}}</a>
 </div>
-{{vm.slackOverflow.individualQuestion.posted_date}}
-{{vm.slackOverflow.individualQuestion.num_of_views}}
-{{vm.slackOverflow.individualQuestion.username}}
-<img src="{{vm.slackOverflow.individualQuestion.profile_img_url}}" height="30px" width="30px" />
-<!-- ADD BACK TO REMOVE BUTTON ng-show="vm.userObject.is_admin"-->
-<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)" >Remove</button> <!-- show for admin only -->
+</div>
 
-<br><br>
+<!-- ADD BACK TO REMOVE BUTTON ng-show="vm.userObject.is_admin"-->
+<button ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)" id="removeBtn" class="btn btn-outline-secondary">Remove</button> <!-- show for admin only -->
+
+
+<!-- tags here -->
+<div class="d-flex flex-row offset-xs-3 offset-sm-3 offset-md-3 offset-lg-3">
+<div ng-repeat="tag in vm.slackOverflow.individualQuestion.tag_array">
+        <span id="tags" class="badge badge-pill badge-plight"><a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a></span>
+</div>
+</div>
+
+<br>
+
+<div id="ind-question-info" class="row offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="ind-question-date">{{vm.slackOverflow.individualQuestion.posted_date}}</div>
+<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-right float-right text-right"><img src="{{vm.slackOverflow.individualQuestion.profile_img_url}}" height="15px" width="15px" /> <p id="postedBy">posted by {{vm.slackOverflow.individualQuestion.username}}</p></div>
+</div>
+
+</div>
+
+<hr id="bottom-hr">
+
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
     <div ng-bind-html="answer.answer"></div>
     <!-- <img ng-src="{{answer.img_url}}" height="200px" width="auto">  -->
@@ -34,7 +51,6 @@
 <text-angular ng-model="vm.slackOverflow.newAnswer.description"></text-angular>
 <button ng-click="vm.postNewAnswer(vm.slackOverflow.individualQuestion.id, vm.slackOverflow.newAnswer)">Post Answer</button>
 
-</section>
 
 
 
