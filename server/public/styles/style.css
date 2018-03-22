@@ -382,3 +382,42 @@ text-angular{
   transform: translateX(20px);
   margin-top: 10px;
 }
+
+.login-container{
+  background-color: #93DEC3;
+  width: 300px;
+  height:300px;
+  border:8px ridge #45BD95;
+  padding: 20px;
+  text-align: center;
+  transform: translateX(40px);
+}
+
+.log-in{
+  color:#3d3d3d;
+}
+
+.register-btn{
+  color: #3d3d3d;
+  margin-right:5px;
+}
+
+.login-btn{
+  background-color: #3d3d3d;
+  color: white;
+  margin-left:5px;
+}
+
+.login-btn:hover{
+  background-color: grey;
+}
+
+.register-container{
+  background-color: #93DEC3;
+  width: 300px;
+  height:300px;
+  border:8px ridge #45BD95;
+  padding: 20px;
+  text-align: center;
+  transform: translateX(40px);
+}
