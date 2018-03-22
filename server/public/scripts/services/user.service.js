@@ -472,6 +472,24 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     return false
   }
 
+  self.resolve = function(){
+    let id = self.slackOverflow.individualQuestion.id
+    let resolveStatus = self.slackOverflow.individualQuestion.resolved;
+    console.log('in resolve function', resolveStatus);
+    resolveStatus = !resolveStatus;
+    console.log('resolvestatus after change:', resolveStatus)
+    $http({
+      method: 'PUT',
+      url: `questions/resolved/${id}`,
+      data: {resolved: resolveStatus}
+    }).then(function(response){
+      console.log('success resolving question', response);
+      self.getIndividualQuestion(id, self.slackOverflow.individualQuestion.num_of_views);
+    }).catch(function(error){
+      console.log('error resolving question', error);
+    })
+  }
+
   self.getAllTags();
   self.getuser();
 

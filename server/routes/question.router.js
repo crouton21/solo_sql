@@ -114,7 +114,7 @@ router.get('/', function(request, response){
   router.get('/:id', function(request, response){
     const id = request.params.id;
     const sqlText = `SELECT questions.id, questions.question_title, questions.question_description, 
-    questions.num_of_views, questions.posted_date, questions.tag_array, joint_users_questions.user_id, 
+    questions.num_of_views, questions.posted_date, questions.tag_array, questions.resolved, joint_users_questions.user_id, 
     users.profile_img_url, users.username FROM joint_users_questions
     JOIN questions on joint_users_questions.question_id = questions.id
     JOIN users on joint_users_questions.user_id = users.id
@@ -352,6 +352,22 @@ router.get('/', function(request, response){
     })
     .catch(function(error){
       console.log('Error on inserting new tag:', error);
+      response.sendStatus(500);
+    })
+  })
+
+  router.put(`/resolved/:id`, function(request, response){
+    const resolved = request.body.resolved;
+    console.log('in router, resolved:', resolved);
+    const id = request.params.id;
+    sqlText = `UPDATE questions SET resolved=$1 WHERE id=$2`;
+    pool.query(sqlText, [resolved, id])
+    .then(function(result) {
+      console.log('question resolved successfully')
+      response.sendStatus(201);
+    })
+    .catch(function(error){
+      console.log('Error on resolving question:', error);
       response.sendStatus(500);
     })
   })

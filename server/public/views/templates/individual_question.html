@@ -7,9 +7,18 @@
 
 <div id="card" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
 
-<div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-8 col-sm-8 col-md-8 col-lg-8">
+<div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-7 col-sm-7 col-md-7 col-lg-7">
 <p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
 </div>
+
+<div clss="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+    <button  class="btn btn-link" id="resolveBtn" ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username" ng-hide="vm.slackOverflow.individualQuestion.resolved" ng-click="vm.resolve()">resolve</button>
+    <div ng-show="vm.slackOverflow.individualQuestion.resolved">
+    <p id="thanks-text">Thanks for asking!</p>
+    <button class="btn btn-link resolve-btn" id="resolveBtn" ng-click="vm.resolve()">(Whoops!)</button>
+    </div>
+</div>
+
 </div>
 
 <!-- ADD BACK TO REMOVE BUTTON ng-show="vm.userObject.is_admin"-->
