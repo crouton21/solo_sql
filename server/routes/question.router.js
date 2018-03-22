@@ -152,7 +152,7 @@ router.get('/', function(request, response){
     JOIN answers on joint_questions_answers.answer_id = answers.id
     JOIN joint_users_answers on joint_users_answers.answer_id = answers.id
     JOIN users on joint_users_answers.user_id = users.id
-    WHERE questions.id = $1 ORDER by answers.votes`;
+    WHERE questions.id = $1 ORDER by answers.votes DESC`;
     pool.query(sqlText, [question_id])
       .then(function(result) {
         console.log('got all answers')

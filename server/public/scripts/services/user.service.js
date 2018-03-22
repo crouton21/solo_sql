@@ -37,6 +37,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             self.slackOverflow.authenticationStatus = true;
             console.log('user authentication status', self.slackOverflow.authenticationStatus);
             $location.path(self.slackOverflow.previousLocation);
+            self.slackOverflow.askQuestionButtonVisible = true;
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
@@ -71,6 +72,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       for (let question of self.slackOverflow.topQuestions){
         question.posted_date = question.posted_date.substring(0,10);
       }
+      self.slackOverflow.previousLocation = ("/questions");
       console.log('top questions', self.slackOverflow.topQuestions);
   }).catch(function(error){
       console.log('Error on search get', error);
@@ -88,6 +90,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       for (let question of self.slackOverflow.allQuestions){
         question.posted_date = question.posted_date.substring(0,10);
       }
+      self.slackOverflow.previousLocation = ("/questions/all")
       console.log('top questions', self.slackOverflow.allQuestions);
   }).catch(function(error){
       console.log('Error on search get', error);
@@ -128,6 +131,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
       $location.url('/search');
+      self.slackOverflow.previousLocation = ("/search")
   }).catch(function(error){
       console.log('Error on search get', error);
   }) 
