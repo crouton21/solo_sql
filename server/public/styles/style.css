@@ -305,6 +305,11 @@ text-angular{
   margin-top: -80px;
 }
 
+#removeBtn:hover{
+  color: white;
+  background-color: red;
+}
+
 #ind-question-date{
   margin-left: 38px;
   font-size: 10px;
@@ -339,7 +344,7 @@ text-angular{
 
 #num-of-votes{
   text-align: center;
-  transform: translate(14px);
+  transform: translateX(20px);
 }
 
 #deleteBtn{
@@ -420,4 +425,10 @@ text-angular{
   padding: 20px;
   text-align: center;
   transform: translateX(40px);
+}
+
+#login-alert{
+  font-size: 10px;
+  margin: -10px;
+  margin-top:10px;
 }

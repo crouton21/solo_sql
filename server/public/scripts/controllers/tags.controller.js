@@ -4,5 +4,7 @@ myApp.controller('TagsController', ['$http', '$location', 'UserService', functio
 
     self.slackOverflow = UserService.slackOverflow;
     self.getAllTags = UserService.getAllTags;
+    self.addTag = UserService.addTag;
+    self.tagAdded = UserService.tagAdded;
 
 }]);

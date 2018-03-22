@@ -24,17 +24,17 @@ router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
   //const email = req.body.email;
-  const is_admin = req.body.is_admin;
+  //const is_admin = req.body.is_admin;
 
   var saveUser = {
     username: req.body.username,
     password: encryptLib.encryptPassword(req.body.password),
     //email:  req.body.email,
-    is_admin: req.body.is_admin
+    //is_admin: req.body.is_admin
   };
   console.log('new user:', saveUser);
-  pool.query('INSERT INTO users (username, password, is_admin) VALUES ($1, $2, $3) RETURNING id',
-    [saveUser.username, saveUser.password, saveUser.is_admin], (err, result) => {
+  pool.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id',
+    [saveUser.username, saveUser.password], (err, result) => {
       if (err) {
         console.log("Error inserting data: ", err);
         res.sendStatus(500);

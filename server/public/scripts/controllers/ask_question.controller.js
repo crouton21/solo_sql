@@ -5,6 +5,7 @@ myApp.controller('AskController', ['$http', '$location', 'UserService', '$scope'
     this.slackOverflow = UserService.slackOverflow;
     this.postNewQuestion = UserService.postNewQuestion;
     this.loadTags = UserService.loadTags;
+    this.checkTag = UserService.checkTag;
 
 
 }]);

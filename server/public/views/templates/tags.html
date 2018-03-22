@@ -8,10 +8,27 @@
     <input type="text" ng-model="vm.searchTags">
 </div>
 
+
+
 <div id="allTags" class="row offset-xs-1 col-xs-10 offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
 <div ng-repeat="tag in vm.slackOverflow.allTags|filter:vm.searchTags">
         <span id="tags" class="badge badge-pill badge-plight"><a id="ind-tag" class="p-2" href="#!/tags/{{tag.tag_name}}">{{tag.tag_name}}</a></span>
 </div>
 </div>
 
+<br>
 
+<div>
+        <div  ng-hide="vm.slackOverflow.tagBeingAdded" class="offset-xs-8 col-xs-8 offset-sm-8 offset-md-8">
+        <button type="btn btn-link" ng-click="vm.addTag()">add tag</button>
+        </div>
+        
+        <div ng-if="vm.slackOverflow.tagBeingAdded" class="offset-xs-8 col-xs-8 offset-sm-8 offset-md-8">
+        <input ng-model="vm.slackOverflow.newTag" placeholder="new tag">
+        <button class="btn btn-link" ng-click="vm.slackOverflow.tagBeingAdded = false">cancel</button>
+        <button ng-click="vm.tagAdded(vm.slackOverflow.newTag)">add</button>
+        </div>
+        </div>
+
+
+        <br><br><br>

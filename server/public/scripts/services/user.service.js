@@ -21,7 +21,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       allQuestions: [],
       questionsAnsweredByIndividualUser: [],
       questionsAskedByIndividualUser: [],
-      askQuestionButtonVisible: true
+      askQuestionButtonVisible: true,
+      textAngularImage:'',
+      textToAddToTextAngular:'',
+      tagBeingAdded: false
     }
 
   self.getuser = function(){
@@ -32,6 +35,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             self.userObject.userName = response.data.username;
             self.userObject.profile_img_url = response.data.profile_img_url;
             self.userObject.userId = response.data.id;
+            //self.userObejct.is_admin = response.data.is_admin;
             console.log('UserService -- getuser -- User Data: ', self.userObject.userName);
             console.log('userObject:', self.userObject);
             self.slackOverflow.authenticationStatus = true;
@@ -258,6 +262,28 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     })
   }
 
+  self.uploadWithTextAngular = function(){
+    console.log('in uploadWithTextAngular function');
+    self.client.pick({
+      accept: 'image/*',
+      maxFiles: 1
+    }).then(function(result){
+      console.log('in upload,', result.filesUploaded[0].url)
+      alert("successful upload!");
+      $http({
+        method: 'PUT',
+        url: `questions/users/update_profile_picture/${self.userObject.userId}`,
+        data: {new_profile_picture: result.filesUploaded[0].url}
+      }).then(function(response){
+        self.slackOverflow.textAngularImage = response.data;
+        console.log(self.slackOverflow.textAngularImage);
+        self.slackOverflow.textToAddToTextAngular = `<img src="${self.slackOverflow.textAngularImage}">`
+    }).catch(function(error){
+        console.log('error on updating profile picture');
+    })
+    })
+  }
+
   self.askQuestion = function(){
     self.getuser();
     self.slackOverflow.askQuestionButtonVisible=false;
@@ -412,6 +438,38 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).catch(function(error){
       console.log('error getting questions answered', error);
     })
+  }
+
+  self.addTag = function(){
+    console.log('in add tag function');
+    self.slackOverflow.tagBeingAdded = true;
+
+  }
+
+  self.tagAdded = function(name){
+    console.log('in tagAdded function', name);
+    $http({
+      method: 'POST',
+      url: 'questions/newtag',
+      data: {new_tag: name}
+    }).then(function(response){
+      console.log('success posting new tag', response);
+      self.slackOverflow.tagBeingAdded = false; //on the .then of the post
+      self.getAllTags(); //get all tags again
+      alert('Your tag has been added, search below to find it.');
+    }).catch(function(error){
+      console.log('error posting new tag', error);
+    })
+  }
+
+  self.checkTag = function(tag){
+    console.log('in checkTag function', tag.text)
+    for (ind_tag of self.slackOverflow.allTags){
+      if (ind_tag.tag_name == tag.text){
+        return true
+      }
+    }
+    return false
   }
 
   self.getAllTags();

@@ -341,5 +341,20 @@ router.get('/', function(request, response){
       response.sendStatus(500);
     })
   })
+
+  router.post(`/newtag`, function(request,response){
+    const new_tag = request.body.new_tag;
+    sqlText = `INSERT INTO tags (tag_name) VALUES ($1)`;
+    pool.query(sqlText, [new_tag])
+    .then(function(result) {
+      console.log('new tag inserted')
+      response.sendStatus(201);
+    })
+    .catch(function(error){
+      console.log('Error on inserting new tag:', error);
+      response.sendStatus(500);
+    })
+  })
+
     
 module.exports = router;

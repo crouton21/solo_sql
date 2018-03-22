@@ -18,5 +18,5 @@ myApp.controller('IndividualQuestionController', ['$http', '$location', 'UserSer
 
     self.deleteAnswer = UserService.deleteAnswer;
     self.deleteQuestion = UserService.deleteQuestion;
-
+    self.uploadWithTextAngular = UserService.uploadWithTextAngular;
 }]);

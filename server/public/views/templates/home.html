@@ -4,7 +4,7 @@
     <div class="offset-xs-3 offset-sm-3 offset-md-3 offset-lg-3 col-xs-12 col-sm-12 col-md-12 col-lg-12 center-block"> 
         <div class="login-container">
   <h1 class="lead log-in">Login</h1><br>
-    <h1 class="lead alert alert-danger" role="alert" ng-if="vm.message != ''">{{vm.message}}</h2>
+    
     <form ng-submit="vm.login()">
       <div>
           <label class="log-in" for="username">Username</label><br>
@@ -19,6 +19,7 @@
           <input class="btn-sm btn login-btn" type="submit" name="submit" value="Log In" />
       </div>
     </form>
+    <h1 class="alert" role="alert" id="login-alert" ng-if="vm.message != ''">{{vm.message}}</h2>
 </div>
 </div>
 </div>

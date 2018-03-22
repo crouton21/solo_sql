@@ -7,8 +7,7 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
     self.user = {
       username: '',
       password: '',
-      email: '',
-      is_admin: false
+      email: ''
     };
     self.message = '';
 
