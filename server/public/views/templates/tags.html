@@ -19,14 +19,14 @@
 <br>
 
 <div>
-        <div  ng-hide="vm.slackOverflow.tagBeingAdded" class="offset-xs-8 col-xs-8 offset-sm-8 offset-md-8">
-        <button type="btn btn-link" ng-click="vm.addTag()">add tag</button>
+        <div  ng-hide="vm.slackOverflow.tagBeingAdded" class="offset-xs-1 offset-lg-1 offset-sm-1 offset-md-1">
+        <button id="add-tag-btn" type="btn" class="btn-sm" ng-click="vm.addTag()">add tag</button>
         </div>
         
-        <div ng-if="vm.slackOverflow.tagBeingAdded" class="offset-xs-8 col-xs-8 offset-sm-8 offset-md-8">
-        <input ng-model="vm.slackOverflow.newTag" placeholder="new tag">
-        <button class="btn btn-link" ng-click="vm.slackOverflow.tagBeingAdded = false">cancel</button>
-        <button ng-click="vm.tagAdded(vm.slackOverflow.newTag)">add</button>
+        <div ng-if="vm.slackOverflow.tagBeingAdded" class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
+        <input id="new-tag-input" ng-model="vm.slackOverflow.newTag" placeholder="new tag">
+        <button id="cancel-new-tag-btn" class="btn btn-link" ng-click="vm.slackOverflow.tagBeingAdded = false">cancel</button>
+        <button id="add-new-tag-btn"  class="btn btn-sm" ng-click="vm.tagAdded(vm.slackOverflow.newTag)">add</button>
         </div>
         </div>
 

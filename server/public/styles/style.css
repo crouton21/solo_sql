@@ -187,6 +187,7 @@ img {
 #card{
   background-color: #f1f1f1;
   padding:0px;
+  z-index: 1;
 }
 
 #questions{
@@ -375,7 +376,7 @@ text-angular{
   transform: translateY(20px);
 }
 
-#answer-title{
+#new-answer-title{
   margin-top: 20px;
   transform: translateX(25px);
   margin-bottom:15px;
@@ -444,5 +445,36 @@ text-angular{
 }
 
 .resolve-btn{
+  margin-top: -40px;
+}
+
+#answer-title{
   margin-top: -30px;
+  transform: translateX(40px);
+}
+
+#add-tag-btn{
+  background-color: #5c5c5c;
+  color: white;
+  transform:translateX(55px);
+}
+
+#new-tag-input{
+  transform:translateX(55px);
+}
+
+#cancel-new-tag-btn{
+  font-size: 10px;
+}
+
+#add-new-tag-btn{
+  background-color: #5c5c5c;
+  color: white;
+}
+
+#check-img{
+  z-index: 2;
+  transform: translateX(135px);
+  position: relative;
+  top:42px;
 }

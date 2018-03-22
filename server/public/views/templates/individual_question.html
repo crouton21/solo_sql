@@ -2,6 +2,7 @@
 <h3 id="ind-question-title" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">{{vm.slackOverflow.individualQuestion.question_title}}</h3>
 
 <hr >
+<div id="check-img"><img ng-if="vm.slackOverflow.individualQuestion.resolved" src="/images/check.png" width="1%" height="1%"/></div>
 
 <div class="row">
 
@@ -15,7 +16,7 @@
     <button  class="btn btn-link" id="resolveBtn" ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username" ng-hide="vm.slackOverflow.individualQuestion.resolved" ng-click="vm.resolve()">resolve</button>
     <div ng-show="vm.slackOverflow.individualQuestion.resolved">
     <p id="thanks-text">Thanks for asking!</p>
-    <button class="btn btn-link resolve-btn" id="resolveBtn" ng-click="vm.resolve()">(Whoops!)</button>
+    <button class="btn btn-link resolve-btn" id="resolveBtn" ng-click="vm.resolve()">unresolve</button>
     </div>
 </div>
 
@@ -42,7 +43,10 @@
 
 </div>
 
-<hr id="bottom-hr"><br>
+<hr id="bottom-hr"><br><br>
+
+<h3 id="answer-title" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">Answers</h3>
+<hr>
 
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
 
@@ -75,7 +79,7 @@
 </div>
 
 
-<h3 class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1" id="answer-title">Your Answer</h3>
+<h3 class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1" id="new-answer-title">Your Answer</h3>
 <hr id="bottom-hr"><br>
 <!-- <button ng-click="vm.upload()">Upload Image</button> -->
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-10 col-sm-10 col-md-10 col-lg-10">
