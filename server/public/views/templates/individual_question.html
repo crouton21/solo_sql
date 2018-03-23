@@ -15,16 +15,14 @@
 <div clss="col-xs-1 col-sm-1 col-md-1 col-lg-1">
     <button  class="btn btn-link" id="resolveBtn" ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username" ng-hide="vm.slackOverflow.individualQuestion.resolved" ng-click="vm.resolve()">resolve</button>
     <div ng-show="vm.slackOverflow.individualQuestion.resolved">
-    <p id="thanks-text">Thanks for asking!</p>
     <button class="btn btn-link resolve-btn" id="resolveBtn" ng-click="vm.resolve()">unresolve</button>
     </div>
 </div>
 
 </div>
 
-<!-- ADD BACK TO REMOVE BUTTON ng-show="vm.userObject.is_admin"-->
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
-<button ng-show="vm.userObject.is_admin" ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)" id="removeBtn" class="btn btn-outline-secondary">Remove</button> <!-- show for admin only -->
+<button ng-show="vm.slackOverflow.isUserAdmin" ng-click="vm.deleteQuestion(vm.slackOverflow.individualQuestion.id)" id="removeBtn" class="btn btn-outline-secondary">Remove</button> <!-- show for admin only -->
 </div>
 
 <!-- tags here -->

@@ -24,7 +24,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       askQuestionButtonVisible: true,
       textAngularImage:'',
       textToAddToTextAngular:'',
-      tagBeingAdded: false
+      tagBeingAdded: false,
+      isUserAdmin: false
     }
 
   self.getuser = function(){
@@ -35,7 +36,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             self.userObject.userName = response.data.username;
             self.userObject.profile_img_url = response.data.profile_img_url;
             self.userObject.userId = response.data.id;
-            //self.userObejct.is_admin = response.data.is_admin;
+            self.slackOverflow.isUserAdmin = response.data.is_admin
+            console.log('is user admin:', self.slackOverflow.isUserAdmin);
             console.log('UserService -- getuser -- User Data: ', self.userObject.userName);
             console.log('userObject:', self.userObject);
             self.slackOverflow.authenticationStatus = true;

@@ -478,3 +478,7 @@ text-angular{
   position: relative;
   top:42px;
 }
+
+#removeBtn{
+  transform: translateX(20px);
+}

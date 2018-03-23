@@ -7,5 +7,4 @@ myApp.controller('AskController', ['$http', '$location', 'UserService', '$scope'
     this.loadTags = UserService.loadTags;
     this.checkTag = UserService.checkTag;
 
-
 }]);
