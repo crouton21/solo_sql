@@ -9,9 +9,13 @@
             <div dir-paginate="question in vm.slackOverflow.allQuestions|itemsPerPage:2">
 
             <div class="row">
+
             <div id="card" class="offset-xs-1 col-xs-1 offset-sm-1 col-sm-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{question.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
-            <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9"><a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
-            <div id="check-img"><img ng-if="question.resolved" src="/images/check.png" width="2%" height="2%"/></div>
+            
+            <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
+            <div><img ng-if="question.resolved" id="check-img" src="/images/check.png" width="2%" height="2%"/>
+            <a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
+            </div>
 
         
             <div class="d-flex flex-row">
@@ -20,16 +24,19 @@
             </div>
             </div>
             <div id="date" class="offset-xs-9 col-xs-2 offset-sm-9 col-sm-2 offset-md-9 col-md-2 offset-lg-9 col-lg-2">{{question.posted_date}}</div>
+
         </div>
         <hr>
         
-</div>
+    </div>
 <!-- pagination div -->
 
 
         </div>
-
-            <dir-pagination-controls max-size="5" 
+            
+            <div class="pagination">
+            <dir-pagination-controls id="pagination-controls"
             direction-links="true" 
             boundary-links="true">
             </dir-pagination-controls>
+            </div>

@@ -384,6 +384,7 @@ text-angular{
   margin-top: 20px;
   transform: translateX(25px);
   margin-bottom:15px;
+  transform: translateX(40px);
 }
 
 .post-answer-btn{
@@ -465,17 +466,28 @@ text-angular{
 #add-new-tag-btn{
   background-color: #5c5c5c;
   color: white;
+  margin-left: 70px;
 }
 
 #check-img{
-  /* z-index: 2;
-  transform: translateX(135px);
-  position: relative;
-  top:42px; */
-
-
+  transform: translateX(-42px);
 }
 
 #removeBtn{
   transform: translateX(20px);
+}
+
+#no-answers{
+  transform: translateX(160px);
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#pagination-controls *{
+  color: black;
+  weight: 30px;
+  float:left;
+  margin-left:40px;
+  margin-top: 10px;
+  padding:-10px;
 }

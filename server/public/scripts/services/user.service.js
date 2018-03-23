@@ -80,6 +80,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       self.slackOverflow.topQuestions = response.data;
       for (let question of self.slackOverflow.topQuestions){
         question.posted_date = question.posted_date.substring(0,10);
+        let index = question.tag_array.indexOf('dummy');
+        if (index > -1) {
+          question.tag_array.splice(index, 1);
+        }
       }
       self.slackOverflow.previousLocation = ("/questions");
       console.log('top questions', self.slackOverflow.topQuestions);
@@ -99,6 +103,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       self.slackOverflow.allQuestions = response.data;
       for (let question of self.slackOverflow.allQuestions){
         question.posted_date = question.posted_date.substring(0,10);
+        let index = question.tag_array.indexOf('dummy');
+        if (index > -1) {
+          question.tag_array.splice(index, 1);
+        }
       }
       self.slackOverflow.previousLocation = ("/questions/all")
       console.log('top questions', self.slackOverflow.allQuestions);
@@ -173,6 +181,10 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       console.log('got individual question', response);
       self.slackOverflow.individualQuestion = response.data[0];
       self.slackOverflow.individualQuestion.posted_date = self.slackOverflow.individualQuestion.posted_date.substring(0,10);
+      let index = self.slackOverflow.individualQuestion.tag_array.indexOf('dummy');
+      if (index > -1) {
+        self.slackOverflow.individualQuestion.tag_array.splice(index, 1);
+      }
       console.log('individual question object:', self.slackOverflow.individualQuestion);
       //call on GET to get all answers for this question
       self.upViews(id,num_of_views);
@@ -214,11 +226,12 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   self.postNewAnswer = function(question_id, newAnswer){
     console.log('in postNewAnswer function', question_id, newAnswer);
     if (!self.slackOverflow.authenticationStatus){ //user is not logged in send to log in page
-      alert('You must be logged in to see this page');
+      swal('You must be logged in to see this page');
       self.slackOverflow.askQuestionButtonVisible = false;
       $location.path("/home");
       return;
     }
+    //check to make sure answer has description
     $http({
       method: 'POST',
       url: '/questions/answers',
@@ -266,7 +279,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       maxFiles: 1
     }).then(function(result){
       console.log('in upload,', result.filesUploaded[0].url)
-      alert("successful upload!");
+      swal("successful upload!");
       $http({
         method: 'PUT',
         url: `questions/users/update_profile_picture/${self.userObject.userId}`,
@@ -287,7 +300,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       maxFiles: 1
     }).then(function(result){
       console.log('in upload,', result.filesUploaded[0].url)
-      alert("successful upload!");
+      swal("successful upload!");
       $http({
         method: 'PUT',
         url: `questions/users/update_profile_picture/${self.userObject.userId}`,
@@ -310,7 +323,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       $location.path("/questions/ask");
     }
     else{ //user is not logged in, send to sign up page, then send to askquestion page once logged in
-      alert('You must be logged in to see this page');
+      swal('You must be logged in to see this page');
       self.slackOverflow.askQuestionButtonVisible=false;
       $location.path("/home");
     }
@@ -354,8 +367,18 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     console.log('in postNewQuestion function, newQuestion:', self.slackOverflow.newQuestion);
     let newQuestion = self.slackOverflow.newQuestion
     let tagsArray = [];
-    for (let tagObject of newQuestion.tags){
-      tagsArray.push(tagObject.text);
+    if (newQuestion.tags){
+      console.log('has tag property');
+      for (let tagObject of newQuestion.tags){
+        tagsArray.push(tagObject.text);
+      }
+    }
+    else{
+      tagsArray.push('dummy');
+    }
+    if (!newQuestion.title || !newQuestion.description){
+      swal('You must have a question title and description.');
+      return;
     }
     console.log('tagsArray in post question:', tagsArray)
     $http({
@@ -369,6 +392,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       }
     }).then(function(response){
       console.log('success creating question, id:', response);
+      swal('Your question has been added!');
       let id_of_question = response.data[0].question_id;
       console.log("id_of_question", id_of_question)
       //locate to /questions/id of your question
@@ -481,7 +505,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       console.log('success posting new tag', response);
       self.slackOverflow.tagBeingAdded = false; //on the .then of the post
       self.getAllTags(); //get all tags again
-      alert('Your tag has been added, search below to find it.');
+      swal('Your tag has been added, search below to find it.');
     }).catch(function(error){
       console.log('error posting new tag', error);
     })

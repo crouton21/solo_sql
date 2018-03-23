@@ -10,6 +10,7 @@ myApp.controller('IndexController', ['$http', '$location', 'UserService', functi
     self.userObject = UserService.userObject;
 
     self.goToProfile = function(){
+        self.slackOverflow.askQuestionButtonVisible=true;
         $location.path("/profile");
     }
 }]);

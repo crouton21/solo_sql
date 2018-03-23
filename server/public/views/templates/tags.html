@@ -25,9 +25,10 @@
         
         <div ng-if="vm.slackOverflow.tagBeingAdded" class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
         <input id="new-tag-input" ng-model="vm.slackOverflow.newTag" placeholder="new tag">
-        <button id="cancel-new-tag-btn" class="btn btn-link" ng-click="vm.slackOverflow.tagBeingAdded = false">cancel</button>
         <button id="add-new-tag-btn"  class="btn btn-sm" ng-click="vm.tagAdded(vm.slackOverflow.newTag)">add</button>
+        <button id="cancel-new-tag-btn" class="btn btn-link" ng-click="vm.slackOverflow.tagBeingAdded = false">cancel</button>
         </div>
+        
         </div>
 
 

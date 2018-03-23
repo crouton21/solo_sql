@@ -11,8 +11,9 @@
        
 
     <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
+        <div><img ng-if="question.resolved" src="/images/check.png" id="check-img" width="2%" height="2%"/>
         <a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
-        <div id="check-img"><img ng-if="question.resolved" src="/images/check.png" width="2%" height="2%"/></div>
+        </div>
 
 
     <div class="d-flex flex-row">

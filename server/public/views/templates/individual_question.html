@@ -5,12 +5,19 @@
 
 <div class="row">
 
-<div id="card" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
+
+<div id="card" ng-if="vm.slackOverflow.individualQuestion.resolved" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3 card-resolved" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
+
+<div id="card" ng-if="!vm.slackOverflow.individualQuestion.resolved" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
+
 
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-7 col-sm-7 col-md-7 col-lg-7">
 <p ng-bind-html="vm.slackOverflow.individualQuestion.question_description">{{vm.slackOverflow.individualQuestion.question_description}}</p>
-<div id="check-img"><img ng-if="vm.slackOverflow.individualQuestion.resolved" src="/images/check.png" width="2%" height="2%"/></div>
 </div>
+
+
+
+
 
 <div clss="col-xs-1 col-sm-1 col-md-1 col-lg-1">
     <button  class="btn btn-link" id="resolveBtn" ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username" ng-hide="vm.slackOverflow.individualQuestion.resolved" ng-click="vm.resolve()">resolve</button>
@@ -45,7 +52,7 @@
 
 <h3 id="answer-title" class="col-xs-8 col-sm-8 col-md-8 col-lg-8 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">Answers</h3>
 <hr>
-
+<div ng-if="vm.slackOverflow.individualQuestionAnswers.length == 0" id="no-answers">There are no answers for this question yet.</div>
 <div ng-repeat="answer in vm.slackOverflow.individualQuestionAnswers">
 
     <div class="row">
