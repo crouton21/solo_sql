@@ -12,6 +12,7 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
     self.message = '';
 
     self.login = function () {
+      self.slackOverflow.askQuestionButtonVisible = false;
       if (self.user.username === '' || self.user.password === '') {
         self.message = "Enter your username and password!";
       } else {
@@ -41,6 +42,7 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
         console.log('sending to server...', self.user);
         $http.post('/api/user/register', self.user).then(function (response) {
           console.log('success');
+          self.slackOverflow.askQuestionButtonVisible = false;
           $location.path('/home');
         },
           function (response) {

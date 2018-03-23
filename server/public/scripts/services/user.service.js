@@ -43,16 +43,17 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             self.slackOverflow.authenticationStatus = true;
             console.log('user authentication status', self.slackOverflow.authenticationStatus);
             $location.path(self.slackOverflow.previousLocation);
-            self.slackOverflow.askQuestionButtonVisible = true;
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
+            self.slackOverflow.askQuestionButtonVisible = false;
             $location.path("/home");
         }
     },function(response){
       console.log('UserService -- getuser -- failure: ', response);
       self.slackOverflow.authenticationStatus = false;
       console.log('user authentication status', self.slackOverflow.authenticationStatus);
+      self.slackOverflow.askQuestionButtonVisible = false;
       $location.path("/home");
     });
   }
@@ -61,6 +62,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     console.log('UserService -- logout');
     $http.get('/api/user/logout').then(function(response) {
       console.log('UserService -- logout -- logged out');
+      self.slackOverflow.askQuestionButtonVisible=true;
       $location.path("/questions");
     });
     self.slackOverflow.authenticationStatus = false;
@@ -69,6 +71,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.getTopQuestions = function(){
     console.log('in getTopQuestions function');
+    self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'GET',
       url: '/questions'
@@ -87,6 +90,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.getAllQuestions = function(){
     console.log('in getAllQuestions function');
+    self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'GET',
       url: '/questions/all'
@@ -119,6 +123,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }
     console.log('in searchEntered function', self.search_term_array);
     //HTTP GET with searchTerm, search in database.  
+    self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'POST',
       url: '/questions/search',
@@ -136,6 +141,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       console.log(self.slackOverflow.searchResults);
       //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
+      self.slackOverflow.askQuestionButtonVisible = true;
       $location.url('/search');
       self.slackOverflow.previousLocation = ("/search")
   }).catch(function(error){
@@ -145,15 +151,18 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.logoClicked = function(){
     console.log('in logo clicked');
+    self.slackOverflow.askQuestionButtonVisible=true;
     $location.url('/questions/all');
   }
 
   self.getIndividualQuestionView = function(id, num_of_views){
+    self.slackOverflow.askQuestionButtonVisible=true;
     $location.url(`/individual_question/${id}/${num_of_views}`);
   }
 
   self.getIndividualQuestion = function(id, num_of_views){
     console.log('In getIndividualQuestion function', id);
+    self.slackOverflow.askQuestionButtonVisible = true;
     num_of_views = parseInt(num_of_views) + 1;
     console.log('num_of_views', num_of_views);
     self.getAnswers(id);
@@ -204,6 +213,12 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.postNewAnswer = function(question_id, newAnswer){
     console.log('in postNewAnswer function', question_id, newAnswer);
+    if (!self.slackOverflow.authenticationStatus){ //user is not logged in send to log in page
+      alert('You must be logged in to see this page');
+      self.slackOverflow.askQuestionButtonVisible = false;
+      $location.path("/home");
+      return;
+    }
     $http({
       method: 'POST',
       url: '/questions/answers',
@@ -226,6 +241,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.getTagQuestions = function(tagName){
     console.log('in getTagQuestions', tagName);
+    self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'GET',
       url: `/questions/tags/${tagName}`
@@ -288,18 +304,21 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.askQuestion = function(){
     self.getuser();
-    self.slackOverflow.askQuestionButtonVisible=false;
     self.slackOverflow.previousLocation = ("/questions/ask")
     if (self.slackOverflow.authenticationStatus){ //user is logged in, send to ask question page
+      self.slackOverflow.askQuestionButtonVisible=false;
       $location.path("/questions/ask");
     }
     else{ //user is not logged in, send to sign up page, then send to askquestion page once logged in
+      alert('You must be logged in to see this page');
+      self.slackOverflow.askQuestionButtonVisible=false;
       $location.path("/home");
     }
   }
 
   self.getAllTags = function(){
     console.log('in getAllTags function');
+    self.slackOverflow.askQuestionButtonVisible=true;
     $http({
       method: 'GET',
       url: '/questions/tags/tags/all'
@@ -353,6 +372,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       let id_of_question = response.data[0].question_id;
       console.log("id_of_question", id_of_question)
       //locate to /questions/id of your question
+      self.slackOverflow.askQuestionButtonVisible=true;
       $location.path(`/individual_question/${id_of_question}/0`);
       self.getIndividualQuestion(id_of_question, 0);
       self.slackOverflow.newQuestion = {};
@@ -380,6 +400,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       url: `/questions/${question_id}`
     }).then(function(response){
       console.log('success deleting question', response);
+      self.slackOverflow.askQuestionButtonVisible=true;
       $location.path(`/questions`)
       self.getTopQuestions(); //delete questions other than top questions????
     }).catch(function(error){
@@ -416,6 +437,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.getQuestionsAskedByIndividualUser = function(){
     console.log('in getQuestionsAskedByIndividualUser function', self.userObject.userId);
+    self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'GET',
       url:`questions/asked/${self.userObject.userId}`
@@ -430,6 +452,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
 
   self.getQuestionsAnsweredByIndividualUser = function(){
     console.log('getQuestionsAnsweredByIndividualUser function', self.userObject.userId);
+    self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'GET',
       url:`questions/answered/${self.userObject.userId}`
