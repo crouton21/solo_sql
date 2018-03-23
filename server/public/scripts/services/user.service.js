@@ -67,6 +67,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     });
     self.slackOverflow.authenticationStatus = false;
     console.log('user authentication status', self.slackOverflow.authenticationStatus);
+    self.slackOverflow.isUserAdmin = false;
   }
 
   self.getTopQuestions = function(){

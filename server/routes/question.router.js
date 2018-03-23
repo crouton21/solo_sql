@@ -164,30 +164,31 @@ router.get('/', function(request, response){
       })
   })
 
-  //NEED TO FINISH POST FOR NEW ANSWER
   router.post('/answers', function(request, response){
-    answer = request.body.answer;
-    question_id = request.body.question_id;
-    img_url = request.body.img_url;
-    user_id = request.body.user_id; 
-    const sqlText = `WITH ins1 AS (
-      INSERT INTO answers(answer, img_url)
-      VALUES ($1, $2)
-      RETURNING answers.id AS answer_id)
-      ,ins2 AS (
-      INSERT INTO joint_questions_answers (answer_id, question_id)
-      SELECT answer_id, $3 FROM ins1)
-      INSERT INTO joint_users_answers (answer_id, user_id)
-      SELECT answer_id, $4 FROM ins1`;
-   pool.query(sqlText, [answer, img_url, question_id, user_id])
-      .then(function(result) {
-        console.log('posted new answer to answers table, joint_questions_answers table, joint_users_answers table');
-        response.sendStatus(201);
-      })
-      .catch(function(error){
-        console.log('Error on posting new answer:', error);
-        response.sendStatus(500);
-      })
+    if (request.isAuthenticated()){
+      answer = request.body.answer;
+      question_id = request.body.question_id;
+      img_url = request.body.img_url;
+      user_id = request.user.id; 
+      const sqlText = `WITH ins1 AS (
+        INSERT INTO answers(answer, img_url)
+        VALUES ($1, $2)
+        RETURNING answers.id AS answer_id)
+        ,ins2 AS (
+        INSERT INTO joint_questions_answers (answer_id, question_id)
+        SELECT answer_id, $3 FROM ins1)
+        INSERT INTO joint_users_answers (answer_id, user_id)
+        SELECT answer_id, $4 FROM ins1`;
+     pool.query(sqlText, [answer, img_url, question_id, user_id])
+        .then(function(result) {
+          console.log('posted new answer to answers table, joint_questions_answers table, joint_users_answers table');
+          response.sendStatus(201);
+        })
+        .catch(function(error){
+          console.log('Error on posting new answer:', error);
+          response.sendStatus(500);
+        })
+    }
   })
 
 
@@ -220,24 +221,27 @@ router.get('/', function(request, response){
   })
 
   router.delete('/answers/delete/:id', function(request, response){
-    const id = request.params.id;
-    console.log('in delete in router,', id);
-    sqlText = `DELETE FROM answers a
-    USING joint_questions_answers jqa, joint_users_answers jua
-    WHERE jqa.answer_id = a.id AND jua.answer_id = a.id
-    AND a.id=$1`;
-    pool.query(sqlText, [id])
-      .then(function(result) {
-        console.log('deleted answer')
-        response.sendStatus(200);
-      })
-      .catch(function(error){
-        console.log('Error on deleting answer:', error);
-        response.sendStatus(500);
-      })
+    if (request.isAuthenticated()){
+      const id = request.params.id;
+      console.log('in delete in router,', id);
+      sqlText = `DELETE FROM answers a
+      USING joint_questions_answers jqa, joint_users_answers jua
+      WHERE jqa.answer_id = a.id AND jua.answer_id = a.id
+      AND a.id=$1`;
+      pool.query(sqlText, [id])
+        .then(function(result) {
+          console.log('deleted answer')
+          response.sendStatus(200);
+        })
+        .catch(function(error){
+          console.log('Error on deleting answer:', error);
+          response.sendStatus(500);
+        })
+    }
   })
 
   router.put('/users/update_profile_picture/:id', function(request, response){
+    if (request.isAuthenticated()){
     const url = request.body.new_profile_picture;
     id = request.params.id;
     console.log('in router put for profile picture, url:', url, 'id:', id);
@@ -251,9 +255,11 @@ router.get('/', function(request, response){
       console.log('Error on updating profile picture:', error);
       response.sendStatus(500);
     })
+  }
   })
 
   router.post(`/`, function(request, response){
+    if (request.isAuthenticated()){
     const question_title = request.body.title;
     const question_description = request.body.description;
     let tag_array = request.body.tags;
@@ -275,9 +281,11 @@ router.get('/', function(request, response){
       console.log('Error on adding question:', error);
       response.sendStatus(500);
     })
+  }
   })
 
   router.delete(`/:id`, function(request, response){
+    if (request.isAuthenticated()){
     const id = request.params.id;
     sqlText = `DELETE FROM questions q
     USING joint_users_questions juq
@@ -292,6 +300,7 @@ router.get('/', function(request, response){
       console.log('Error on deleting question:', error);
       response.sendStatus(500);
     })
+  }
   })
   
   router.put(`/answers/:answer_id`, function(request, response){
@@ -310,7 +319,8 @@ router.get('/', function(request, response){
   })
 
   router.get(`/asked/:user_id`, function(request, response){
-    const user_id = request.params.user_id;
+    if (request.isAuthenticated()){
+    const user_id = request.user.id;
     sqlText = `SELECT * FROM questions
     JOIN joint_users_questions ON joint_users_questions.question_id = questions.id
     WHERE joint_users_questions.user_id = $1`;
@@ -323,10 +333,12 @@ router.get('/', function(request, response){
       console.log('Error on getting all questions asked by user:', error);
       response.sendStatus(500);
     })
+  }
   })
 
   router.get(`/answered/:user_id`, function(request, response){
-    const user_id = request.params.user_id;
+    if (request.isAuthenticated()){
+    const user_id = request.user.id;
     sqlText = `SELECT * FROM questions
     JOIN joint_questions_answers ON joint_questions_answers.question_id = questions.id
     JOIN joint_users_answers ON joint_users_answers.answer_id = joint_questions_answers.answer_id
@@ -340,6 +352,7 @@ router.get('/', function(request, response){
       console.log('Error on getting all questions answered by user:', error);
       response.sendStatus(500);
     })
+  }
   })
 
   router.post(`/newtag`, function(request,response){
@@ -357,6 +370,7 @@ router.get('/', function(request, response){
   })
 
   router.put(`/resolved/:id`, function(request, response){
+    if (request.isAuthenticated()){
     const resolved = request.body.resolved;
     console.log('in router, resolved:', resolved);
     const id = request.params.id;
@@ -370,6 +384,7 @@ router.get('/', function(request, response){
       console.log('Error on resolving question:', error);
       response.sendStatus(500);
     })
+  }
   })
 
     
