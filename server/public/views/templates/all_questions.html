@@ -3,7 +3,10 @@
         
         <hr>
         
-        <div class="container-fluid" ng-repeat="question in vm.slackOverflow.allQuestions">
+        <div class="container-fluid" >
+                <!-- ng-repeat="question in vm.slackOverflow.allQuestions" -->
+
+            <div dir-paginate="question in vm.slackOverflow.allQuestions|itemsPerPage:2">
 
             <div class="row">
             <div id="card" class="offset-xs-1 col-xs-1 offset-sm-1 col-sm-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{question.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
@@ -20,4 +23,13 @@
         </div>
         <hr>
         
+</div>
+<!-- pagination div -->
+
+
         </div>
+
+            <dir-pagination-controls max-size="5" 
+            direction-links="true" 
+            boundary-links="true">
+            </dir-pagination-controls>
