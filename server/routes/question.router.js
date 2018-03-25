@@ -374,7 +374,7 @@ router.get('/', function(request, response){
     const resolved = request.body.resolved;
     console.log('in router, resolved:', resolved);
     const id = request.params.id;
-    sqlText = `UPDATE questions SET resolved=$1 WHERE id=$2`;
+    sqlText = `UPDATE questions SET resolved=$1, num_of_views=num_of_views-1 WHERE id=$2`;
     pool.query(sqlText, [resolved, id])
     .then(function(result) {
       console.log('question resolved successfully')

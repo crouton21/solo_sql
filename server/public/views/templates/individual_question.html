@@ -6,9 +6,8 @@
 <div class="row">
 
 
-<div id="card" ng-if="vm.slackOverflow.individualQuestion.resolved" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3 card-resolved" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
+<div id="card" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3 card-resolved" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
 
-<div id="card" ng-if="!vm.slackOverflow.individualQuestion.resolved" style="margin-right:-50px;" class="col-xs-1 col-sm-1 col-md-1 col-lg-1 offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{vm.slackOverflow.individualQuestion.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
 
 
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-7 col-sm-7 col-md-7 col-lg-7">
@@ -43,7 +42,7 @@
 
 <div id="ind-question-info" class="row offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
 <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" id="ind-question-date">{{vm.slackOverflow.individualQuestion.posted_date}}</div>
-<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-right float-right text-right"><img src="{{vm.slackOverflow.individualQuestion.profile_img_url}}" height="15px" width="15px" /> <p id="postedBy">posted by {{vm.slackOverflow.individualQuestion.username}}</p></div>
+<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-right float-right text-right"><img src="{{vm.slackOverflow.individualQuestion.profile_img_url}}" id="question-profile-img" /> <p id="postedBy">posted by {{vm.slackOverflow.individualQuestion.username}}</p></div>
 </div>
 
 </div>
@@ -75,7 +74,7 @@
     </div>
    
     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 pull-right float-right text-right">
-    <img id="answer-image" src="{{answer.profile_img_url}}" height="15px" width="15px" />
+    <img id="answer-image" src="{{answer.profile_img_url}}"/>
     <p id="postedBy" class="answer-by"> answered by {{answer.username}}</p>
     </div>
     </div>
@@ -88,11 +87,12 @@
 <hr id="bottom-hr"><br>
 <!-- <button ng-click="vm.upload()">Upload Image</button> -->
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-10 col-sm-10 col-md-10 col-lg-10">
-<div ng-click="vm.uploadWithTextAngular()">Upload</div>
+
 
 <div text-angular ta-file-drop="dropHandler" ng-model="vm.slackOverflow.newAnswer.description"></div>
 </div>
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
 <button class="btn post-answer-btn btn-sm" ng-click="vm.postNewAnswer(vm.slackOverflow.individualQuestion.id, vm.slackOverflow.newAnswer)">Post Answer</button>
+<button id="upload-photo-btn" class="btn-sm btn-secondary" ng-click="vm.uploadWithTextAngular()">Upload Photo</button>
 </div>
 <br><br>

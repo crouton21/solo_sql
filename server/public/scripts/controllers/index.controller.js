@@ -8,9 +8,7 @@ myApp.controller('IndexController', ['$http', '$location', 'UserService', functi
     self.logout = UserService.logout;
     self.askQuestion = UserService.askQuestion;
     self.userObject = UserService.userObject;
+    self.signOut = UserService.signOut;
+    self.goToProfile = UserService.goToProfile;
 
-    self.goToProfile = function(){
-        self.slackOverflow.askQuestionButtonVisible=true;
-        $location.path("/profile");
-    }
 }]);

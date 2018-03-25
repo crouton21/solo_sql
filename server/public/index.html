@@ -2,6 +2,13 @@
 <html ng-app="myApp">
     <head>
         <title>Slack Overflow</title>
+
+        <!--google authentication-->
+        
+        <meta name="google-signin-client_id" content="88002197219-0t3grfhpb6pgdi6tqei9d18nvhclm5np.apps.googleusercontent.com">
+        <!-- <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
+
+
         <link rel="stylesheet" href="styles/style.css">
         <link rel="stylesheet" href="vendors/bootstrap_simple_theme.css">
         <script src="vendors/bootstrap.js"></script>
@@ -75,8 +82,23 @@
       <div class="col-xs-2 col-md-2 col-lg-2 header_item">
       <div class="row"><a href="#!/home" id="small_header_link" class="col-xs-12 col-md-12 col-lg-12 pull-left btn-link" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a></div>
       <div class="row"><a ng-click="ic.logout()" id="small_header_link" class="col-xs-6 col-md-6 col-lg-6 text-right btn-link" ng-show="ic.slackOverflow.authenticationStatus">Log Out</a>
-      <div ng-show="ic.slackOverflow.authenticationStatus" id="image-container" class="col-xs-6 col-md-6 col-lg-6 pull-left">
-      <img ng-click="ic.goToProfile()" class="pull-left" id="profile_pic" src="{{ic.userObject.profile_img_url}}">
+    
+
+        <!--Google sign out-->
+       <!-- <a href="#" onclick="signOut()">Sign out</a>        
+        <script>
+                function signOut() {
+                  console.log('in signOut function');
+                  var auth2 = gapi.auth2.getAuthInstance();
+                  auth2.signOut().then(function () {
+                    console.log('User signed out.');
+                  });
+                }
+              </script>
+        -->
+      
+        <div ng-show="ic.slackOverflow.authenticationStatus" id="image-container" class="col-xs-6 col-md-6 col-lg-6 pull-left">
+      <img ng-click="ic.goToProfile(ic.userObject.userId)" class="pull-left" id="profile_pic" src="{{ic.userObject.profile_img_url}}">
       </div></div>
       </div>
 
@@ -90,8 +112,8 @@
     
     <main ng-view></main>
     </section>
+    <script src="https://apis.google.com/js/platform.js"  async defer></script>
     </body>
 </html>
 
 
-<!-- ng-if="ic.slackOverflow.askQuestionButtonVisible"  -->

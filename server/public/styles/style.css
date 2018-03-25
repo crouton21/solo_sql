@@ -168,6 +168,7 @@ img {
   border-style: solid;
   border-color: #45BD95;
   border-width: 1px;
+  object-fit: cover;
 }
 
 .page-title{
@@ -258,6 +259,7 @@ text-angular{
   border-style: ridge;
   border-color: #45BD95;
   border-width: 1px;
+  object-fit: cover;
 }
 
 #hi{
@@ -365,6 +367,27 @@ text-angular{
 #answer-image{
   transform: translateX(100px);
   transform: translateY(20px);
+  object-fit: cover;
+  height: 15px;
+  width: 15px;
+}
+
+#answer-image:hover{
+  transform: scale(13);
+  z-index: 4;
+  position: relative;
+}
+
+#question-profile-img{
+  object-fit: cover;
+  height: 15px;
+  width: 15px;
+}
+
+#question-profile-img:hover{
+  transform: scale(13);
+  z-index: 4;
+  position: relative;
 }
 
 .answer-by{
@@ -392,6 +415,11 @@ text-angular{
   color: white;
   transform: translateX(20px);
   margin-top: 10px;
+}
+
+.post-answer-btn:hover{
+  background-color: #3d3d3d;
+  color: white;
 }
 
 .login-container{
@@ -485,9 +513,23 @@ text-angular{
 
 #pagination-controls *{
   color: black;
-  weight: 30px;
-  float:left;
-  margin-left:40px;
+  /* right: 0px; */
+  margin-left:5px;
   margin-top: 10px;
-  padding:-10px;
+  transform: translateX(65px);
 }
+
+#pagination-controls{
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+#upload-photo-btn{
+  margin-left:30px;
+  transform: translateY(5px);
+}
+
+#upload-photo-btn-ask{
+  margin-left:5px;
+}
+

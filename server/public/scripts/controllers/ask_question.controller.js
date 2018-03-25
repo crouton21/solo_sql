@@ -6,5 +6,6 @@ myApp.controller('AskController', ['$http', '$location', 'UserService', '$scope'
     this.postNewQuestion = UserService.postNewQuestion;
     this.loadTags = UserService.loadTags;
     this.checkTag = UserService.checkTag;
+    this.uploadWithTextAngular = UserService.uploadWithTextAngular;
 
 }]);
