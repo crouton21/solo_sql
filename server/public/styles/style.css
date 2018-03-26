@@ -541,13 +541,8 @@ text-angular{
   width: 100%;
 }
 
-#upload-photo-btn{
-  /* transform: translateY(63px); */
-
-}
-
 #upload-photo-move{
-  transform: translateX(120px);
+  transform: translateX(130px);
 }
 
 #upload-photo-btn-ask{
