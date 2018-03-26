@@ -179,6 +179,8 @@ img {
 #card-text{
   font-size: 8px;
   text-align:center;
+  position: relative;
+  z-index: 2;
 }
 
 .card-title{
@@ -187,11 +189,14 @@ img {
 
 .card{
   left: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 #card{
   background-color: #f1f1f1;
   padding:0px;
+  position: relative;
   z-index: 1;
 }
 
@@ -507,6 +512,11 @@ text-angular{
   transform: translateX(-42px);
 }
 
+#check-img-ind-question{
+  position: relative;
+  transform: translateX(107px);
+}
+
 #removeBtn{
   transform: translateX(20px);
 }
@@ -545,4 +555,14 @@ text-angular{
 
 #upload-move{
   transform: translateY(10px);
+}
+
+#technologies{
+  text-align: center;
+}
+
+#tech-list{
+  list-style-type: none;
+  font-size: 20px;
+  transform: translateX(-12px);
 }

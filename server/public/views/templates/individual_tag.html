@@ -2,7 +2,7 @@
 
 <hr>
 
-<div class="container-fluid" ng-repeat="question in vm.slackOverflow.taggedQuestions">
+<div class="container-fluid" dir-paginate="question in vm.slackOverflow.taggedQuestions|itemsPerPage:10">
     <div id="check-img"><img ng-if="question.resolved" src="/images/check.png" width="1%" height="1%"/></div>
 
     <div class="row">
@@ -19,4 +19,14 @@
 </div>
 <hr>
 
-</div>
+</div></div>
+
+
+<div class="pagination">
+        <dir-pagination-controls id="pagination-controls"
+        direction-links="true" 
+        boundary-links="true">
+        </dir-pagination-controls>
+        </div>
+
+<br><br><br><br><br><br><br>
