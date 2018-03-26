@@ -345,18 +345,19 @@ text-angular{
 #arrow-up{
   height: 20px;
   width: 20px;
-  transform: translateY(10px);
+  display:block;
+  margin:auto;  
 }
 
 #arrow-down{
   height: 20px;
   width: 20px;
-  transform: translateY(-10px);
+  display:block;
+  margin:auto;
 }
 
 #num-of-votes{
   text-align: center;
-  /* transform: translateX(20px); */
 }
 
 #deleteBtn{
