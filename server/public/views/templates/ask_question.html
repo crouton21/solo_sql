@@ -6,8 +6,11 @@
 <label id="newQuestion" class="offset-xs-1 col-xs-1 offset-sm-1 col-sm-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1" for="questionTitle">Title:</label>
 <input id="questionTitle" class="col-xs-8 col-sm-8 col-md-8 col-lg-8" ng-model="vm.slackOverflow.newQuestion.title"/>
 </div>
+<br>
+<div id="upload-move"><button id="upload-photo-btn-ask" class="btn-sm btn-secondary" ng-click="vm.uploadWithTextAngular()">Upload Photo</button></div>
 
 <div id="newQuestionInput" class="offset-xs-1 col-xs-10 offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
+
 <text-angular ng-model="vm.slackOverflow.newQuestion.description"></text-angular>
 </div>
 
@@ -16,14 +19,14 @@
 
 
 <div id="tagInput" class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-<tags-input ng-model="vm.slackOverflow.newQuestion.tags" add-on-paste="true" on-tag-adding="vm.checkTag($tag)">
+<tags-input ng-model="vm.slackOverflow.newQuestion.tags" add-on-paste="true" > <!--on-tag-adding="vm.checkTag($tag)"-->
         <auto-complete source="vm.loadTags($query)">
         </auto-complete>
 </tags-input>
 </div></div>
 
 <div class="offset-xs-1 col-xs-10 offset-sm-1 col-sm-10 offset-md-1 col-md-10 offset-lg-1 col-lg-10">
-<button class="btn-sm" id="askButton" ng-click="vm.postNewQuestion()">Ask Question</button>
-<button id="upload-photo-btn-ask" class="btn-sm btn-secondary" ng-click="vm.uploadWithTextAngular()">Upload Photo</button>
+<button class="btn-sm" id="askButton" ng-if="!vm.slackOverflow.isBeingEdited" ng-click="vm.postNewQuestion()">Ask Question</button>
+<button class="btn-sm" id="askButton" ng-if="vm.slackOverflow.isBeingEdited" ng-click="vm.postEditedQuestion()">Edit Question</button>
 </div>
 <br><br><br>

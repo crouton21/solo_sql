@@ -21,4 +21,5 @@ myApp.controller('IndividualQuestionController', ['$http', '$location', 'UserSer
     self.uploadWithTextAngular = UserService.uploadWithTextAngular;
     self.resolve = UserService.resolve;
     self.goToProfile = UserService.goToProfile;
+    self.editQuestion = UserService.editQuestion;
 }]);

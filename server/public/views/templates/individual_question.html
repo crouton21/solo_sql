@@ -23,6 +23,7 @@
     <div ng-show="vm.slackOverflow.individualQuestion.resolved">
     <button class="btn btn-link unresolve-btn" id="resolveBtn" ng-click="vm.resolve()">unresolve</button>
     </div>
+    <button class="btn btn-link edit-btn" ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username" ng-click="vm.editQuestion()" id="editBtn">edit</button>
 </div>
 
 </div>
@@ -84,8 +85,9 @@
 
 
 <h3 class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1" id="new-answer-title">Your Answer</h3>
-<hr id="bottom-hr"><br>
+<hr id="bottom-hr">
 <!-- <button ng-click="vm.upload()">Upload Image</button> -->
+<div id="upload-photo-move"><button id="upload-photo-btn" class="btn-sm btn-secondary" ng-click="vm.uploadWithTextAngular()">Upload Photo</button></div>
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1 col-xs-10 col-sm-10 col-md-10 col-lg-10">
 
 
@@ -93,6 +95,5 @@
 </div>
 <div class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
 <button class="btn post-answer-btn btn-sm" ng-click="vm.postNewAnswer(vm.slackOverflow.individualQuestion.id, vm.slackOverflow.newAnswer)">Post Answer</button>
-<button id="upload-photo-btn" class="btn-sm btn-secondary" ng-click="vm.uploadWithTextAngular()">Upload Photo</button>
 </div>
 <br><br>

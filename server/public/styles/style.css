@@ -472,6 +472,12 @@ text-angular{
   color: #45BD95;
 }
 
+#editBtn{
+  font-size: 10px;
+  display: block;
+  margin-top: -5px;
+}
+
 #answer-title{
   margin-top: -30px;
   transform: translateX(40px);
@@ -525,11 +531,18 @@ text-angular{
 }
 
 #upload-photo-btn{
-  margin-left:30px;
-  transform: translateY(5px);
+  /* transform: translateY(63px); */
+
+}
+
+#upload-photo-move{
+  transform: translateX(120px);
 }
 
 #upload-photo-btn-ask{
-  margin-left:5px;
+  transform: translateX(120px);
 }
 
+#upload-move{
+  transform: translateY(10px);
+}

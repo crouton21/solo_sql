@@ -26,6 +26,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       textToAddToTextAngular:'',
       tagBeingAdded: false,
       isUserAdmin: false,
+      addTag: '',
+      isBeingEdited: false
     }
 
   self.getuser = function(){
@@ -497,20 +499,21 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       self.slackOverflow.tagBeingAdded = false; //on the .then of the post
       self.getAllTags(); //get all tags again
       swal('Your tag has been added, search to find it.');
+      self.slackOverflow.addTag = '';
     }).catch(function(error){
       console.log('error posting new tag', error);
     })
   }
 
-  self.checkTag = function(tag){
-    console.log('in checkTag function', tag.text)
-    for (ind_tag of self.slackOverflow.allTags){
-      if (ind_tag.tag_name == tag.text){
-        return true
-      }
-    }
-    return false
-  }
+  // self.checkTag = function(tag){
+  //   console.log('in checkTag function', tag.text)
+  //   for (ind_tag of self.slackOverflow.allTags){
+  //     if (ind_tag.tag_name == tag.text){
+  //       return true
+  //     }
+  //   }
+  //   return false
+  // }
 
   self.resolve = function(){
     let id = self.slackOverflow.individualQuestion.id
@@ -534,6 +537,37 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     self.slackOverflow.askQuestionButtonVisible=true;
     $location.path(`/profile/${user_id}`);
 }
+
+  self.editQuestion = function(){
+    console.log('in editQuestion function,', self.slackOverflow.individualQuestion);
+    self.slackOverflow.newQuestion.title = self.slackOverflow.individualQuestion.question_title;
+    self.slackOverflow.newQuestion.description = self.slackOverflow.individualQuestion.question_description;
+    self.slackOverflow.newQuestion.tags = self.slackOverflow.individualQuestion.tag_array;
+    self.slackOverflow.isBeingEdited = true;
+    $location.path("/questions/ask");
+}
+
+  self.postEditedQuestion = function(){
+    console.log('in postEditedQuestion function', self.slackOverflow.individualQuestion.id);
+    let tag_array = [];
+    for (let tag of self.slackOverflow.newQuestion.tags){
+      tag_array.push(tag.text);
+    }
+    $http({
+      method: 'PUT',
+      url: `questions/edited/${self.slackOverflow.individualQuestion.id}`,
+      data: {title: self.slackOverflow.newQuestion.title,
+             description: self.slackOverflow.newQuestion.description,
+             tag_array: tag_array}
+    }).then(function(response){
+      console.log('success editing question', response);
+      self.getIndividualQuestion(self.slackOverflow.individualQuestion.id, self.slackOverflow.individualQuestion.num_of_views);
+      self.getIndividualQuestionView(self.slackOverflow.individualQuestion.id, self.slackOverflow.individualQuestion.num_of_views);
+      self.slackOverflow.isBeingEdited=false;
+    }).catch(function(error){
+      console.log('error editing question', error);
+    })
+  }
 
   self.getAllTags();
   self.getuser();

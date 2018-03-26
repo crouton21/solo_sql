@@ -6,7 +6,7 @@
             <div id="no-results" class="col-xs-9 offset-xs-2 col-sm-9 offset-sm-2 col-md-9 offset-md-2 col-md-9 offset-lg-2" ng-if="vm.slackOverflow.searchResults.length == 0">There are no search results for "{{vm.slackOverflow.originalSearchTerm}}".</div>
 
             <div ng-if="vm.slackOverflow.searchResults.length > 0">
-            <div class="container-fluid" dir-paginate="question in vm.slackOverflow.searchResults|itemsPerPage:2">
+            <div class="container-fluid" dir-paginate="question in vm.slackOverflow.searchResults|itemsPerPage:10">
                 <div class="row">
                 <div id="card" class="offset-xs-1 col-xs-1 offset-sm-1 col-sm-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right card border-light mb-3" style="max-width: 20rem"><div class="card-body"> <h4 class="card-title">{{question.num_of_views}}</h4> <p id="card-text" class="card-text">Views</p></div></div>
                 

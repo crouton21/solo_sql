@@ -387,5 +387,28 @@ router.get('/', function(request, response){
   }
   })
 
+  router.put(`/edited/:id`, function(request, response){
+    if (request.isAuthenticated()){
+    const id = request.params.id;
+    const title = request.body.title;
+    const description = request.body.description;
+    const tag_array = request.body.tag_array;
+    let array_to_send = [];
+    for (let tag of tag_array){
+      array_to_send.push("'"+tag+"'");
+    }
+    console.log('editing question in router, tag_array:', tag_array);
+    sqlText = "UPDATE questions SET question_title=$1, question_description=$2, tag_array=ARRAY["+array_to_send+"] WHERE id=$3";
+    pool.query(sqlText, [title, description,id])
+    .then(function(result) {
+      console.log('question edited successfully')
+      response.sendStatus(200);
+    })
+    .catch(function(error){
+      console.log('Error on editing question:', error);
+      response.sendStatus(500);
+    })
+  }
+  })
     
 module.exports = router;

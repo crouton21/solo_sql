@@ -2,10 +2,11 @@ myApp.controller('AskController', ['$http', '$location', 'UserService', '$scope'
     console.log('AskController created');
     var self = this;
 
-    this.slackOverflow = UserService.slackOverflow;
-    this.postNewQuestion = UserService.postNewQuestion;
-    this.loadTags = UserService.loadTags;
-    this.checkTag = UserService.checkTag;
-    this.uploadWithTextAngular = UserService.uploadWithTextAngular;
+    self.slackOverflow = UserService.slackOverflow;
+    self.postNewQuestion = UserService.postNewQuestion;
+    self.loadTags = UserService.loadTags;
+    self.checkTag = UserService.checkTag;
+    self.uploadWithTextAngular = UserService.uploadWithTextAngular;
+    self.postEditedQuestion = UserService.postEditedQuestion;
 
 }]);
