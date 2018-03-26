@@ -4,6 +4,7 @@ const Person = require('../models/Person');
 const userStrategy = require('../strategies/sql.localstrategy');
 const pool = require('../modules/pool.js');
 const router = express.Router();
+const nodemailer = require('nodemailer');
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', (req, res) => {
@@ -24,16 +25,43 @@ router.get('/', (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  //const email = req.body.email;
+  const email = req.body.email;
   //const is_admin = req.body.is_admin;
 
   var saveUser = {
     username: req.body.username,
     password: encryptLib.encryptPassword(req.body.password),
-    //email:  req.body.email,
+    email:  req.body.email,
     //is_admin: req.body.is_admin
   };
   console.log('new user:', saveUser);
+
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'slack.overflow.app@gmail.com',
+      pass: 'k4zpd5ha'
+    }
+  });
+  
+  let mailOptions = {
+    from: 'slack.overflow.app@gmail.com',
+    to: email,
+    subject: 'Your Username and Password for Slack Overflow',
+    text: `username: ${username}, password: ${req.body.password}`
+  };
+  
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log(error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+
+
+
+
   pool.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id',
     [saveUser.username, saveUser.password], (err, result) => {
       if (err) {

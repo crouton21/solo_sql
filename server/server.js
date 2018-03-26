@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 
 const passport = require('./strategies/sql.localstrategy');
 const sessionConfig = require('./modules/session-middleware');

@@ -38,11 +38,16 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
     self.registerUser = function () {
       if (self.user.username === '' || self.user.password === '') {
         self.message = "Choose a username and password!";
-      } else {
+      }
+      else if(self.user.email === ''){
+        self.message = "An email is required.";
+      }
+      else {
         console.log('sending to server...', self.user);
         $http.post('/api/user/register', self.user).then(function (response) {
           console.log('success');
           self.slackOverflow.askQuestionButtonVisible = false;
+          swal(`Check ${self.user.email} for your username and password.`);
           $location.path('/home');
         },
           function (response) {
