@@ -252,10 +252,7 @@ img {
 #askButton:hover{
   background-color: #45BD95;
 }
-/* 
-text-angular{
-  height: 50%;
-} */
+
 
 #profile_img_url{
   height: 200px;
@@ -541,8 +538,12 @@ text-angular{
   width: 100%;
 }
 
+/* #upload-photo-btn{
+ transform: translateX(10px);
+} */
+
 #upload-photo-move{
-  transform: translateX(130px);
+  transform: translateX(120px);
 }
 
 #upload-photo-btn-ask{
