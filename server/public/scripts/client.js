@@ -54,6 +54,12 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
       templateUrl: '/views/templates/technologies.html',
       controller: 'TechnologiesController as vm',
     })
+    .when('/support', {
+      templateUrl: '/views/templates/support.html',
+    })
+    .when('/privacy', {
+      templateUrl: '/views/templates/privacy.html',
+    })
     .when('/user', { //USE AS PROFILE??
       templateUrl: '/views/templates/user.html',
       controller: 'UserController as vm',
