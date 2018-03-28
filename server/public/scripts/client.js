@@ -8,7 +8,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
     .when('/', {
       //templateUrl:'index.html',
       controller: 'IndexController as ic',
-      
+      redirectTo: '/questions'
     })
     .when('/questions', {
       templateUrl: '/views/templates/questions.html',
