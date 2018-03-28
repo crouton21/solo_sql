@@ -18,7 +18,7 @@
 
 
 
-<div clss="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
     <button  class="btn btn-link" id="resolveBtn" ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username" ng-hide="vm.slackOverflow.individualQuestion.resolved" ng-click="vm.resolve()">resolve</button>
     <div ng-show="vm.slackOverflow.individualQuestion.resolved">
     <button class="btn btn-link unresolve-btn" id="resolveBtn" ng-click="vm.resolve()"  ng-if="vm.userObject.userName==vm.slackOverflow.individualQuestion.username">unresolve</button>
