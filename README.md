@@ -1,65 +1,90 @@
 # Name of Project
 
-One Paragraph of project description goes here. Link to the live version of the app if it's hosted on Heroku.
+Slack Overflow https://fathomless-depths-55476.herokuapp.com
 
 ## Built With
 
-List technologies and frameworks here
+SQL, AngularJS, node.js, Express, Text-Angular, ng tags input, bootstrap, sweetalert, dirpagination, filestack, heroku, passport
 
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+npm install
+npm start
+
 ### Prerequisites
 
-Link to software that is required to install the app (e.g. node).
+Link to software that is required to install the app.
 
 - [Node.js](https://nodejs.org/en/)
-- List other prerequisites here
 
 
 ### Installing
 
 Steps to get the development environment running.
 
-```sql
-CREATE TABLE "users" (
-  "id" serial primary key,
-  "username" varchar(80) not null UNIQUE,
-  "password" varchar(240) not null
+create table questions(
+	id serial primary key,
+	question_title varchar,
+	question_description varchar,
+	num_of_view int default 0,
+	posted_date date default CURRENT_TIMESTAMP,
+	tag_array text[]
 );
-```
 
-## Screen Shot
+create table tags(
+	id serial primary key,
+	tag_name varchar
+);
 
-Include one or two screen shots of your project here (optional). Remove if unused.
+create table users(
+	id serial primary key,
+	username varchar,
+	password varchar,
+	email varchar,
+	profile_img_url varchar DEFAULT 'images/profile_picture.png'
+);
+
+create table answers(
+	id serial primary key,
+	answer varchar,
+	votes int default 0,
+	posted_date date default CURRENT_TIMESTAMP
+);
+
+create table joint_users_questions(
+	user_id int references users,
+	question_id int references questions ON DELETE CASCADE
+);
+
+create table joint_questions_answers(
+	question_id int references questions ON DELETE CASCADE,
+	answer_id int references answers ON DELETE CASCADE
+);
+
+create table joint_users_answers(
+	user_id int references users,
+	answer_id int references answers ON DELETE CASCADE
+);
 
 ## Documentation
 
-Link to a read-only version of your scope document or other relevant documentation here (optional). Remove if unused.
-
-### Completed Features
-
-High level list of items completed.
-
-- [x] Feature a
-- [x] Feature b
+https://docs.google.com/document/d/1124avU5fwZVGCfh84O-IIqU1KwnkKWJAMT5CMFO0x3k/edit?usp=sharing
 
 ### Next Steps
 
-Features that you would like to add at some point in the future.
-
-- [ ] Feature c
+- [ ] Slack slash commands
+- [ ] build in file upload with text-angular
 
 ## Deployment
 
-Add additional notes about how to deploy this on a live system
+Visit www.heroku.com to deploy
 
-## Authors
+## Author
 
-* Name of author(s)
-
+Christiana Routon
 
 ## Acknowledgments
 
-* Hat tip to anyone who's code was used
+Shout out to the creators of text-angular, bootstrap, dirPagination, awesome fonts, ng tags input and sweetalerts!
