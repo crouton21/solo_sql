@@ -410,5 +410,8 @@ router.get('/', function(request, response){
     })
   }
   })
+
+  //recieve POST request from Slack, url: https://fathomless-depths-55476.herokuapp.com/slack/receive
+  //slash command - /slackoverflow
     
 module.exports = router;
