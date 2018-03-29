@@ -560,6 +560,10 @@ img {
 
 #tech-list{
   list-style-type: none;
-  font-size: 20px;
+  font-size: 15px;
   transform: translateX(-12px);
+}
+
+#link{
+  margin-top: -20px
 }
