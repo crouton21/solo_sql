@@ -10,3 +10,5 @@ const router = express.Router();
 router.post('/receive', function(request, response){
     console.log('in slack post');
 })
+
+module.exports = router;
