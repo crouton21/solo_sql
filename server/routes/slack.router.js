@@ -11,7 +11,8 @@ const router = express.Router();
 router.post('/receive', function(request, response){
     console.log('in slack post', request.body);
     searchedText = request.body.text;
-    searchedText.split(' ');
+    searchedText = searchedText.split(' ');
+    console.log(searchedText);
     let textstring = '';
     for (let text of searchedText){
         textstring += text + '&';
