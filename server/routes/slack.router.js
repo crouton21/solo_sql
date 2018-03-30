@@ -10,12 +10,12 @@ const router = express.Router();
 // // SLACK POST
 router.post('/receive', function(request, response){
     console.log('in slack post', request.body);
-    // searchedText = request.body.text;
-    // let textstring = '';
-    // for (let text of searchedText){
-    //     textstring += text + '&';
-    // }
-    // console.log('textstring to put on url:', searchedText)
+    searchedText = request.body.text;
+    let textstring = '';
+    for (let text of searchedText){
+        textstring += text + '&';
+    }
+    console.log('textstring to put on url:', searchedText)
     // opn('https://slack-overflow-prime.herokuapp.com');
     response.send(`https://slack-overflow-prime.herokuapp.com`);
     ///#!/search/${textstring}
