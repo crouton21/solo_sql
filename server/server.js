@@ -25,8 +25,9 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/questions', questionRouter);
 
-// const https = require("https");
-
+const https = require("https");
+const express = require('express');
+const router = express.Router();
 // // SLACK POST
 router.post('/slack/receive', function(request, response){
     console.log('in slack post');
