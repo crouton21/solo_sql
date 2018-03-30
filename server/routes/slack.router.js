@@ -4,7 +4,7 @@ const encryptLib = require('../modules/encryption');
 const Person = require('../models/Person');
 const userStrategy = require('../strategies/sql.localstrategy');
 const pool = require('../modules/pool.js');
-// const opn = require('opn');
+const opn = require('opn');
 const router = express.Router();
 
 // // SLACK POST
@@ -13,6 +13,7 @@ router.post('/receive', function(request, response){
     //if request.body.text is empty send to slackOverflow home page, otherwise send search link
     searchedText = request.body.text;
     if (searchedText == ''){
+        opn('https://slack-overflow-prime.herokuapp.com/', {app: 'google chrome'});
         response.send(`https://slack-overflow-prime.herokuapp.com/`);
     }
     else{
@@ -24,6 +25,7 @@ router.post('/receive', function(request, response){
     }
     console.log('textstring to put on url:', textstring)
     // opn('https://slack-overflow-prime.herokuapp.com');
+    opn(`https://slack-overflow-prime.herokuapp.com/#!/search/${textstring}`, {app: 'google chrome'});
     response.send(`https://slack-overflow-prime.herokuapp.com/#!/search/${textstring}`);
     ///#!/search/${textstring}
     }
