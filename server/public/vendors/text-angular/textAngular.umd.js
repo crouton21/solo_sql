@@ -414,46 +414,13 @@ angular.module('textAngularSetup', [])
             var reLinkButton = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" tabindex="-1" unselectable="on" title="' + taTranslations.editLink.reLinkButton.tooltip + '"><i class="fa fa-edit icon-edit"></i></button>');
             reLinkButton.on('click', function(event){
                 event.preventDefault();
-                //var urlLink = $window.prompt(taTranslations.insertLink.dialogPrompt, $element.attr('href'));
-                var urlLink = $window.swal({
-                    title: 'insert link', //taTranslations.insertLink.dialogPrompt
-                    type: "input",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                }, function (urlLink) {
-                    if(urlLink && urlLink !== '' && urlLink !== 'http://'){
+                var urlLink = $window.prompt(taTranslations.insertLink.dialogPrompt, $element.attr('href'));
+                if(urlLink && urlLink !== '' && urlLink !== 'http://'){
                     $element.attr('href', urlLink);
                     editorScope.updateTaBindtaTextElement();
                 }
-                    editorScope.hidePopover();
-                  });
-                });
-
-
-                // swal({
-                //     title: "An input!",
-                //     text: "Write something interesting:",
-                //     type: "input",
-                //     showCancelButton: true,
-                //     closeOnConfirm: false,
-                //     inputPlaceholder: "Write something"
-                //   }, function (inputValue) {
-                //     if (inputValue === false) return false;
-                //     if (inputValue === "") {
-                //       swal.showInputError("You need to write something!");
-                //       return false
-                //     }
-                //     swal("Nice!", "You wrote: " + inputValue, "success");
-                //   });
-
-
-
-            //     if(urlLink && urlLink !== '' && urlLink !== 'http://'){
-            //         $element.attr('href', urlLink);
-            //         editorScope.updateTaBindtaTextElement();
-            //     }
-            //     editorScope.hidePopover();
-            // });
+                editorScope.hidePopover();
+            });
             buttonGroup.append(reLinkButton);
             var unLinkButton = angular.element('<button type="button" class="btn btn-default btn-sm btn-small" tabindex="-1" unselectable="on" title="' + taTranslations.editLink.unLinkButton.tooltip + '"><i class="fa fa-unlink icon-unlink"></i></button>');
             // directly before this click event is fired a digest is fired off whereby the reference to $element is orphaned off

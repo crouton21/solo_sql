@@ -1,4 +1,4 @@
-.ta-hidden-input {
+/* .ta-hidden-input {
     width: 1px;
     height: 1px;
     border: none;
@@ -9,7 +9,7 @@
     left: -10000px;
     opacity: 0;
     overflow: hidden;
-}
+} */
 
 /* add generic styling for the editor */
 .ta-root.focussed > .ta-scroll-window.form-control {
@@ -21,7 +21,7 @@
 }
 
 .ta-editor.ta-html, .ta-scroll-window.form-control {
-    min-height: 200px;
+    min-height: 300px;
     height: auto;
     overflow: auto;
     font-family: inherit;
@@ -35,7 +35,7 @@
 
 .ta-scroll-window > .ta-bind {
     height: auto;
-    min-height: 200px;
+    min-height: 300px;
     padding: 6px 12px;
 }
 
