@@ -8,7 +8,10 @@ const router = express.Router();
 
 // // SLACK POST
 router.post('/receive', function(request, response){
-    console.log('in slack post', request.body);
+    console.log('in slack post', request.body.text);
+    searchedText = request.body.text;
+    response.send(`https://fathomless-depths-55476.herokuapp.com`);
+
 })
 
 module.exports = router;
