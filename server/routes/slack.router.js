@@ -12,6 +12,10 @@ router.post('/receive', function(request, response){
     console.log('in slack post', request.body);
     //if request.body.text is empty send to slackOverflow home page, otherwise send search link
     searchedText = request.body.text;
+    if (searchedText == ''){
+        response.send(`https://slack-overflow-prime.herokuapp.com/`);
+    }
+    else{
     searchedText = searchedText.split(' ');
     console.log(searchedText);
     let textstring = '';
@@ -22,6 +26,7 @@ router.post('/receive', function(request, response){
     // opn('https://slack-overflow-prime.herokuapp.com');
     response.send(`https://slack-overflow-prime.herokuapp.com/#!/search/${textstring}`);
     ///#!/search/${textstring}
+    }
 })
 
 module.exports = router;
