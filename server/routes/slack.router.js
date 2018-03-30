@@ -11,8 +11,12 @@ const router = express.Router();
 router.post('/receive', function(request, response){
     console.log('in slack post', request.body.text);
     searchedText = request.body.text;
+    let textstring = '';
+    for (let text of searchedText){
+        textstring += text + '&';
+    }
     // opn('https://slack-overflow-prime.herokuapp.com');
-    response.send(`https://slack-overflow-prime.herokuapp.com`);
+    response.send(`https://slack-overflow-prime.herokuapp.com/search/${textstring}`);
 
 })
 

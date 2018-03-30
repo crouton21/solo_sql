@@ -57,8 +57,12 @@ router.get('/', function(request, response){
 //       })
 //   })
 
-  router.post('/search', function(request, response){
-    let search_term_array = request.body.search_term_array;
+  router.post('/search/:searchstring', function(request, response){
+    // let search_term_array = request.body.search_term_array;
+    // console.log('search term in router:', search_term_array);
+    let searchstring = request.params.searchstring;
+    let search_term_array = searchstring.split('&');
+    search_term_array.pop();
     console.log('search term in router:', search_term_array);
     let searchArrayTitle = [];
     let searchArrayDescription = [];

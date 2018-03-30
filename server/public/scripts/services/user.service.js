@@ -27,7 +27,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       tagBeingAdded: false,
       isUserAdmin: false,
       addTag: '',
-      isBeingEdited: false
+      isBeingEdited: false,
+      searchInString: ''
     }
 
   self.getuser = function(){
@@ -132,12 +133,17 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       }
     }
     console.log('in searchEntered function', self.search_term_array);
+    self.searchInString = '';
+    for (let term of self.search_term_array){
+      self.searchInString += term + '&';
+    }
+    console.log('search string:', self.searchInString)
     //HTTP GET with searchTerm, search in database.  
     self.slackOverflow.askQuestionButtonVisible = true;
     $http({
       method: 'POST',
-      url: '/questions/search',
-      data: {search_term_array: self.search_term_array}
+      url: `/questions/search/${self.searchInString}`,
+      // data: {search_term_array: self.search_term_array}
     }).then(function(response){
       console.log('search success', response.data);
       for (let question of response.data){
@@ -152,7 +158,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
       self.slackOverflow.askQuestionButtonVisible = true;
-      $location.url('/search');
+      $location.url(`/search/${self.searchInString}`);
+      self.searchInString = '';
       self.slackOverflow.previousLocation = ("/search")
   }).catch(function(error){
       console.log('Error on search get', error);

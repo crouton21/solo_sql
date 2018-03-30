@@ -26,7 +26,7 @@ myApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $l
       templateUrl: '/views/templates/individual_tag.html',
       controller: 'IndividualTagController as vm',
     })
-    .when('/search', {
+    .when('/search/:searchstring', {
       templateUrl: '/views/templates/search.html',
       controller: 'SearchController as vm',
     })
