@@ -28,9 +28,9 @@ app.use('/questions', questionRouter);
 // const https = require("https");
 
 // // SLACK POST
-// router.post('/slack/receive', function(request, response){
-//     console.log('in slack post', request.body);
-// })
+router.post('/slack/receive', function(request, response){
+    console.log('in slack post');
+})
 
 
 // Serve static files
