@@ -9,6 +9,8 @@ const sessionConfig = require('./modules/session-middleware');
 // Route includes
 const userRouter = require('./routes/user.router');
 const questionRouter = require('./routes/question.router');
+//slack router
+const slackRouter = require('./routes/slack.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -24,14 +26,8 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/questions', questionRouter);
-
-const https = require("https");
-const express = require('express');
-const router = express.Router();
-// // SLACK POST
-router.post('/slack/receive', function(request, response){
-    console.log('in slack post');
-})
+//slack route
+app.use('/slack', slackRouter);
 
 
 // Serve static files
