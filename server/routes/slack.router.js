@@ -15,9 +15,10 @@ router.post('/receive', function(request, response){
     for (let text of searchedText){
         textstring += text + '&';
     }
+    console.log('textstring to put on url:', searchedText)
     // opn('https://slack-overflow-prime.herokuapp.com');
-    response.send(`https://slack-overflow-prime.herokuapp.com/search/${textstring}`);
-
+    response.send(`https://slack-overflow-prime.herokuapp.com`);
+    ///#!/search/${textstring}
 })
 
 module.exports = router;
