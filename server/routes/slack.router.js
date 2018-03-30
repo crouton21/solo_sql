@@ -10,6 +10,7 @@ const router = express.Router();
 // // SLACK POST
 router.post('/receive', function(request, response){
     console.log('in slack post', request.body);
+    //if request.body.text is empty send to slackOverflow home page, otherwise send search link
     searchedText = request.body.text;
     searchedText = searchedText.split(' ');
     console.log(searchedText);

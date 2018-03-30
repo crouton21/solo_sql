@@ -10,5 +10,6 @@ myApp.controller('IndexController', ['$http', '$location', 'UserService', functi
     self.userObject = UserService.userObject;
     self.signOut = UserService.signOut;
     self.goToProfile = UserService.goToProfile;
+    self.search = UserService.search;
 
 }]);

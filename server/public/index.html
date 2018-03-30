@@ -77,9 +77,8 @@
       <a class="header_link questions_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item"  href="#!/questions">Questions</a>
 
       <a class="header_link tags_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item"   href="#!/tags">Tags</a>
-
-
-      <form ng-submit="ic.searchEntered()" class="col-xs-5 col-md-5 col-lg-5 header_item">
+      <!-- ng-submit="ic.searchEntered()" -->
+      <form ng-submit="ic.search()" class="col-xs-5 col-md-5 col-lg-5 header_item">
             <input id="searchBar" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
       </form>
 

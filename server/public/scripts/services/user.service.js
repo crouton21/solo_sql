@@ -118,13 +118,25 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   })    
   }
 
+  self.search = function(){
+    let searchstring = '';
+    let split = self.slackOverflow.searchTerm.split(' ');
+    for (let term of split){
+      searchstring += term + '&';
+    }
+    $location.url(`/search/${searchstring}`);
+  }
+
   self.searchEntered = function(){
-    self.slackOverflow.originalSearchTerm = '';
-    self.slackOverflow.originalSearchTerm = self.slackOverflow.searchTerm;
+    let searchstring = $routeParams.searchstring;
+    console.log(searchstring, 'search string in search entered');
     self.slackOverflow.searchResults = [];
     self.commonWords = ['or', 'and', 'but', 'so', 'is', 'not', 'my', 'is', 'it', 'the', 'this', 'question', 'working', 'of', 'here', 'maybe', 'be', 'to', 'a', 'in', 'that', 'have', 'it', 'i', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'an', 'will', 'my', 'would', 'there', 'what', 'up', 'out', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'your', 'good','some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'most', 'us'];
-    self.search_term_array = self.slackOverflow.searchTerm.toLowerCase().split(' ');
-
+    // self.search_term_array = self.slackOverflow.searchTerm.toLowerCase().split(' ');
+    self.search_term_array = searchstring.split('&');
+    self.slackOverflow.originalSearchTerm = '';
+    self.slackOverflow.originalSearchTerm = self.search_term_array.join(' ');
+    self.slackOverflow.originalSearchTerm = self.slackOverflow.originalSearchTerm.substring(0, self.slackOverflow.originalSearchTerm.length-1)
     for(let i = self.search_term_array.length-1; i--;){
       for (word of self.commonWords){
       if (self.search_term_array[i] === word){
@@ -132,6 +144,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       }
       }
     }
+    self.search_term_array.pop();
     console.log('in searchEntered function', self.search_term_array);
     self.searchInString = '';
     for (let term of self.search_term_array){
@@ -158,7 +171,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
       self.slackOverflow.askQuestionButtonVisible = true;
-      $location.url(`/search/${self.searchInString}`);
+      // $location.url(`/search/${self.searchInString}`);
       self.searchInString = '';
       self.slackOverflow.previousLocation = ("/search")
   }).catch(function(error){
