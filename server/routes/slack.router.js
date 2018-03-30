@@ -9,7 +9,7 @@ const router = express.Router();
 
 // // SLACK POST
 router.post('/receive', function(request, response){
-    console.log('in slack post', request.body.text);
+    console.log('in slack post', request.body);
     // searchedText = request.body.text;
     // let textstring = '';
     // for (let text of searchedText){
