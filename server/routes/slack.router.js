@@ -15,7 +15,7 @@ router.post('/receive', function(request, response){
     //if request.body.text is empty send to slackOverflow home page, otherwise send search link
     searchedText = request.body.text;
     if (searchedText == ''){
-        open('https://slack-overflow-prime.herokuapp.com/', {app: 'google chrome'});
+        open('https://slack-overflow-prime.herokuapp.com/');
         response.send(`https://slack-overflow-prime.herokuapp.com/`);
     }
     else{
@@ -37,7 +37,7 @@ router.post('/receive', function(request, response){
         textstring += text + '&';
     }
     console.log('textstring to put on url:', textstring)
-    open(`https://slack-overflow-prime.herokuapp.com/#!/search/${textstring}`, {app: 'google chrome'});
+    open(`https://slack-overflow-prime.herokuapp.com/#!/search/${textstring}`);
     response.send(`https://slack-overflow-prime.herokuapp.com/#!/search/${textstring}`);
     }
 })
