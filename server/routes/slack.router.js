@@ -48,5 +48,5 @@ console.log('original searchterm in router outside function:', originalSearchTer
 
 module.exports = { 
     router:router,
-    originalSearchTerm:originalSearchTerm
+    // originalSearchTerm:originalSearchTerm
   }
