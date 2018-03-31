@@ -11,7 +11,9 @@ const userRouter = require('./routes/user.router');
 const questionRouter = require('./routes/question.router');
 //slack router
 const slackRouter = require('./routes/slack.router');
-// const ogsearchTerm = require('./routes/slack.router');
+
+let ogSearchTerm = slackRouter.originalSearchTerm;
+console.log(ogSearchTerm);
 
 // Body parser middleware
 app.use(bodyParser.json());
