@@ -28,7 +28,8 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       isUserAdmin: false,
       addTag: '',
       isBeingEdited: false,
-      searchInString: ''
+      searchInString: '',
+      alertShowing: true,
     }
 
   self.getuser = function(){
@@ -576,6 +577,12 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     }).catch(function(error){
       console.log('error editing question', error);
     })
+  }
+
+  self.xoutofalert = function(){
+    console.log('in xoutofalert function!');
+    self.slackOverflow.alertShowing = false;
+
   }
 
   self.getAllTags();

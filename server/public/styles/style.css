@@ -567,3 +567,19 @@ img {
 #link{
   margin-top: -20px
 }
+
+#slash{
+  text-align: center;
+  padding: 10px;
+  margin-top: 10px;
+  width: 100%;
+  background-color: #f6f670;
+  margin-bottom: -10px;
+}
+
+#xbutton{
+  float: right;
+  vertical-align: top;
+  width: 8px;
+  height:8px;
+}

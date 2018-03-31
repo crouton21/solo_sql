@@ -6,6 +6,7 @@ myApp.controller('QuestionsController', ['$http', '$location', 'UserService', fu
     self.getTopQuestions = UserService.getTopQuestions;
     self.getIndividualQuestion = UserService.getIndividualQuestion;
     self.getIndividualQuestionView = UserService.getIndividualQuestionView;
+    self.xoutofalert = UserService.xoutofalert;
 
     self.getTopQuestions();
 

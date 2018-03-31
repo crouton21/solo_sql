@@ -1,6 +1,6 @@
 
 <h3 class="offset-xs-1 col-xs-12 offset-sm-1 col-sm-12 offset-md-1 col-md-12 offset-lg-1 col-lg-12 page-title">Most Viewed Questions</h3>
-
+<div ng-if="vm.slackOverflow.alertShowing"><div ng-include="'views/partials/slashcommands.html'"></div></div>
 <hr>
 
 <div class="container-fluid" ng-repeat="question in vm.slackOverflow.topQuestions">
