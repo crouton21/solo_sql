@@ -1,4 +1,4 @@
-/* .ta-hidden-input {
+.ta-hidden-input {
     width: 1px;
     height: 1px;
     border: none;
@@ -9,7 +9,7 @@
     left: -10000px;
     opacity: 0;
     overflow: hidden;
-} */
+}
 
 /* add generic styling for the editor */
 .ta-root.focussed > .ta-scroll-window.form-control {
