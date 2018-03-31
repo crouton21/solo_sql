@@ -42,4 +42,7 @@ router.post('/receive', function(request, response){
     }
 })
 
-module.exports = router;
+module.exports = { 
+    router:router,
+    originalSearchTerm:originalSearchTerm
+  }

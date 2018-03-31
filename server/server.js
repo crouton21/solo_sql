@@ -11,6 +11,7 @@ const userRouter = require('./routes/user.router');
 const questionRouter = require('./routes/question.router');
 //slack router
 const slackRouter = require('./routes/slack.router');
+// const ogsearchTerm = require('./routes/slack.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,7 +28,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/questions', questionRouter);
 //slack route
-app.use('/slack', slackRouter);
+app.use('/slack', slackRouter.router);
 
 
 // Serve static files
@@ -39,3 +40,4 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`);
 });
+
