@@ -7,6 +7,7 @@ myApp.controller('IndividualTagController', ['$http', '$location', 'UserService'
     self.getTagQuestions = UserService.getTagQuestions;
     self.slackOverflow.tagName = tagName;
     self.getIndividualQuestionView = UserService.getIndividualQuestionView;
+    self.deleteTag = UserService.deleteTag;
     self.getTagQuestions(tagName);
 
 }]);

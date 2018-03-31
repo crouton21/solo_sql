@@ -346,6 +346,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
         self.slackOverflow.tagsObjectArray.push({text: tag.tag_name});
       } 
       console.log('tagsObjectArray: ', self.slackOverflow.tagsObjectArray);
+      self.slackOverflow.askQuestionButtonVisible=true;
   }).catch(function(error){
       console.log('Error on get all tags', error);
   })    
@@ -515,15 +516,15 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
     })
   }
 
-  // self.checkTag = function(tag){
-  //   console.log('in checkTag function', tag.text)
-  //   for (ind_tag of self.slackOverflow.allTags){
-  //     if (ind_tag.tag_name == tag.text){
-  //       return true
-  //     }
-  //   }
-  //   return false
-  // }
+  self.checkTag = function(tag){
+    console.log('in checkTag function', tag.text)
+    for (ind_tag of self.slackOverflow.allTags){
+      if (ind_tag.tag_name == tag.text){
+        return true
+      }
+    }
+    return false
+  }
 
   self.resolve = function(){
     let id = self.slackOverflow.individualQuestion.id
@@ -582,7 +583,22 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
   self.xoutofalert = function(){
     console.log('in xoutofalert function!');
     self.slackOverflow.alertShowing = false;
+  }
 
+  self.deleteTag = function(){
+    console.log('tag to be deleted:', self.slackOverflow.tagName)
+    $http({
+      method: 'DELETE',
+      url: `/questions/tags/${self.slackOverflow.tagName}`
+    }).then(function(response){
+      console.log('tag deleted', 200);
+      //get all tags
+      self.getAllTags();
+      //go to tags page
+      $location.url('/tags');
+  }).catch(function(error){
+      console.log('error deleting tag');
+  })
   }
 
   self.getAllTags();

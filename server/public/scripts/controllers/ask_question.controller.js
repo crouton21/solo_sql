@@ -8,5 +8,6 @@ myApp.controller('AskController', ['$http', '$location', 'UserService', '$scope'
     self.checkTag = UserService.checkTag;
     self.uploadWithTextAngular = UserService.uploadWithTextAngular;
     self.postEditedQuestion = UserService.postEditedQuestion;
+    self.checkTag = UserService.checkTag;
 
 }]);

@@ -415,6 +415,22 @@ router.get('/', function(request, response){
   }
   })
 
+  router.delete('/tags/:name', function(request, response){
+    if (request.isAuthenticated()){
+      const tagname = request.params.name;
+      sqlText = "DELETE from tags where tag_name = $1";
+      pool.query(sqlText, [tagname])
+      .then(function(result) {
+        console.log('tag deleted successfully')
+        response.sendStatus(200);
+      })
+      .catch(function(error){
+        console.log('Error on deleting tag:', error);
+        response.sendStatus(500);
+      })
+    }
+  })
+
   //recieve POST request from Slack, url: https://fathomless-depths-55476.herokuapp.com/slack/receive
   //slash command - /slackoverflow
     

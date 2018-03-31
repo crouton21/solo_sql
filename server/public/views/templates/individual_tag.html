@@ -1,5 +1,5 @@
 <h3 class="offset-xs-1 col-xs-12 offset-sm-1 col-sm-12 offset-md-1 col-md-12 offset-lg-1 col-lg-12 page-title">{{vm.slackOverflow.tagName}}</h3>
-
+<button class="btn btn-link" id="deleteTag" ng-click="vm.deleteTag()" ng-show="vm.slackOverflow.isUserAdmin">delete</button>
 <hr>
 
 <div class="container-fluid" dir-paginate="question in vm.slackOverflow.taggedQuestions|itemsPerPage:10">

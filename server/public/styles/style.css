@@ -583,3 +583,8 @@ img {
   width: 8px;
   height:8px;
 }
+
+#deleteTag{
+  font-size: 10px;
+  margin-left: 140px;
+}
