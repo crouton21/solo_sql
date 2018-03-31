@@ -22,7 +22,8 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
             if (response.status == 200) {
               console.log('success: ', response.data);
               // location works with SPA (ng-route)
-              $location.path('/user');
+              // $location.path('/user');
+              $location.path(self.slackOverflow.previousLocation);
             } else {
               console.log('failure error: ', response);
               self.message = "Incorrect credentials. Please try again.";

@@ -30,6 +30,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       isBeingEdited: false,
       searchInString: '',
       alertShowing: true,
+      searchstring: ''
     }
 
   self.getuser = function(){
@@ -46,7 +47,7 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
             console.log('userObject:', self.userObject);
             self.slackOverflow.authenticationStatus = true;
             console.log('user authentication status', self.slackOverflow.authenticationStatus);
-            $location.path(self.slackOverflow.previousLocation);
+            // $location.path(self.slackOverflow.previousLocation);
         } else {
             console.log('UserService -- getuser -- failure');
             // user has no session, bounce them back to the login page
@@ -163,7 +164,6 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       self.slackOverflow.askQuestionButtonVisible = true;
       // $location.url(`/search/${self.searchInString}`);
       self.searchInString = '';
-      self.slackOverflow.previousLocation = ("/search")
   }).catch(function(error){
       console.log('Error on search get', error);
   }) 
