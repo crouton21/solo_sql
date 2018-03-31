@@ -73,7 +73,9 @@ router.get('/', function(request, response){
     for (let i=0; i<search_term_array.length; i++){
         let word = search_term_array[i];
         let upword = '';
-        word = word.toLowerCase();
+        if (word.length>1){
+          word = word[0].toLowerCase() + word.substring(1, word.length);
+        }
         console.log('word:', word, 'length of word:', word.length);
         if (word.length>1){
           upword = word[0].toUpperCase() + word.substring(1, word.length);
