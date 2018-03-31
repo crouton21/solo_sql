@@ -68,14 +68,33 @@ router.get('/', function(request, response){
     let searchArrayDescription = [];
     let sumArray = []
     let aliasArray = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','aa','bb','cc','dd','ee','ff','gg','hh','ii','jj','kk','ll','mm','nn','oo','pp','qq','rr','ss','tt','uu','vv','ww','xx','yy','zz','aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj','kkk','lll','mmm','nnn','ooo','ppp','qqq','rrr','sss','ttt','uuu','vvv','www','xxx','yyy','zzz','aaaa','bbbb','cccc','dddd','eeee','ffff','gggg','hhhh','iiii','jjjj','kkkk','llll','mmmm','nnnn','oooo','pppp','qqqq','rrrr','ssss','tttt','uuuu','vvvv','wwww','xxxx','yyyy','zzzz'];
+    let aliasArray2 = ['aaaaa','bbbbb','ccccc','ddddd','eeeee','fffff','ggggg','hhhhh','iiiii','jjjjj','kkkkk','lllll','mmmmm','nnnnn','ooooo','ppppp','qqqqq','rrrrr','sssss','ttttt','uuuuu','vvvvv','wwwww','xxxxx','yyyyy','zzzzz','aaaaaa','bbbbbb','cccccc','dddddd','eeeeee','ffffff','gggggg','hhhhhh','iiiiii','jjjjjj','kkkkkk','llllll','mmmmmm','nnnnnn','oooooo','ppppp','qqqqqq','rrrrrr','ssssss','tttttt','uuuuuu','vvvvvv','wwwwww','xxxxxx','yyyyyy','zzzzzz','aaaaaaa','bbbbbbb','ccccccc','ddddddd','eeeeeee','fffffff','ggggggg','hhhhhhh','iiiiiii','jjjjjjj','kkkkkkk','lllllll','mmmmmmm','nnnnnnn','ooooooo','ppppppp','qqqqqqq','rrrrrrr','sssssss','ttttttt','uuuuuuu','vvvvvvv','wwwwwww','xxxxxxx','yyyyyyy','zzzzzzz','aaaaaaaa','bbbbbbbb','cccccccc','dddddddd','eeeeeeee','ffffffff','gggggggg','hhhhhhhh','iiiiiiii','jjjjjjjj','kkkkkkkk','llllllll','mmmmmmmm','nnnnnnnn','oooooooo','pppppppp','qqqqqqqq','rrrrrrrr','ssssssss','tttttttt','uuuuuuuu','vvvvvvvv','wwwwwwww','xxxxxxxx','yyyyyyyy','zzzzzzzz'];
+
     for (let i=0; i<search_term_array.length; i++){
         let word = search_term_array[i];
+        let upword = '';
+        word = word.toLowerCase();
+        console.log('word:', word, 'length of word:', word.length);
+        if (word.length>1){
+          upword = word[0].toUpperCase() + word.substring(1, word.length);
+          console.log('word:', word, 'upword:', upword)
+        }
         let alias1 = aliasArray[i];
         let alias2 = aliasArray[aliasArray.length-1-i]
+        let alias3 = aliasArray2[i];
+        let alias4 = aliasArray2[aliasArray2.length-1-i]
         searchArrayTitle.push(`LATERAL(SELECT COUNT(*) - 1 AS ${alias1} FROM regexp_split_to_table(tb.question_title, '${word}')) ${alias1}`);
+        if (word.length>1){
+          searchArrayTitle.push(`LATERAL(SELECT COUNT(*) - 1 AS ${alias3} FROM regexp_split_to_table(tb.question_title, '${upword}')) ${alias3}`);
+        }
         searchArrayDescription.push(`LATERAL(SELECT COUNT(*) - 1 AS ${alias2} FROM regexp_split_to_table(tb.question_description, '${word}')) ${alias2}`);
+        if (word.length>1){
+          searchArrayDescription.push(`LATERAL(SELECT COUNT(*) - 1 AS ${alias4} FROM regexp_split_to_table(tb.question_description, '${upword}')) ${alias4}`);
+        }
         sumArray.push(alias1);
         sumArray.push(alias2);
+        sumArray.push(alias3);
+        sumArray.push(alias4);
     }
     addedsqlTextForTitle = searchArrayTitle.join(", ");
     addedsqlTextForDescription = searchArrayDescription.join(", ");
