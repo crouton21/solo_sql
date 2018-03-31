@@ -13,7 +13,7 @@ const questionRouter = require('./routes/question.router');
 const slackRouter = require('./routes/slack.router');
 
 let ogSearchTerm = slackRouter.originalSearchTerm;
-console.log(ogSearchTerm);
+console.log('og search term in server:', ogSearchTerm);
 
 // Body parser middleware
 app.use(bodyParser.json());

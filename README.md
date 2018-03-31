@@ -1,6 +1,6 @@
 # Name of Project
 
-Slack Overflow https://fathomless-depths-55476.herokuapp.com
+Slack Overflow https://slack-overflow-prime.herokuapp.com
 
 ## Built With
 
