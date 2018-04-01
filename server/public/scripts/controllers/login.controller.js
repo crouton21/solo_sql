@@ -3,6 +3,7 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
     var self = this;
 
     self.slackOverflow = UserService.slackOverflow;
+    self.getuser = UserService.getuser;
 
     self.user = {
       username: '',
@@ -10,6 +11,7 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
       email: ''
     };
     self.message = '';
+
 
     self.login = function () {
       self.slackOverflow.askQuestionButtonVisible = false;
@@ -23,6 +25,7 @@ myApp.controller('LoginController', ['$http', '$location', 'UserService', functi
               console.log('success: ', response.data);
               // location works with SPA (ng-route)
               // $location.path('/user');
+              self.getuser();
               self.slackOverflow.authenticationStatus = true;
               $location.path(self.slackOverflow.previousLocation);
             } else {
