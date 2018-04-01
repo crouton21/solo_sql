@@ -157,7 +157,12 @@ myApp.service('UserService', ['$http', '$location', '$routeParams',  function($h
       }
       for (let question of self.slackOverflow.searchResults){
         question.posted_date = question.posted_date.substring(0,10);
+        let index = question.tag_array.indexOf('dummy');
+        if (index > -1) {
+          question.tag_array.splice(index, 1);
+        }
       }
+
       console.log(self.slackOverflow.searchResults);
       //self.slackOverflow.searchResults = response.data;
       self.slackOverflow.searchTerm = '';
