@@ -12,9 +12,6 @@ const questionRouter = require('./routes/question.router');
 //slack router
 const slackRouter = require('./routes/slack.router');
 
-// let ogSearchTerm = slackRouter.originalSearchTerm;
-// console.log('og search term in server:', ogSearchTerm);
-
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -31,7 +28,6 @@ app.use('/api/user', userRouter);
 app.use('/questions', questionRouter);
 //slack route
 app.use('/slack', slackRouter.router);
-
 
 // Serve static files
 app.use(express.static('server/public'));

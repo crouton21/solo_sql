@@ -1,51 +1,64 @@
+<section class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">
 
-<section class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1" >
-
-<div class="row">
-<img id="profile_img_url" src="{{vm.userObject.profile_img_url}}">
-<div id="hi" class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">Hi, {{vm.userObject.userName}}</div>
-</div>
-
-<button id="change-pic-btn" ng-click="vm.upload()">Change Profile Picture</button>
-
-<h4 id="profile-title">Questions Asked</h4>
-<hr id="profile-hr">
-
-<div ng-if="vm.slackOverflow.questionsAskedByIndividualUser.length > 0">
-<div ng-repeat="question in vm.slackOverflow.questionsAskedByIndividualUser">
-        <div class="row"><div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
-        <div><img ng-if="question.resolved" id="check-img" src="/images/check.png" width="2%" height="2%"/>
-        <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)" id="questions">{{question.question_title}}</a>
+        <div class="row">
+                <img id="profile_img_url" src="{{vm.userObject.profile_img_url}}">
+                <div id="hi" class="offset-xs-1 offset-sm-1 offset-md-1 offset-lg-1">Hi, {{vm.userObject.userName}}</div>
         </div>
 
-        <div class="d-flex flex-row">
-                <div ng-repeat="tag in question.tag_array">
-                <span id="tags" class="badge badge-pill badge-plight"><a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a></span>
-                </div>
-        </div><br>
+        <button id="change-pic-btn" ng-click="vm.upload()">Change Profile Picture</button>
 
-        </div></div>
-    </div></div>
-<div id="profile-questions-answers" ng-if="vm.slackOverflow.questionsAskedByIndividualUser.length == 0">You have not asked any questions yet.</div>
+        <h4 id="profile-title">Questions Asked</h4>
+        <hr id="profile-hr">
 
+        <div ng-if="vm.slackOverflow.questionsAskedByIndividualUser.length > 0">
+                <div ng-repeat="question in vm.slackOverflow.questionsAskedByIndividualUser">
+                        <div class="row">
+                                <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
+                                        <div>
+                                                <img ng-if="question.resolved" id="check-img" src="/images/check.png" width="2%"
+                                                        height="2%" />
+                                                <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)" id="questions">{{question.question_title}}</a>
+                                        </div>
 
+                                        <div class="d-flex flex-row">
+                                                <div ng-repeat="tag in question.tag_array">
+                                                        <span id="tags" class="badge badge-pill badge-plight">
+                                                                <a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a>
+                                                        </span>
+                                                </div>
+                                        </div>
+                                        <br>
 
-<h4 id="profile-title">Questions Answered</h4>
-<hr id="profile-hr">
-<div ng-if="vm.slackOverflow.questionsAnsweredByIndividualUser.length > 0">
-<div ng-repeat="question in vm.slackOverflow.questionsAnsweredByIndividualUser">
-        <div class="row"><div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
-                <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)" id="questions">{{question.question_title}}</a>
-        
-                <div class="d-flex flex-row">
-                        <div ng-repeat="tag in question.tag_array">
-                        <span id="tags" class="badge badge-pill badge-plight"><a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a></span>
+                                </div>
                         </div>
-                </div><br>
-        
-                </div></div>
-            </div></div>
-<div id="profile-questions-answers" ng-if="vm.slackOverflow.questionsAnsweredByIndividualUser.length == 0">You have not answered any questions yet.</div>
+                </div>
+        </div>
+        <div id="profile-questions-answers" ng-if="vm.slackOverflow.questionsAskedByIndividualUser.length == 0">You have not asked any questions yet.</div>
+
+
+
+        <h4 id="profile-title">Questions Answered</h4>
+        <hr id="profile-hr">
+        <div ng-if="vm.slackOverflow.questionsAnsweredByIndividualUser.length > 0">
+                <div ng-repeat="question in vm.slackOverflow.questionsAnsweredByIndividualUser">
+                        <div class="row">
+                                <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
+                                        <a ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)" id="questions">{{question.question_title}}</a>
+
+                                        <div class="d-flex flex-row">
+                                                <div ng-repeat="tag in question.tag_array">
+                                                        <span id="tags" class="badge badge-pill badge-plight">
+                                                                <a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a>
+                                                        </span>
+                                                </div>
+                                        </div>
+                                        <br>
+
+                                </div>
+                        </div>
+                </div>
+        </div>
+        <div id="profile-questions-answers" ng-if="vm.slackOverflow.questionsAnsweredByIndividualUser.length == 0">You have not answered any questions yet.</div>
 
 </section>
 
@@ -53,15 +66,24 @@
 
 
 
-    <div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9"><a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
-    
+<div class="offset-xs-1 col-xs-9 offset-sm-1 col-sm-9 offset-md-1 col-md-9 offset-lg-1 col-lg-9">
+        <a id="questions" ng-click="vm.getIndividualQuestionView(question.id, question.num_of_views)">{{question.question_title}}</a>
 
-    <div class="d-flex flex-row">
-    <div ng-repeat="tag in question.tag_array">
-    <span id="tags" class="badge badge-pill badge-plight"><a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a></span>
-    </div>
-    </div>
-    <div id="date" class="offset-xs-9 col-xs-2 offset-sm-9 col-sm-2 offset-md-9 col-md-2 offset-lg-9 col-lg-2">{{question.posted_date}}</div>
+
+        <div class="d-flex flex-row">
+                <div ng-repeat="tag in question.tag_array">
+                        <span id="tags" class="badge badge-pill badge-plight">
+                                <a id="ind-tag" class="p-2" href="#!/tags/{{tag}}">{{tag}}</a>
+                        </span>
+                </div>
+        </div>
+        <div id="date" class="offset-xs-9 col-xs-2 offset-sm-9 col-sm-2 offset-md-9 col-md-2 offset-lg-9 col-lg-2">{{question.posted_date}}</div>
 </div>
 
-<br><br><br><br><br><br><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

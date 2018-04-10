@@ -11,7 +11,6 @@ router.get('/', (req, res) => {
   // check if logged in
   if (req.isAuthenticated()) {
     // send back user object from database
-    console.log('user object in user router,', req.user);
     res.send(req.user);
   } else {
     // failure best handled on the server. do redirect here.
@@ -34,7 +33,6 @@ router.post('/register', (req, res, next) => {
     email:  req.body.email,
     //is_admin: req.body.is_admin
   };
-  console.log('new user:', saveUser);
 
   let transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -53,19 +51,13 @@ router.post('/register', (req, res, next) => {
   
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
-      console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
     }
   });
-
-
-
 
   pool.query('INSERT INTO users (username, password) VALUES ($1, $2) RETURNING id',
     [saveUser.username, saveUser.password], (err, result) => {
       if (err) {
-        console.log("Error inserting data: ", err);
         res.sendStatus(500);
       } else {
         res.sendStatus(201);

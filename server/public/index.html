@@ -1,126 +1,112 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
-    <head>
-        <title>Slack Overflow</title>
 
-        <!--google authentication-->
-        
-        <!-- <meta name="google-signin-client_id" content="88002197219-0t3grfhpb6pgdi6tqei9d18nvhclm5np.apps.googleusercontent.com"> -->
-        <meta name="slack-app-id" content="A9XMRCTRA">
-        <!-- <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
+<head>
+  <title>Slack Overflow</title>
 
+  <!--google authentication-->
 
-        <link rel="stylesheet" href="styles/style.css">
-        <link rel="stylesheet" href="vendors/bootstrap_simple_theme.css">
-        <script src="vendors/bootstrap.js"></script>
-
-        <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
-        <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
-
-        <!-- pagination -->
-        <script src="vendors/dirPagination.js"></script>
-
-        <!--sweetalert -->
-        <script src="vendors/sweetalert.min.js"></script>
-
-        <!-- modal -->
-        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
-        <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.3.js"></script>
-        
-        <!-- TagsInput -->
-        <script src="vendors/ng-tags-input.js"></script>
-        <link rel="stylesheet" href="vendors/ng-tags-input.css">
-
-        <!-- TextAngular -->
-        <link rel='stylesheet' href='vendors/text-angular/textAngular.css'>
-        <script src='vendors/text-angular/textAngular-rangy.min.js'></script>
-        <script src='vendors/text-angular/textAngular-sanitize.min.js'></script>
-        <!-- <script src='vendors/text-angular/textAngular.min.js'></script> -->
-        <script src='vendors/text-angular/textAngular.min.js'></script>
-        <script src='vendors/text-angular/textAngular.umd.js'></script>
-        <link rel="stylesheet" href="vendors/text-angular/font-awesome.min.css">
+  <!-- <meta name="google-signin-client_id" content="88002197219-0t3grfhpb6pgdi6tqei9d18nvhclm5np.apps.googleusercontent.com"> -->
+  <meta name="slack-app-id" content="A9XMRCTRA">
+  <!-- <script src="https://apis.google.com/js/platform.js"  async defer></script> -->
 
 
+  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" href="vendors/bootstrap_simple_theme.css">
+  <script src="vendors/bootstrap.js"></script>
 
-        <script type="text/javascript" src="scripts/client.js"></script>
-        <script type="text/javascript" src="scripts/controllers/info.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/user.controller.js"></script>
-        <script type="text/javascript" src="scripts/services/user.service.js"></script>
-        <!-- filestack -->
-        <script type="text/javascript" src="https://static.filestackapi.com/v3/filestack.js"></script>
-        <!-- SOURCE IN ALL CONTROLLERS, add controllers in client.js -->
-        <script type="text/javascript" src="scripts/controllers/index.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/ask_question.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/individual_question.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/individual_tag.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/profile.controller.js"></script> 
-        <script type="text/javascript" src="scripts/controllers/search.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/tags.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/questions.controller.js"></script>
-        <script type="text/javascript" src="scripts/controllers/all_questions.controller.js"></script>
+  <script type="text/javascript" src="vendors/angular/angular.min.js"></script>
+  <script type="text/javascript" src="vendors/angular-route/angular-route.min.js"></script>
 
-    </head>
+  <!-- pagination -->
+  <script src="vendors/dirPagination.js"></script>
 
-    <body>
-    <section ng-controller="IndexController as ic">
+  <!--sweetalert -->
+  <script src="vendors/sweetalert.min.js"></script>
+
+  <!-- modal -->
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.js"></script>
+  <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.13.3.js"></script>
+
+  <!-- TagsInput -->
+  <script src="vendors/ng-tags-input.js"></script>
+  <link rel="stylesheet" href="vendors/ng-tags-input.css">
+
+  <!-- TextAngular -->
+  <link rel='stylesheet' href='vendors/text-angular/textAngular.css'>
+  <script src='vendors/text-angular/textAngular-rangy.min.js'></script>
+  <script src='vendors/text-angular/textAngular-sanitize.min.js'></script>
+  <!-- <script src='vendors/text-angular/textAngular.min.js'></script> -->
+  <script src='vendors/text-angular/textAngular.min.js'></script>
+  <script src='vendors/text-angular/textAngular.umd.js'></script>
+  <link rel="stylesheet" href="vendors/text-angular/font-awesome.min.css">
+
+
+
+  <script type="text/javascript" src="scripts/client.js"></script>
+  <script type="text/javascript" src="scripts/controllers/login.controller.js"></script>
+  <script type="text/javascript" src="scripts/services/user.service.js"></script>
+  <!-- filestack -->
+  <script type="text/javascript" src="https://static.filestackapi.com/v3/filestack.js"></script>
+  <!-- SOURCE IN ALL CONTROLLERS, add controllers in client.js -->
+  <script type="text/javascript" src="scripts/controllers/index.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/ask_question.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/individual_question.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/individual_tag.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/profile.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/search.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/tags.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/questions.controller.js"></script>
+  <script type="text/javascript" src="scripts/controllers/all_questions.controller.js"></script>
+
+</head>
+
+<body>
+  <section ng-controller="IndexController as ic">
 
     <div class="container-fluid header">
       <div class="row">
-      <div id="logo-container" class="offset-xs-1 col-xs-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right header_item">
-      <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log"  ng-click="ic.logoClicked()">
-      </div>
-      
-    
-    
+        <div id="logo-container" class="offset-xs-1 col-xs-1 offset-md-1 col-md-1 offset-lg-1 col-lg-1 text-right header_item">
+          <img id="logo" src="images/slack_overflow.png" alt="Slack Overflow Log" ng-click="ic.logoClicked()">
+        </div>
 
-      <a class="header_link questions_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item"  href="#!/questions">Questions</a>
+        <a class="header_link questions_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item" href="#!/questions">Questions</a>
 
-      <a class="header_link tags_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item"   href="#!/tags">Tags</a>
-      <!-- ng-submit="ic.searchEntered()" -->
-      <form ng-submit="ic.search()" class="col-xs-5 col-md-5 col-lg-5 header_item">
-            <input id="searchBar" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..."/>
-      </form>
+        <a class="header_link tags_link col-xs-1 col-md-1 col-lg-1 col-centered header_item item" href="#!/tags">Tags</a>
 
-      <div class="col-xs-2 col-md-2 col-lg-2 header_item">
-      <div class="row"><a href="#!/home" id="small_header_link" class="col-xs-12 col-md-12 col-lg-12 pull-left btn-link" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a></div>
-      <div class="row"><a ng-click="ic.logout()" id="small_header_link" class="col-xs-6 col-md-6 col-lg-6 text-right btn-link" ng-show="ic.slackOverflow.authenticationStatus">Log Out</a>
-    
+        <form ng-submit="ic.search()" class="col-xs-5 col-md-5 col-lg-5 header_item">
+          <input id="searchBar" type="text" ng-model="ic.slackOverflow.searchTerm" name="search" placeholder="Search..." />
+        </form>
 
-        <!--Google sign out-->
-       <!-- <a href="#" onclick="signOut()">Sign out</a>        
-        <script>
-                function signOut() {
-                  console.log('in signOut function');
-                  var auth2 = gapi.auth2.getAuthInstance();
-                  auth2.signOut().then(function () {
-                    console.log('User signed out.');
-                  });
-                }
-              </script>
-        -->
-      
-        <div ng-show="ic.slackOverflow.authenticationStatus" id="image-container" class="col-xs-6 col-md-6 col-lg-6 pull-left">
-      <img ng-click="ic.goToProfile(ic.userObject.userId)" class="pull-left" id="profile_pic" src="{{ic.userObject.profile_img_url}}">
-      </div></div>
-      </div>
+        <div class="col-xs-2 col-md-2 col-lg-2 header_item">
+          <div class="row">
+            <a href="#!/home" id="small_header_link" class="col-xs-12 col-md-12 col-lg-12 pull-left btn-link" ng-hide="ic.slackOverflow.authenticationStatus">Log In</a>
+          </div>
+          <div class="row">
+            <a ng-click="ic.logout()" id="small_header_link" class="col-xs-6 col-md-6 col-lg-6 text-right btn-link" ng-show="ic.slackOverflow.authenticationStatus">Log Out</a>
 
 
-      <!-- <a href="https://slack.com/oauth/authorize?scope=incoming-webhook&client_id=140002966599.337739435860"><img alt="Add to Slack" height="20" width="70" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a> -->
-
+            <div ng-show="ic.slackOverflow.authenticationStatus" id="image-container" class="col-xs-6 col-md-6 col-lg-6 pull-left">
+              <img ng-click="ic.goToProfile(ic.userObject.userId)" class="pull-left" id="profile_pic" src="{{ic.userObject.profile_img_url}}">
+            </div>
+          </div>
+        </div>
 
       </div>
-    </div> 
+    </div>
 
     <div class="row">
-    <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10 btn-sm float-right" id="askQuestionButton" ng-click="ic.askQuestion()" ng-if="ic.slackOverflow.askQuestionButtonVisible" ><span id="smallerText">Ask Question</span></button>
-    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10 float-right" id="askQuestionButtonReplacement" ng-if="!ic.slackOverflow.askQuestionButtonVisible" ></div>
-    </div> 
-    
+      <button class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10 btn-sm float-right"
+        id="askQuestionButton" ng-click="ic.askQuestion()" ng-if="ic.slackOverflow.askQuestionButtonVisible">
+        <span id="smallerText">Ask Question</span>
+      </button>
+      <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 btn offset-xs-10 offset-sm-10 offset-md-10 offset-lg-10 float-right" id="askQuestionButtonReplacement"
+        ng-if="!ic.slackOverflow.askQuestionButtonVisible"></div>
+    </div>
+
     <main ng-view></main>
-    </section>
-    <script src="https://apis.google.com/js/platform.js"  async defer></script>
-    </body>
+  </section>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+</body>
+
 </html>
-
-
